@@ -1,0 +1,17 @@
+{
+  "name": "Testemunho e catálise",
+  "category": "mathmod:lore",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A matemagia não consome mana. Um material pode servir como $(thing)testemunho$(): prova de que uma alteração possui substância, precisão ou estabilidade para acontecer.$(br2)Testemunhos são gastos quando o efeito tem sucesso. Suas propriedades dependem do mundo, então cada modpack pode descrevê-los de outro modo."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "O que permanece",
+      "text": "Um $(thing)catalisador$() não é gasto. Ele mantém uma construção coerente, aumenta o orçamento disponível ou permite uma relação mais exigente.$(br2)A tela de recursos separa testemunhos de catalisadores. Passe o cursor sobre um material para saber se ele é consumido ou se estabiliza a prova."
+    }
+  ]
+}

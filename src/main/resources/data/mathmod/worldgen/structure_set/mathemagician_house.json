@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "mathmod:mathemagician_house",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 18476291,
+    "spacing": 64,
+    "separation": 16
+  }
+}

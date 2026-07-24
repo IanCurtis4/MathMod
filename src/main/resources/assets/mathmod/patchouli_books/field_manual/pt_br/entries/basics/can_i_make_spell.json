@@ -1,0 +1,32 @@
+{
+  "name": "Primeira magia",
+  "category": "mathmod:basics",
+  "icon": "minecraft:writable_book",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Sim. Use um Talismã programável vazio, escolha Pulo, Dash ou Raio em Teoremas e pressione Inscrever.$(br2)O uso normal conjura a prova inscrita. Agache e use para abrir recursos; <- Prova volta ao programador."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Primeiro testemunho",
+      "text": "Pulo começa com uma preparação recomendada de 1 pena. Mantenha a pena no inventário; ela é um testemunho e só é consumida quando a conjuração funciona.$(br2)Após inscrever, a prova talvez já esteja pronta. Abra Recursos para inspecionar o plano; ele fica pronto quando grafo, preparação e inventário concordam."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Da prova ao efeito",
+      "text": "C.Q.D. marca uma prova confirmada no talismã.$(br2)Uma conjuração bem-sucedida responde com portanto: ∴ a prova produz efeito."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "O selo da prova",
+      "text": "O pequeno selo ao lado do título da prova informa seu estado atual. Passe o cursor para ver o diagnóstico exato.$(br2)O traço de demonstração em ciano significa demonstrada; pontos dourados indicam inscrição pendente; a soma coral pede testemunhos; o quadrado verde significa pronta para conjurar."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Uma prova pequena",
+      "text": "Matemágicos começam com provas pequenas porque cada premissa, testemunho e resultado pode ser inspecionado.$(br2)Domine Pulo, das runas tipadas ao efeito no mundo, antes de compor conjecturas mais longas."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "name_key": "tradition.mathmod.keepers_of_remainder.name",
+  "summary_key": "tradition.mathmod.keepers_of_remainder.summary",
+  "icon": "mathmod:axiomatic_ink"
+}

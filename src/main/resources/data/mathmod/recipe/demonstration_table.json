@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PBP",
+    "CAC",
+    "PPP"
+  ],
+  "key": {
+    "P": { "item": "minecraft:oak_planks" },
+    "B": { "item": "minecraft:book" },
+    "C": { "item": "mathmod:chalk" },
+    "A": { "item": "mathmod:axiomatic_ink" }
+  },
+  "result": {
+    "id": "mathmod:demonstration_table",
+    "count": 1
+  }
+}

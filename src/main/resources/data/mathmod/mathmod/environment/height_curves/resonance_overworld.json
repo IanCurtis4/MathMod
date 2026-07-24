@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "dimension": "minecraft:overworld",
+  "channel": "mathmod:resonance",
+  "points": [
+    { "x": 0.0, "y": 0.15 },
+    { "x": 0.5, "y": 0.0 },
+    { "x": 1.0, "y": 0.25 }
+  ]
+}

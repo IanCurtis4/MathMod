@@ -1,0 +1,28 @@
+{
+  "name": "Fragments From The Field",
+  "category": "mathmod:lore",
+  "icon": "minecraft:paper",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Horizon Measurers",
+      "text": "$(o)\"A step is not east until an observer supplies east. Give the walker a frame, then the same mark may become right, forward, or return.\"$()$(br2)Their surviving notes describe direction as a relation to an observer. Player-relative frames preserve this approach."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Gatherers Of Means",
+      "text": "$(o)\"Do not ask which lantern is the middle lantern. Ask where all lanterns would agree to meet.\"$()$(br2)They used repeated observations to locate centers, a practice echoed by centroid theorems and future target queries."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Boundary Builders",
+      "text": "$(o)\"A wall is one answer to a boundary. The rule that names where a wall belongs is the more durable answer.\"$()$(br2)Their diagrams treat an area as a condition. Regions and anchors inherit that idea."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Unfinished Notes",
+      "text": "Scattered manuscripts mention rotating gardens, paths that avoid fragile ground, and moving marks divided among many hands. These are $(thing)conjectures$(), not available spells yet.$(br2)When a conjecture becomes implementable, it should return as an editable tutorial or theorem rather than a hidden fixed effect."
+    }
+  ]
+}

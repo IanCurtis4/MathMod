@@ -1,0 +1,17 @@
+{
+  "name": "Witnesses And Catalysts",
+  "category": "mathmod:lore",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Mathemagic does not consume mana. A material can instead serve as a $(thing)witness$(): proof that a local alteration has enough substance, precision, or stability to occur.$(br2)Witness materials are spent when the effect succeeds. Their properties depend on the world and its available materials, so packs may describe them differently."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "What Remains",
+      "text": "A $(thing)catalyst$() is not spent. It keeps a construction coherent, increases its available budget, or permits a more demanding relation.$(br2)The resource screen separates witnesses from catalysts. Hover a material there to read whether it is consumed or stabilizing the proof."
+    }
+  ]
+}

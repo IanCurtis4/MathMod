@@ -1,0 +1,31 @@
+{
+  "name": "Caderno de campo",
+  "category": "mathmod:basics",
+  "icon": "mathmod:field_ledger",
+  "extra_recipe_mappings": {
+    "mathmod:field_ledger": 0
+  },
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Conhecimento tem forma",
+      "text": "Um matemágico não aprende apenas segurando um objeto. O $(item)Caderno de campo$(), criado com um livro e pena e Giz rúnico, registra materiais usados em provas bem-sucedidas, epifanias concluídas pela prática e descobertas lidas no mundo.$(br2)Use-o para consultar progresso, rotas e construções concedidas."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Prática harmônica",
+      "text": "Para buscar a $(thing)Correspondência harmônica$(), conjure com sucesso duas vezes tendo $(item)Pena$() preparada na prova e duas vezes com $(item)Quartzo do Nether$().$(br2)Os materiais pertencem a tiers diferentes. Movimento e ressonância juntos revelam seno, cosseno, suas Formas do Laboratório e o $(thing)Passo harmônico$()."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Descobertas de campo",
+      "text": "Algumas construções sobrevivem como manuscritos em baús de vila. Cartógrafos podem preservar $(thing)O horizonte rotacionado$(), $(thing)A medida vinculada$() ou $(thing)O caderno dos remanescentes$().$(br2)Cada registro revela uma construção e pode apontar para uma epifania posterior. A leitura nunca consome o manuscrito."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Conjecturas",
+      "text": "Uma linha bloqueada do catálogo continua visível como conjectura. Passe o cursor para descobrir qual epifania ou descoberta oferece uma rota de construção.$(br2)Conhecimento limita inscrição e edição, nunca a execução de um talismã válido mais antigo."
+    }
+  ]
+}

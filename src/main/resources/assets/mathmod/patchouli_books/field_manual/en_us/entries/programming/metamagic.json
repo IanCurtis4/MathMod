@@ -1,0 +1,59 @@
+{
+  "name": "Tiers and Metamagic",
+  "category": "mathmod:programming",
+  "icon": "mathmod:recursive_seal",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Keepers of the Remainder studied not only what a proof changes, but what survives its enactment. Their recursive work became $(l)metamagic$(): magic whose subject is the cost of later magic.$(br2)It still obeys typed runes, witnesses, plans, and explicit execution."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Four Tiers",
+      "text": "$(li)I: Fundamental$(li)II: Refined$(li)III: Arcane$(li)IV: Metamagical$(br2)A proof inherits the highest tier among its runes. Tier I is the baseline. Higher tiers require a material witness of at least the same tier."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A Witness Must Work",
+      "text": "A high-tier item is not a decorative key. It must contribute a required attribute, supply budget that the graph actually needs, or satisfy a fixed item cost.$(br2)The Resources screen shows required and contributing tiers. Unrelated filler cannot unlock a proof."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Snapshot Rule",
+      "text": "At the beginning of a cast, the server records active metamagic and builds one immutable cost plan. Effects created by that cast cannot reduce their own price.$(br2)Axiom of Parsimony therefore consumes its full witnesses before helping the next spell."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Parsimony",
+      "text": "Parsimony reduces every positive attribute requirement of later casts by 1 per effect level, to a maximum reduction of 2. A requirement never falls below 1.$(br2)It does not reduce fixed items, graph budget, or required tier."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Conservation",
+      "text": "Conservation gives each consumed item unit a 15% survival chance per effect level, capped at 45%. The player must still possess the complete planned cost before casting.$(br2)Catalysts already survive and do not roll."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:axiomatic_ink",
+      "title": "Axiomatic Ink",
+      "text": "Tier IV, consumed. Its dragon breath, echo, lapis, and amethyst carry metamagic and economy. The Axiom of Parsimony needs two measures at base cost."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:recursive_seal",
+      "title": "Recursive Seal",
+      "text": "Tier IV catalyst. A nether star closes the seal while echo shards and pearls preserve the remainder. It carries metamagic, conservation, and stability."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Building Plans",
+      "text": "Parsimony Plan and Conservation Plan produce $(l)Effect Plan$() values. Connect entities, duration, and level, then conclude with Execute Plan.$(br2)The Laboratory offers self-targeting forms; their plan remains editable before execution is added."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Pack Authority",
+      "text": "KubeJS may tune rune tiers, material tiers, attributes, budget, and consumption. Java retains effect behavior, caps, random rolls, and server authority.$(br2)Metamagic changes accounting, never permission: it cannot bypass target safety or unsupported executors."
+    }
+  ]
+}

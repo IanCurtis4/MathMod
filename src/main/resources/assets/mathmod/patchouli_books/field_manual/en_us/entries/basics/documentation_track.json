@@ -1,0 +1,12 @@
+{
+  "name": "Documentation Track",
+  "category": "mathmod:basics",
+  "icon": "patchouli:guide_book",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This book is meant to evolve in parallel with the code.$(br2)Each feature should add or update at least one entry that states:$(br)$(li)what players can do now,$(li)what is planned but unavailable,$(li)what pack authors can configure."
+    }
+  ]
+}

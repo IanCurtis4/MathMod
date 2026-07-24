@@ -1,0 +1,32 @@
+{
+  "name": "Campos de correspondência",
+  "category": "mathmod:environment",
+  "icon": "mathmod:chalk",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Uma correspondência é uma resposta limitada que o mundo dá a uma pergunta nomeada. Espacial, estabilidade, vitalidade e ressonância são coordenadas no espaço de atributos, não direções.$(br2)O mesmo lugar pode ter várias respostas ao mesmo tempo. A ordem na página nunca muda sua identidade."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Camadas, não presságios",
+      "text": "Um canal combina camadas de dimensão, bioma, altura e ruído salgado. O resultado é limitado pelo intervalo declarado.$(br2)O ruído permanece estável em um mundo, mas o segredo por trás dele nunca é exibido. Um relatório é evidência de uma medição, não um ritual para ler a seed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Projetar é escolher",
+      "text": "Um campo de atributos não é um vetor de movimento. Primeiro escolha um canal com Projetar canal de correspondência; só então uma operação escalar, como Gradiente de campo, pode ler sua variação espacial.$(br2)Esse passo extra é uma fronteira de teorema: um gradiente tem unidades por bloco, enquanto o atributo não possui direção física."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "O relatório da âncora",
+      "text": "Inscreva Levantamento dimensional com o giz e execute a âncora. Depois, use a âncora agachado para consultar o último relatório.$(br2)Ele registra a geração, dezoito amostras planejadas, um sinal de redstone de 0 a 15, o canal dominante e faixas qualitativas de intensidade. Nunca registra a seed, o segredo, amostras brutas ou coeficientes ocultos."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Ressonância inicial",
+      "text": "O pacote inicial adiciona mathmod:resonance. Planícies a reforçam suavemente; o Deep Dark adiciona uma correspondência mais forte; a altura curva o resultado do overworld.$(br2)Esses são dados didáticos, não leis universais. Um datapack pode adicionar canais e camadas declarativas limitadas, mas nunca código executável de amostragem."
+    }
+  ]
+}

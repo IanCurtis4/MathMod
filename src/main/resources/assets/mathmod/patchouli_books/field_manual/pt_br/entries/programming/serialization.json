@@ -1,0 +1,12 @@
+{
+  "name": "Serialização",
+  "category": "mathmod:programming",
+  "icon": "minecraft:paper",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Programas têm um codec versionado e são salvos como dados do item no talismã.$(br2)Os campos estáveis incluem nós, arestas, nó de saída e limite de orçamento."
+    }
+  ]
+}

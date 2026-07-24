@@ -1,0 +1,27 @@
+{
+  "name": "Regions",
+  "category": "mathmod:programming",
+  "icon": "minecraft:filled_map",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Regions are the first reusable spatial predicate values in MathMod.$(br2)A region can be built once, then used to test positions, filter target lists, filter block lists, or produce a bounded set of sample positions."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Current Runes",
+      "text": "$(li)sphere_region(Vec3, Number) -> Region$(li)box_region(Vec3, Vec3) -> Region$(li)region_contains(Region, Vec3) -> Bool$(li)sample_region(Region) -> Vec3List"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Filtering",
+      "text": "$(li)filter_entities_in_region(EntityList, Region) -> EntityList$(li)filter_blocks_in_region(BlockPosList, Region) -> BlockPosList$(br2)The Laboratory can make a sphere around you, filter targets inside it, and feed that list into an effect plan."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Limits",
+      "text": "Region radius, box size, and sample count are clamped by Java-side policy.$(br2)This keeps regions useful for spell composition without allowing a talisman to scan or sample a huge area in one cast."
+    }
+  ]
+}

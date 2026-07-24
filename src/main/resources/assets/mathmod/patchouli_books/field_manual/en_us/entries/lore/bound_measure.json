@@ -1,0 +1,18 @@
+{
+  "name": "The Bound Measure",
+  "category": "mathmod:lore",
+  "icon": "mathmod:field_manuscript",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "A Compounder's Record",
+      "text": "The page smells faintly of resin. Its diagrams treat a living body as a changing quantity and a soul-bound position as a constraint, never as ownership.$(br2)The margin repeats one warning: a valid bond excludes the will of another mathemagician."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Recovered Construction",
+      "text": "Reading this manuscript records $(thing)The Bound Measure$() and reveals the $(thing)Soul Constraint$() Theorem and its planning rune.$(br2)Use Binding Resin in successful constraints, and compare that practice with proofs paid by Vital Salt. Their correspondence may make a stronger living transformation legible."
+    }
+  ]
+}

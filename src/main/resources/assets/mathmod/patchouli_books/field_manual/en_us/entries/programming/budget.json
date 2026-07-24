@@ -1,0 +1,17 @@
+{
+  "name": "Budget",
+  "category": "mathmod:programming",
+  "icon": "minecraft:emerald",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "MathMod does not plan to use mana or spell cooldowns in the MVP.$(br2)Instead, each rune contributes to a compile-time budget. Better materials can later increase the budget of a talisman or anchor."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Why Budget?",
+      "text": "A budget gives pack authors a build-time balance lever. Rune material requirements are the cast-time lever: survival talismans consume configured items after a successful cast."
+    }
+  ]
+}

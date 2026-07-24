@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "tradition": "mathmod:keepers_of_remainder",
+  "title_key": "discovery.mathmod.ledger_of_remainders.title",
+  "page_keys": ["manuscript.mathmod.ledger_of_remainders.page.1"],
+  "icon": "mathmod:axiomatic_ink",
+  "rarity": "rare",
+  "patchouli_entry": "mathmod:lore/ledger_of_remainders",
+  "theorem": "mathmod:axiom_of_parsimony"
+}

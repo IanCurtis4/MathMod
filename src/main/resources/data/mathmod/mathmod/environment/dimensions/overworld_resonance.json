@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "dimension": "minecraft:overworld",
+  "values": { "mathmod:resonance": 0.2 }
+}

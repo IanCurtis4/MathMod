@@ -1,0 +1,32 @@
+{
+  "name": "Can I Make A Spell?",
+  "category": "mathmod:basics",
+  "icon": "minecraft:writable_book",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Yes. Use an empty Programmed Talisman, choose Hop, Dash, or Ray in Theorems, then Inscribe.$(br2)Normal use casts the inscribed proof. Sneak-use opens its resources; <- Proof returns to the programmer."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "First Witness",
+      "text": "Hop begins with a recommended preparation of 1 feather. Keep that feather in your inventory; it is a witness and is consumed only when the cast succeeds.$(br2)After inscription, the proof may already be ready. Open Resources to inspect its plan; it says Ready when graph, preparation, and inventory agree."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "From Proof To Effect",
+      "text": "Q.E.D. marks a proof confirmed on the talisman.$(br2)A successful cast answers with therefore: ∴ the proof takes effect."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The Proof Seal",
+      "text": "The small seal beside the proof title reports its current state. Hover it for the exact diagnosis.$(br2)A teal turnstile means demonstrated; gold dots mean inscription is pending; a coral sum means witnesses are missing; a green square means cast-ready."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A Small Proof",
+      "text": "Mathemagicians begin with small proofs because every premise, witness, and result can be inspected.$(br2)Master Hop from typed runes to world effect before composing longer conjectures."
+    }
+  ]
+}

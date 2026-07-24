@@ -1,0 +1,18 @@
+{
+  "name": "The Cartographer's Thread",
+  "category": "mathmod:lore",
+  "icon": "minecraft:map",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "A map is a question",
+      "text": "Cartographers do not merely draw places. They decide which measurements deserve to survive the journey. Their chests may now contain a Field Manuscript: one bounded fragment selected from the current tradition pool.$(br2)The chance is finite, and an empty pool yields nothing. No reader's knowledge is consulted when a chest is filled."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Four routes into proof",
+      "text": "The first pool carries four routes: the Rotated Horizon, the Bound Measure, the Ledger of Remainders, and Weighted Gathering. Each manuscript is a record, not a spell. Read it to learn what the world has remembered; build the proof yourself at the Programmer.$(br2)A Mathemagician may eventually exchange emeralds for these records, but the house and profession remain a later construction."
+    }
+  ]
+}

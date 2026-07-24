@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "biome": "minecraft:plains",
+  "overrides": { "mathmod:resonance": 0.25 },
+  "additives": {}
+}

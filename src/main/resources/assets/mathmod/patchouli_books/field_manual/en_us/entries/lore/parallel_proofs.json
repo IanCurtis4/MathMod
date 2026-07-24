@@ -1,0 +1,17 @@
+{
+  "name": "Convergent Proofs",
+  "category": "mathmod:lore",
+  "icon": "minecraft:writable_book",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Independent observers began with local problems and invented different marks for what they found. Two records may disagree in notation yet describe the same typed relation.$(br2)A mathemagician compares their inputs, bindings, and result. Age, distance, and authority do not make a proof valid; a construction must survive inspection and use."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Shared Records",
+      "text": "The Theorems catalog preserves modern reconstructions, not ownership. A field lineage means that a proof echoes one tradition's surviving method.$(br2)Hover a theorem to see that lineage. Future manuscripts may preserve alternate demonstrations, but a record never casts or rewrites a talisman by itself."
+    }
+  ]
+}

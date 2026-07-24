@@ -1,0 +1,7 @@
+{
+  "type": "mathmod:mathemagician_house",
+  "biomes": "#minecraft:has_structure/village_plains",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "spawn_overrides": {}
+}

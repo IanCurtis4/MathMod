@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:obsidian" },
+  "priority": 0,
+  "density": 4.5,
+  "structural_strength": 16.0,
+  "brittleness": 0.15,
+  "elasticity": 0.01,
+  "thermal_resistance": 12.0,
+  "magical_resistance": 4.0,
+  "compression_mass_exponent": 0.0
+}

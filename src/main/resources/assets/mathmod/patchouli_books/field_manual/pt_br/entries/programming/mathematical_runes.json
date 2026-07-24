@@ -1,0 +1,57 @@
+{
+  "name": "Runas matemáticas",
+  "category": "mathmod:programming",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Runas matemáticas calculam valores sem alterar o mundo. Uma magia ainda pode exigir testemunhos ou catalisadores para sustentar a precisão antes do efeito final.$(br2)Cada primitiva deve servir a muitas provas, não disfarçar uma magia fixa."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Escalar",
+      "text": "$(li)number_add / subtract$(li)number_multiply / divide$(li)number_clamp$(li)number_sin / number_cos$(br2)Ângulos usam radianos. Operações inválidas, como divisão por zero, falham com segurança."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Vetor",
+      "text": "$(li)vector_add / subtract$(li)vector_length / normalize$(li)vector_dot / cross$(li)vector_project / reflect$(li)vector_distance$(br2)A projeção falha com segurança quando seu eixo tem comprimento zero."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Bases",
+      "text": "$(li)player_frame$(li)transform_local_vector$(br2)Bases convertem coordenadas locais em vetores do mundo. Veja Bases de coordenadas para teoremas e ações práticas do Laboratório."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Cálculo amostrado",
+      "text": "$(li)finite_difference: (f1-f0)/h$(li)simpson_integral: largura*(f0+4fm+f1)/6$(br2)São regras numéricas limitadas sobre amostras explícitas. Elas não afirmam derivar ou integrar expressões simbólicas arbitrárias."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Parâmetros no Laboratório",
+      "text": "A Forma Número abre uma entrada numérica. Diferença Finita pede f(x), f(x+h) e h. Painel de Simpson pede a, b, f(a), f((a+b)/2) e f(b).$(br2)Os limites definem a largura; as três imagens ainda são amostras fornecidas pelo matemágico."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Magnitude e custo",
+      "text": "Resultados amostrados de magnitude até 1 não acrescentam custo. Acima disso, a exigência de precisão cresce como teto(log2(|resultado|)), até o limite de 8.$(br2)A conta é refeita pelo servidor sobre o grafo normalizado: alterar apenas a interface não reduz a evidência exigida."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Simetria cíclica",
+      "text": "$(li)cyclic_element constrói um elemento de Cn.$(li)cyclic_compose soma resíduos.$(li)cyclic_inverse encontra o parceiro da identidade.$(li)cyclic_rotate_y faz o elemento agir num vetor.$(br2)Apenas ordens inteiras de 2 a 64 são aceitas."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Evidências especiais",
+      "text": "$(li)Quartzo: ressonância, precisão; catalisador.$(li)Cobre: continuidade; consumido.$(li)Lápis-lazúli: simetria; catalisador.$(li)Cristais de prismarinho: orientação; catalisador.$(br2)KubeJS pode substituir cada relação. Estes itens são padrões, não tradição universal."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Observação e redução",
+      "text": "$(li)entity_velocities lê movimento em blocos por tick.$(li)vector_lengths produz uma lista numérica.$(li)sum, mean e max reduzem listas; listas vazias valem zero.$(br2)Subgrafos puros e constantes são normalizados antes da execução. Observações do mundo e efeitos nunca são tratados como constantes."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "name": "Efeitos alquímicos",
+  "category": "mathmod:programming",
+  "icon": "mathmod:homuncular_matrix",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Runas alquímicas descrevem transformações temporárias de entidades vivas. Elas ampliam a matemagia para além de movimento e detecção sem abandonar sua disciplina tipada.$(br2)Um reagente é evidência de que a matéria sustenta a correspondência solicitada."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Planos antes de efeitos",
+      "text": "Runas de restauração, aceleração, ocultação, visão, decadência, vínculo e infusão produzem valores $(l)Plano de efeito$(). Nada acontece até que $(l)Executar plano$() conclua o grafo.$(br2)$(l)Compor planos$() une dois planos sem executar nenhum antes da hora."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Mudanças clássicas",
+      "text": "$(li)Restauração cura dano limitado.$(li)Aceleração concede Velocidade.$(li)Ocultação concede Invisibilidade.$(li)Noctiluz concede Visão noturna.$(li)Decadência concede Definhamento.$(br2)Duração e nível são entradas numéricas, não propriedades escondidas da magia."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Limites medidos",
+      "text": "Restauração cura no máximo 8 pontos por conjuração. Efeitos benéficos duram até 60 segundos; hostis, até 15. O nível máximo é III.$(br2)Planos de estado hostis e Restrição da alma ignoram jogadores. São regras do servidor, não sugestões."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Restrição da alma",
+      "text": "A Restrição registra uma posição de âncora e resiste ao movimento além de três blocos. O vínculo é temporário, desacelera o alvo e o estabiliza contra repulsão.$(br2)Ela afeta entidades vivas não jogadoras próximas; não cria posse nem persiste após expirar."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Infusão vital",
+      "text": "A Infusão vital adiciona temporariamente vida, armadura e força de ataque por um efeito registrado. Ao terminar, o ciclo de efeitos do Minecraft remove cada modificador.$(br2)Mutação permanente e atributos arbitrários ficam fora do contrato desta beta."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:vital_salt",
+      "title": "Sal vital",
+      "text": "Consumido. Conduz restauração e vitalidade por açúcar, melancia reluzente e quartzo."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:mercurial_draught",
+      "title": "Elixir mercurial",
+      "text": "Consumido. Uma correspondência de redstone e ferro para celeridade e transmutação."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:umbral_powder",
+      "title": "Pó umbral",
+      "text": "Consumido. Fermentação, tinta e carvão sustentam ocultação com um traço de decadência."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:noctilucent_lens",
+      "title": "Lente noctiluzente",
+      "text": "Catalisador. Prismarinho, quartzo, ouro e cenoura dourada sustentam visão e precisão."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:grave_salt",
+      "title": "Sal funerário",
+      "text": "Consumido. Areia das almas, farinha de osso e rosa do Wither conduzem decadência e alma."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:binding_resin",
+      "title": "Resina vinculante",
+      "text": "Consumida. Slime, linha, areia das almas e ametista sustentam vínculo, alma e estabilidade."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:homuncular_matrix",
+      "title": "Matriz homuncular",
+      "text": "Catalisador. Uma matriz estável para infusão e vitalidade. É exigida como evidência, mas sobrevive à inscrição."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Correspondência local",
+      "text": "Estas receitas e atributos são a escola padrão dos Compositores de Correspondências, não uma verdade universal.$(br2)KubeJS pode trocar seletores, atributos, orçamento e consumo. A execução continua sendo lógica Java limitada."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Álgebra defensiva",
+      "text": "Planos defensivos P9 são provas voltadas ao jogador: um alvo vivo, uma runa de execução direta e nenhuma conjuração por âncora. Um plano defensivo não pode atingir outro jogador, reduzir um efeito mais forte ou usar valores físicos P11 para escalar seu resultado."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Proposição de purificação",
+      "text": "A purificação consome Sal Vital e remove apenas o conjunto nocivo aprovado: Veneno, Definhamento e Fraqueza. Ela não remove efeitos benéficos nem efeitos arbitrários de outros mods. Se nada puder ser removido, o pagamento retorna."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Lema de resistência",
+      "text": "Resistência concede Resistência a dano II ao conjurador por um intervalo limitado. A duração é uma entrada numérica com teto de 30 segundos. O Sal Vital é consumido; a Matriz homuncular permanece como catalisador."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Manto de absorção",
+      "text": "A absorção segue a mesma lei de pagamento e alvo, produzindo Absorção II por no máximo 30 segundos. O talismã reserva os itens antes da mutação e os restaura se o alvo ou o efeito falhar."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mathmod:block/demonstration_table"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "biome": "minecraft:deep_dark",
+  "overrides": {},
+  "additives": { "mathmod:resonance": 0.4 }
+}

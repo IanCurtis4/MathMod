@@ -1,0 +1,12 @@
+{
+  "name": "O inspetor de runas",
+  "category": "mathmod:programming",
+  "icon": "mathmod:programmed_talisman",
+  "sortnum": 3,
+  "pages": [
+    {"type":"patchouli:text","text":"O inspetor é uma janela somente leitura para uma prova.$(br2)Ele mostra o mesmo grafo dirigido que o servidor valida e executa. Selecionar um nó revela sua runa, tipo de saída, pureza, expressão e custo.$(br2)O inspetor é uma lente, não um segundo editor de magias."},
+    {"type":"patchouli:text","title":"Três tipos de movimento","text":"Runas puras calculam a partir de suas entradas e podem ser normalizadas quando todas as entradas são conhecidas. Observações leem o mundo ou um ator e permanecem dinâmicas. Efeitos atravessam a fronteira para realizar uma ação no mundo.$(br2)Uma dependência dinâmica não é um erro; é a parte da prova que espera pelo mundo."},
+    {"type":"patchouli:text","title":"Guiado e inscrito","text":"O Laboratório guarda uma sequência limitada de invocações de Formas rúnicas. O modo Inscrito guarda o ProgramGraph autoritativo.$(br2)O Laboratório só pode reabrir uma prova salva quando reproduzir cada invocação produzir exatamente o mesmo grafo. Formas ausentes nunca viram uma magia parcial ou adivinhada."},
+    {"type":"patchouli:text","title":"Lendo o canvas","text":"Camadas mostram a direção do fluxo de informação. Linhas ligam uma saída de origem a uma entrada nomeada. Teal marca cálculo puro, dourado marca observação e coral marca efeitos.$(br2)Clique em um nó ou mova-se com as setas. Feche o inspetor para voltar ao Programador; inspecionar não inscreve nem consome nada."}
+  ]
+}

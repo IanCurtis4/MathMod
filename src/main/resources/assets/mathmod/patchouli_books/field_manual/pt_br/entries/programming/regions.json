@@ -1,0 +1,27 @@
+{
+  "name": "Regiões",
+  "category": "mathmod:programming",
+  "icon": "minecraft:filled_map",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Regiões são os primeiros valores de predicado espacial reutilizáveis do MathMod.$(br2)Uma região pode ser criada uma vez e depois usada para testar posições, filtrar listas de alvos, filtrar listas de blocos ou produzir um conjunto limitado de posições amostradas."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Runas atuais",
+      "text": "$(li)sphere_region(Vec3, Number) -> Region$(li)box_region(Vec3, Vec3) -> Region$(li)region_contains(Region, Vec3) -> Bool$(li)sample_region(Region) -> Vec3List"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Filtros",
+      "text": "$(li)filter_entities_in_region(EntityList, Region) -> EntityList$(li)filter_blocks_in_region(BlockPosList, Region) -> BlockPosList$(br2)O Laboratório consegue criar uma esfera ao seu redor, filtrar alvos dentro dela e alimentar essa lista em um plano de efeito."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Limites",
+      "text": "Raio de região, tamanho de caixa e número de amostras são limitados por política Java.$(br2)Assim, regiões servem para composição de magias sem permitir que um talismã varra ou amostre uma área enorme em uma conjuração."
+    }
+  ]
+}

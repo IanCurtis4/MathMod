@@ -1,0 +1,18 @@
+{
+  "name": "O Fio do Cartógrafo",
+  "category": "mathmod:lore",
+  "icon": "minecraft:map",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Um mapa é uma pergunta",
+      "text": "Cartógrafos não desenham apenas lugares. Eles decidem quais medições merecem sobreviver à viagem. Seus baús agora podem conter um Manuscrito de Campo: um fragmento limitado, escolhido do conjunto atual de tradições.$(br2)A chance é finita, e um conjunto vazio não produz nada. O conhecimento de quem abrirá o baú nunca é consultado durante sua geração."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Quatro caminhos para a prova",
+      "text": "O primeiro conjunto traz quatro caminhos: Horizonte Rotacionado, Medida Limitada, Livro dos Restos e Reunião Ponderada. Cada manuscrito é um registro, não uma magia. Leia-o para descobrir o que o mundo preservou; construa a prova você mesmo no Programador.$(br2)Um matemágico poderá trocar esmeraldas por esses registros no futuro, mas a casa e a profissão ficam para uma construção posterior."
+    }
+  ]
+}

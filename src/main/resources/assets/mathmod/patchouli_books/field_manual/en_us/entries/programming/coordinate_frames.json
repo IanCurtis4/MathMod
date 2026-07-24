@@ -1,0 +1,22 @@
+{
+  "name": "Coordinate Frames",
+  "category": "mathmod:programming",
+  "icon": "minecraft:compass",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A coordinate frame gives meaning to $(thing)right$(), $(thing)up$(), and $(thing)forward$() relative to an observer.$(br2)MathMod's horizontal player frame follows yaw while ignoring pitch, so a local forward vector stays level even when the player looks vertically."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Typed Composition",
+      "text": "$(thing)player_frame$(): Player -> Frame$(br)$(thing)transform_local_vector$(): Frame x Vector3 -> Vector3$(br2)The local vector components are ordered (right, up, forward). The transformation is pure computation; only the final Push Self rune changes the world."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "In The Laboratory",
+      "text": "The Geometry group includes Right Basis Vector, Forward Basis Vector, and Oblique Basis Vector. Their related axis glyphs share one origin while each arrow identifies its direction.$(br2)Add one, then add Push Self. The editable graph exposes both frame runes, making these actions tutorials as well as shortcuts."
+    }
+  ]
+}

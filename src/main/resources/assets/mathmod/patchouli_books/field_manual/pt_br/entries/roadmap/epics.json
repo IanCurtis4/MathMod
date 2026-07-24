@@ -1,0 +1,17 @@
+{
+  "name": "Épicos",
+  "category": "mathmod:roadmap",
+  "icon": "minecraft:map",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "O roteiro de desenvolvimento vive em docs/EPICS.md e docs/MATHEMATICAL_GAMEPLAY_ROADMAP.md.$(br2)Foco atual: auditoria da interface, clareza didática e identidade simbólica; depois, manuscritos e editor avançado."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Depois",
+      "text": "$(li)Referenciais de coordenadas$(li)Campos e derivadas numéricas$(li)Integração e distribuições$(li)Solucionadores limitados$(li)Linguagem futura mais próxima de lambda"
+    }
+  ]
+}

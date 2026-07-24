@@ -1,0 +1,41 @@
+{
+  "name": "World Anchors",
+  "category": "mathmod:basics",
+  "icon": "mathmod:rune_anchor",
+  "sortnum": 3,
+  "extra_recipe_mappings": {
+    "mathmod:rune_anchor": 0,
+    "mathmod:chalk": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Rune Anchors are the first world spell carrier.$(br2)Rune Chalk carries a chosen anchor theorem. Use the chalk in the air to change the theorem, then use it on an anchor to inscribe that construction."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Controls",
+      "text": "$(li)Chalk in air: change theorem.$(li)Chalk tooltip: shows the chosen theorem.$(li)Chalk on anchor: inscribe.$(li)Sneak-use chalk on anchor: erase inscription.$(li)Empty hand: enact the proof.$(li)Sneak-use empty hand: inspect the theorem."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Sacrifice Pulse",
+      "text": "Sacrifice Pulse consumes one amethyst sacrifice dropped within 2.5 blocks of the anchor, then plays the same marker effect.$(br2)The built-in selector accepts $(item)minecraft:amethyst_shard$() plus common amethyst gem tags when a pack provides them."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Offering Spark",
+      "text": "Offering Spark consumes the same amethyst shard, then conjures one $(item)minecraft:glowstone_dust$() at the anchor.$(br2)This is a tiny first drop rune: fixed item, fixed count, and fully server-side."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Warding Pulse",
+      "text": "Warding Pulse consumes one amethyst sacrifice, then pushes nearby non-player living entities away from the anchor.$(br2)It is intentionally harmless: no damage, no explosions, and players are ignored."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Kinetic Transducer",
+      "text": "This theorem observes entities within eight blocks, takes the mean magnitude of their velocities, and converts it into redstone power from 0 to 15.$(br2)The measurement is a snapshot: enacting the proof holds that result for ten seconds. Enact it again to sample anew."
+    }
+  ]
+}

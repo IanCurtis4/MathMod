@@ -1,0 +1,48 @@
+{
+  "name": "Teoremas da beta",
+  "category": "mathmod:programming",
+  "icon": "mathmod:programmed_talisman",
+  "priority": true,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "O Programador rúnico organiza 29 magias editáveis como $(thing)teoremas$(): construções prontas cuja fórmula e grafo tipado podem ser inspecionados antes da inscrição.$(br2)A lista é rolável e separada em Movimento, Leitura, Controle, Alquimia e Metamagia. Passe o cursor sobre um teorema para ler a fórmula e seu comportamento completo."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Notação das fórmulas",
+      "text": "Uma fórmula é um resumo compacto, não código executável. Seu verbo externo declara a conclusão: $(thing)push$(), $(thing)blink$() ou $(thing)mark$(). Dentro dele, $(thing)self$(), $(thing)look$() e $(thing)up$() nomeiam valores; relações como $(thing)ray(self,12)$() e $(thing)nearest(4)$() compõem as evidências.$(br2)Selecione um teorema para manter sua fórmula acima da prova tipada numerada."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Teclado e narrador",
+      "text": "Pressione Tab até a paleta ganhar contorno ciano. As setas para cima e para baixo movem a linha marfim; Enter ou Espaço seleciona. Home/End salta para as pontas.$(br2)O narrador lê nome, posição na lista, fórmula ou tipo de saída e as teclas de ativação."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Movimento",
+      "text": "$(li)Pulo: vetor vertical curto.$(li)Dash: olhar multiplicado por 0,8.$(li)Salto vetorial: direção normalizada somada à subida.$(li)Recuo: multiplica o olhar por -0,65.$(li)Blink: teleporte seguro ao acerto de um raio."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Movimento local",
+      "text": "$(li)Ângulo reto: passo no eixo local direito.$(li)Dash planar: avanço horizontal independente da inclinação.$(li)Salto oblíquo: combina esquerda, subida e frente locais.$(br2)São transformações matriciais pela base do jogador, não efeitos de movimento exclusivos."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Movimento avançado",
+      "text": "$(li)Passo harmônico: seno e cosseno formam componentes polares.$(li)Passo ortogonal: cima vezes olhar dá uma direção perpendicular.$(li)Quarto de volta: C4 age no vetor do olhar.$(li)Salto por quadratura: Simpson estima o impulso por amostras do seno.$(br2)Cada conclusão ainda chega ao efeito comum de empurrão."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Leitura",
+      "text": "$(li)Raio: marca o ponto observado.$(li)Centroide mineral: marca a média dos blocos em #c:ores num raio de 5.$(li)Centroide vital: marca a média das criaturas próximas.$(br2)Centroides falham sem consumir o plano quando o conjunto consultado está vazio."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Controle",
+      "text": "$(li)Lift: eleva os quatro alvos válidos mais próximos.$(li)Elevação hostil: afeta apenas criaturas hostis.$(li)Onda vetorial: empurra seis alvos na direção do olhar.$(li)Guarda do horizonte: prioriza os quatro hostis mais distantes.$(br2)Os controles materializam um plano de efeito e normalmente exigem ametista e atributos de força."
+    }
+  ]
+}

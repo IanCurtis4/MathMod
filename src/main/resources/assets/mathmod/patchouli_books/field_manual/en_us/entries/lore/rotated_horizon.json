@@ -1,0 +1,18 @@
+{
+  "name": "The Rotated Horizon",
+  "category": "mathmod:lore",
+  "icon": "mathmod:field_manuscript",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "A Field Discovery",
+      "text": "The page carries several hands. One measured a quarter-turn with cords, another reduced it to four residues, and a third drew the same action as a rune.$(br2)No hand claims the first proof. Together they record that a direction can be transformed while its length remains witnessed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Recovered Construction",
+      "text": "Reading the manuscript adds $(thing)The Rotated Horizon$() to your field ledger.$(br2)It reveals the cyclic element and its action on a vector, the $(thing)Quarter Turn$() Theorem, and the matching Laboratory Form.$(br2)Duplicate copies remain readable and are not consumed."
+    }
+  ]
+}

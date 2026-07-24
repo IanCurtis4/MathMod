@@ -1,0 +1,59 @@
+{
+  "name": "Tiers e metamagia",
+  "category": "mathmod:programming",
+  "icon": "mathmod:recursive_seal",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Os Guardiões do Resto estudaram não apenas o que uma prova altera, mas o que sobrevive à sua execução. Seu trabalho recursivo tornou-se $(l)metamagia$(): magia cujo objeto é o custo da magia seguinte.$(br2)Ela ainda obedece a runas tipadas, testemunhas, planos e execução explícita."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Quatro tiers",
+      "text": "$(li)I: Fundamental$(li)II: Refinado$(li)III: Arcano$(li)IV: Metamágico$(br2)Uma prova herda o maior tier entre suas runas. Tier I é a base. Tiers superiores exigem uma testemunha material de tier igual ou maior."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A testemunha trabalha",
+      "text": "Um item de tier alto não é uma chave decorativa. Ele deve contribuir com um atributo exigido, fornecer orçamento realmente necessário ou satisfazer um custo fixo.$(br2)A tela Recursos mostra os tiers exigido e contribuinte. Material irrelevante não destrava a prova."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Regra do retrato",
+      "text": "No início da conjuração, o servidor registra a metamagia ativa e constrói um único plano de custo imutável. Efeitos criados pela própria conjuração não reduzem seu preço.$(br2)O Axioma da Parcimônia paga suas testemunhas completas antes de ajudar a magia seguinte."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Parcimônia",
+      "text": "Parcimônia reduz cada requisito positivo de atributo das conjurações seguintes em 1 por nível do efeito, até a redução máxima de 2. Um requisito nunca cai abaixo de 1.$(br2)Ela não reduz itens fixos, orçamento do grafo ou tier exigido."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Conservação",
+      "text": "Conservação dá a cada unidade de item consumido 15% de chance de sobreviver por nível, até 45%. O jogador ainda precisa possuir o custo planejado completo antes de conjurar.$(br2)Catalisadores já sobrevivem e não fazem rolagem."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:axiomatic_ink",
+      "title": "Tinta axiomática",
+      "text": "Tier IV, consumida. Sopro do dragão, eco, lápis-lazúli e ametista carregam metamagia e economia. O Axioma da Parcimônia requer duas medidas no custo base."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:recursive_seal",
+      "title": "Selo recursivo",
+      "text": "Catalisador de tier IV. Uma estrela do Nether fecha o selo, enquanto fragmentos de eco e pérolas preservam o resto. Carrega metamagia, conservação e estabilidade."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Construindo planos",
+      "text": "Plano de Parcimônia e Plano de Conservação produzem valores $(l)Plano de efeito$(). Conecte entidades, duração e nível, então conclua com Executar Plano.$(br2)O Laboratório oferece formas autorreferentes; o plano continua editável antes de acrescentar a execução."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Autoridade do modpack",
+      "text": "KubeJS pode ajustar tiers de runa e material, atributos, orçamento e consumo. Java mantém comportamento dos efeitos, limites, sorteios e autoridade do servidor.$(br2)Metamagia altera contabilidade, nunca permissão: não ignora segurança de alvos ou executores não suportados."
+    }
+  ]
+}

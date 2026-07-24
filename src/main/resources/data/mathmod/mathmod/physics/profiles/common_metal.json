@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:iron_block" },
+  "priority": 0,
+  "density": 7.8,
+  "structural_strength": 8.0,
+  "brittleness": 0.25,
+  "elasticity": 0.08,
+  "thermal_resistance": 6.0,
+  "magical_resistance": 1.5,
+  "compression_mass_exponent": 0.0
+}

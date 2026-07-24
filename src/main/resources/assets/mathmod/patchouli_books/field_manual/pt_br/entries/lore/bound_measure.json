@@ -1,0 +1,18 @@
+{
+  "name": "A medida vinculada",
+  "category": "mathmod:lore",
+  "icon": "mathmod:field_manuscript",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Registro de um combinador",
+      "text": "A página guarda um leve cheiro de resina. Seus diagramas tratam um corpo vivo como quantidade mutável e uma posição vinculada à alma como restrição, nunca como posse.$(br2)A margem repete um aviso: um vínculo válido exclui a vontade de outro matemágico."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Construção recuperada",
+      "text": "Ler este manuscrito registra $(thing)A medida vinculada$() e revela o Teorema da $(thing)Restrição da alma$() e sua runa de planejamento.$(br2)Use Resina de Ligação em restrições bem-sucedidas e compare essa prática com provas pagas por Sal Vital. A correspondência pode tornar legível uma transformação viva mais forte."
+    }
+  ]
+}

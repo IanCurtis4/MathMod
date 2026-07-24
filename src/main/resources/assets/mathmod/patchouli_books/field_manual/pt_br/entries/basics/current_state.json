@@ -1,0 +1,23 @@
+{
+  "name": "O que existe agora",
+  "category": "mathmod:basics",
+  "icon": "mathmod:programmed_talisman",
+  "priority": true,
+  "sortnum": 0,
+  "extra_recipe_mappings": {
+    "mathmod:programmed_talisman": 0,
+    "mathmod:chalk": 1,
+    "mathmod:rune_anchor": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Esta versão reúne portadores jogáveis de item e de mundo.$(br2)$(li)O talismã inscreve Teoremas ou provas do Laboratório.$(li)Agache e use para inspecionar o plano de recursos.$(li)O caderno de campo agora registra a Correspondência harmônica pela prática e O horizonte rotacionado pela exploração."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Itens",
+      "text": "$(li)O $(thing)Talismã programável$() abre o Programador rúnico.$(li)O $(thing)Giz rúnico$() seleciona teoremas de âncora e inscreve suas provas.$(li)A $(thing)Âncora rúnica$() guarda uma inscrição centrada no mundo.$(li)O $(thing)Caderno de campo$() mostra progresso e rotas privados.$(li)Um $(thing)Manuscrito de campo$() registra uma descoberta sem ser consumido."
+    }
+  ]
+}

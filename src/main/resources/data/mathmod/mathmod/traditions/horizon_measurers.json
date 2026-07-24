@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "name_key": "tradition.mathmod.horizon_measurers.name",
+  "summary_key": "tradition.mathmod.horizon_measurers.summary",
+  "icon": "minecraft:compass"
+}

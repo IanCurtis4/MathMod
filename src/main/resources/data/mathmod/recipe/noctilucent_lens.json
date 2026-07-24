@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "C": {
+      "item": "minecraft:golden_carrot"
+    }
+  },
+  "pattern": [
+    "GQG",
+    "PCP",
+    " G "
+  ],
+  "result": {
+    "id": "mathmod:noctilucent_lens"
+  }
+}

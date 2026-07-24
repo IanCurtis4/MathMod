@@ -1,0 +1,17 @@
+{
+  "name": "Limites de segurança",
+  "category": "mathmod:programming",
+  "icon": "minecraft:shield",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Programas executáveis são validados no servidor antes de salvar e antes de rodar.$(br2)Limites atuais: 64 nós, 128 arestas, limite máximo de orçamento 128 e saída Unit para execução em item ou âncora."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Tempo de execução",
+      "text": "Força de empurrão e alcance de raycast são limitados em tempo de execução. KubeJS pode ajustar definições, mas o MVP não executa comportamento de magia via JavaScript."
+    }
+  ]
+}

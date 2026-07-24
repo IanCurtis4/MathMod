@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "title_key": "epiphany.mathmod.harmonic_motion.title",
+  "correlation": "mathmod:harmonic_correspondence",
+  "studies": [
+    {
+      "material": "mathmod:feather",
+      "tier": 1,
+      "successful_casts": 2
+    },
+    {
+      "material": "mathmod:quartz",
+      "tier": 2,
+      "successful_casts": 2
+    }
+  ],
+  "grants": [
+    {
+      "kind": "rune",
+      "id": "mathmod:number_sin"
+    },
+    {
+      "kind": "rune",
+      "id": "mathmod:number_cos"
+    },
+    {
+      "kind": "theorem",
+      "id": "mathmod:harmonic_step"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "name": "Alchemical Effects",
+  "category": "mathmod:programming",
+  "icon": "mathmod:homuncular_matrix",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Alchemical runes describe temporary transformations of living entities. They extend mathemagic beyond motion and detection without replacing its typed discipline.$(br2)A reagent is evidence that matter can support the requested correspondence."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Plans Before Effects",
+      "text": "Restoration, acceleration, concealment, sight, decay, binding, and infusion runes produce $(l)Effect Plan$() values. They do nothing until $(l)Execute Plan$() concludes the graph.$(br2)$(l)Compound Plans$() joins two plans without executing either early."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Classic Changes",
+      "text": "$(li)Restoration heals bounded damage.$(li)Acceleration grants Speed.$(li)Concealment grants Invisibility.$(li)Noctilucence grants Night Vision.$(li)Decay grants Wither.$(br2)Duration and level are numerical inputs, not hidden properties of the spell."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Measured Limits",
+      "text": "Restoration is capped at 8 health per cast. Beneficial effects last at most 60 seconds; hostile effects at most 15. Effect level is capped at III.$(br2)Hostile status plans and Soul Constraint ignore players. These are server rules, not suggestions."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Soul Constraint",
+      "text": "Soul Constraint records an anchor position and resists motion farther than three blocks from it. The binding is temporary, slows the subject, and stabilizes it against knockback.$(br2)It affects nearby non-player living entities; it does not create ownership or persist across expiration."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Vital Infusion",
+      "text": "Vital Infusion temporarily adds health, armor, and attack strength through a registered effect. When the duration ends, every modifier is removed by Minecraft's effect lifecycle.$(br2)Permanent mutation and arbitrary attribute identifiers remain outside this beta contract."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:vital_salt",
+      "title": "Vital Salt",
+      "text": "Consumed. Carries restoration and vitality through sugar, glistering melon, and quartz."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:mercurial_draught",
+      "title": "Mercurial Draught",
+      "text": "Consumed. A redstone and iron correspondence for haste and transmutation."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:umbral_powder",
+      "title": "Umbral Powder",
+      "text": "Consumed. Fermentation, ink, and charcoal support concealment with a trace of decay."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:noctilucent_lens",
+      "title": "Noctilucent Lens",
+      "text": "Catalyst. Prismarine, quartz, gold, and a golden carrot support sight and precision."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:grave_salt",
+      "title": "Grave Salt",
+      "text": "Consumed. Soul sand, bone meal, and a wither rose carry decay and soul correspondence."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:binding_resin",
+      "title": "Binding Resin",
+      "text": "Consumed. Slime, thread, soul sand, and amethyst support binding, soul, and stability."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "mathmod:homuncular_matrix",
+      "title": "Homuncular Matrix",
+      "text": "Catalyst. A stable matrix for infusion and vitality. It is required as evidence, but survives inscription."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Local Correspondence",
+      "text": "These recipes and attributes are the default school of the Compounders of Correspondence, not universal truth.$(br2)KubeJS may replace ingredient selectors, attribute values, budget contribution, and whether a reagent is consumed. Execution remains bounded Java logic."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Defensive Algebra",
+      "text": "P9 defensive plans are player-first proofs: one living target, one direct execution rune, and no anchor casting. A defensive plan cannot target another player, cannot downgrade a stronger effect, and cannot use P11 physical values to scale its result."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Cleansing Proposition",
+      "text": "Cleansing consumes Vital Salt and removes only the approved harmful set: Poison, Wither, and Weakness. It does not remove beneficial effects or arbitrary modded effects. If there is nothing to remove, the payment returns."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Resistance Lemma",
+      "text": "Resistance grants a bounded Damage Resistance II interval to the caster. Its duration is a numerical input capped at 30 seconds. Vital Salt is consumed; the Homuncular Matrix remains as a catalyst."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Absorption Mantle",
+      "text": "Absorption follows the same payment and target law, producing Absorption II for at most 30 seconds. The talisman reserves items before mutation and restores them if the target or effect check fails."
+    }
+  ]
+}

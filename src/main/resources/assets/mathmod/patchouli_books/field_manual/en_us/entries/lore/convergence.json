@@ -1,0 +1,18 @@
+{
+  "name": "The Convergence",
+  "category": "mathmod:lore",
+  "icon": "minecraft:compass",
+  "priority": true,
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "No one culture invented mathemagic. Across distant places and eras, observers found that the world answers the same careful relations.$(br2)A direction can be compared. A boundary can be stated. Many positions can reveal a center. The recurring discovery of these answers is called $(thing)the Convergence$()."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A Practical Art",
+      "text": "The Convergence is not a source of power and it does not replace material work. It is the observation that a complete, valid construction can guide a local change in the world.$(br2)Every tradition named its results differently. Modern practitioners keep the shared word $(thing)theorem$() for a construction that can be repeated."
+    }
+  ]
+}

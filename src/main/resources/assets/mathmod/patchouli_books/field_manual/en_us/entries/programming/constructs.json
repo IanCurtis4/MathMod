@@ -1,0 +1,37 @@
+{
+  "name": "Construct Bodies",
+  "category": "mathmod:programming",
+  "icon": "minecraft:stone",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A construct body is a transient mathematical object made from a bounded region and an exact block material.$(br2)It is not a placed structure and it is not a persistent entity. The server owns its material, motion, collision, and lifetime."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The Cavalieri chain",
+      "text": "$(li)solid_of_revolution(Vec3, Vec3) -> Region$(li)materialize_construct(Region) -> Construct Body$(li)compress_construct(Body, Number) -> Construct Body$(li)spin_construct(Body, Vec3, Number) -> Construct Body$(li)launch_construct(Body, Vec3, Vec3) -> Effect$(br2)The Cavalieri Projectile is this chain saved as a theorem, not a hidden mega-rune."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Material is a parameter",
+      "text": "The first preset names minecraft:stone explicitly. Custom programs may replace the material constant with an exact block item id.$(br2)The block must be an ordinary BlockItem. Fluids, block entities, tags, NBT variants, and placement callbacks are outside this slice."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Cost and mass",
+      "text": "The candidate voxels determine the maximum item count and the mass-equivalent of the body. Compression changes visual scale but does not create or destroy source items.$(br2)The work proxies are: linear = 0.5 * m * |v|^2; rotational = 0.5 * I * omega^2; compression surcharge = m * (1 / scale^3 - 1). They are balance measures, not SI units."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Boundaries",
+      "text": "The preview is an upper bound. A cast may use fewer voxels, but never more than 128. Scale is clamped to 0.25..1, angular speed to pi/4, launch speed to 2, and flight lifetime to 100 ticks.$(br2)The body emits particles as its first visual presentation."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "When a launch fails",
+      "text": "No exact material means no cast. An unloaded chunk, a block collision, an invalid state, or the owner's existing flight ends the transient body without changing terrain.$(br2)Survival-ready protection and dedicated-server GameTests are still part of the next P8 hardening pass."
+    }
+  ]
+}

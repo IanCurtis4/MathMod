@@ -1,0 +1,32 @@
+{
+  "name": "Correspondence Fields",
+  "category": "mathmod:environment",
+  "icon": "mathmod:chalk",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A correspondence is a bounded answer the world gives to a named question. Spatial, stability, vitality, and resonance are coordinates in attribute space, not directions.$(br2)The same place can have several answers at once. Their order on a page never changes their identity."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Layers, not omens",
+      "text": "A channel combines dimension, biome, height, and salted noise layers. The result is clamped to its declared range.$(br2)The noise is stable for one world, but the secret behind it is never shown. A report is evidence of a measurement, not a seed-reading ritual."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Projection is a choice",
+      "text": "An attribute field is not a vector of motion. First choose a channel with Project Correspondence Channel; only then may a scalar operation, such as Field Gradient, read its spatial change.$(br2)This extra step is a theorem boundary: a gradient has units per block, while the attribute itself has no physical direction."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The anchor's report",
+      "text": "Inscribe Dimensional Survey with the chalk and execute the anchor. Sneak-use the anchor afterward to inspect the last report.$(br2)It records the generation, eighteen planned samples, a 0--15 redstone signal, the dominant channel, and qualitative intensity bands. It never records the seed, secret, raw samples, or hidden layer coefficients."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Starter resonance",
+      "text": "The starter pack adds mathmod:resonance. Plains gently reinforce it; the Deep Dark adds a stronger correspondence; height bends the overworld curve.$(br2)These are teaching data, not universal laws. A datapack may add bounded declarative channels and layers, but never executable sampler code."
+    }
+  ]
+}

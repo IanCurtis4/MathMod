@@ -1,0 +1,37 @@
+{
+  "name": "Física dos materiais",
+  "category": "mathmod:programming",
+  "icon": "minecraft:iron_block",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Um material possui dois livros. A quantidade exata de itens paga pela magia; o perfil físico descreve como um futuro constructo poderá se comportar. Esses livros nunca substituem um ao outro.$(br2)O primeiro perfil é resolvido pelo BlockState padrão canônico do material e por sua forma de colisão em um contexto vazio. Formas dependentes de vizinhos ficam adiadas."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A escada de perfis",
+      "text": "Um perfil de datapack vence uma declaração KubeJS, que vence uma declaração interna. Seletores de bloco exato vencem tags. Sem declaração correspondente, heurísticas limitadas de dureza e resistência à explosão fornecem uma densidade de fallback. Blocos de mods desconhecidos continuam candidatos válidos.$(br2)Um perfil pode definir densidade, resistência estrutural, fragilidade, elasticidade, resistência térmica, resistência mágica e expoente de compressão."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A primeira aproximacao",
+      "text": "A forma de colisão canônica é amostrada como uma união na resolução N = 16. Seu volume ocupado V combina-se com a densidade rho e a compactação limitada C:$(br2)C = clamp(1 + a log1p(H) + b log1p(R), 1, 8)$(br)m = clamp(V rho C, 0, 256)$(br2)Isso é uma quantidade estável de gameplay, não uma conversão para unidades do mundo real."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Lendo a prévia",
+      "text": "O painel de recursos pode mostrar uma estimativa física para um constructo. A estimativa é apenas orientativa e aparece marcada como tal. O servidor resolve novamente a forma canônica, o snapshot ativo, o centro ponderado pela massa e a inércia no momento do disparo.$(br2)Um reload pode mudar estimativas futuras; ele não reescreve uma magia salva nem um constructo que já esteja voando."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Materiais iniciais",
+      "text": "O livro inicial inclui lã branca, tábuas de carvalho, pedra, vidro, um bloco de ferro como metal comum e obsidiana. Seus valores são exemplos para autores de modpacks, não leis imutáveis.$(br2)Copie um perfil para um datapack e altere-o dentro dos limites documentados. O pagamento exato e o limite de massa-equivalente do P8 continuam no livro anterior."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "O que continua adiado",
+      "text": "Perfis físicos ainda não concedem dano ao terreno, penetração, explosões, atributos permanentes de entidades ou força de impacto sem limite. Esses efeitos precisam de contratos próprios de proteção, transação, rollback e servidor dedicado.$(br2)Por enquanto, o perfil é uma promessa medida sobre um material, não uma permissão para quebrar o mundo."
+    }
+  ]
+}

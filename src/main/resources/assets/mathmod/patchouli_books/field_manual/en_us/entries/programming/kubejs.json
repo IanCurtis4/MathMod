@@ -1,0 +1,42 @@
+{
+  "name": "KubeJS",
+  "category": "mathmod:programming",
+  "icon": "minecraft:command_block",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "MathMod exposes an optional KubeJS bridge through Java.loadClass.$(br2)Use it from kubejs/startup_scripts to register materials, tune rune budgets, add material requirements, configure anchor presets, and enable or disable runes."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Example",
+      "text": "const MathMod = Java.loadClass('com.mathmod.kubejs.MathModKubeJS')$(br2)MathMod.material('steel_plus', '#c:ingots/steel', 8, 2)$(br)MathMod.addMaterialAttribute('steel_plus', 'force', 3)$(br)MathMod.addRuneAttributeRequirement('mathmod:push_self', 'motion', 1)"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Safety",
+      "text": "KubeJS changes definitions, not runtime spell logic. executorKey must refer to Java-side behavior implemented by MathMod. This keeps spell execution server-safe and predictable."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Anchor Presets",
+      "text": "Pack scripts can call setAnchorSacrifice(selector, count, radius), setOfferingSparkDrop(item, count), and setWardingPulse(radius, strength).$(br2)Selectors accept exact items, tags, or comma-separated mixes."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Default Materials",
+      "text": "MathMod ships defaults for vanilla items plus common modpack tags: tin, bronze, steel, osmium, arcane essence/source, and allthemodium.$(br2)Use setMaterialTranslationKey(id, key) to give a tagged material a localized catalog name. Its stable id and full selector remain in the hover details."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Manuscripts",
+      "text": "The manuscript API is also declarative. In a startup script, register a tradition, then register each manuscript with a schema version, title, pages, icon, and rarity.$(br2)The complete sample is in docs/examples/kubejs/mathmod_manuscripts.js. It does not execute spells, grant knowledge, change loot, or access players and worlds."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Stable Names",
+      "text": "Use namespaced ids such as example:constant_fields. A manuscript may point to a theorem or Patchouli entry, but the reader record remains data only.$(br2)Aliases migrate an old id to a new id: MathMod.manuscriptAlias(1, 'example:old_constant_fields', 'example:constant_fields'). Duplicate ids and invalid references are rejected during reload."
+    }
+  ]
+}

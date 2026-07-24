@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:glass" },
+  "priority": 0,
+  "density": 0.8,
+  "structural_strength": 1.0,
+  "brittleness": 0.9,
+  "elasticity": 0.02,
+  "thermal_resistance": 2.5,
+  "magical_resistance": 0.8,
+  "compression_mass_exponent": 0.0
+}

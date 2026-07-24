@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:rotated_horizon",
+  "title_key": "discovery.mathmod.rotated_horizon.title",
+  "patchouli_entry": "mathmod:lore/rotated_horizon",
+  "grants": [
+    {
+      "kind": "rune",
+      "id": "mathmod:cyclic_element"
+    },
+    {
+      "kind": "rune",
+      "id": "mathmod:cyclic_rotate_y"
+    },
+    {
+      "kind": "theorem",
+      "id": "mathmod:quarter_turn"
+    }
+  ]
+}

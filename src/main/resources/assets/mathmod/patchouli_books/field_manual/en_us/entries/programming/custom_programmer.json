@@ -1,0 +1,47 @@
+{
+  "name": "The Laboratory",
+  "category": "mathmod:programming",
+  "icon": "mathmod:programmed_talisman",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Rune Programmer separates preserved Theorems from work in the Laboratory.$(br2)The Laboratory keeps a workspace of ordered rune steps. Each step has a stable identity so the same model can later become a direct graph editor."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Demonstration",
+      "text": "The left panel groups $(thing)Rune Forms$() into Sources, Algebra, Geometry, Queries, and Effects. A form is a guided step that may expand into several typed runes.$(br2)Hover before applying it: the preview names inputs reused from the current proof, premises that will be inferred, and the exact number of runes and bindings added."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Closing The Proof",
+      "text": "A talisman can only inscribe a proof whose final output is $(thing)Unit$(): an explicit world effect.$(br2)If the proof does not close, the red diagnosis names both the required output type and the type currently produced. Read those two types as the next construction problem."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Compact Notation",
+      "text": "A narrow Laboratory writes each Rune Form as a small formula: $(thing)|v|$() is vector length, $(thing)v·look$() is a dot product, and $(thing)self∈R$() tests region membership.$(br2)Search accepts form name, category, output type, formula, or technical rune id. Tab, Up/Down, Enter, hover, and narration all expose the same ordered forms and expansion preview."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Inscription",
+      "text": "While the server checks a demonstration, inscription controls wait. A confirmed proof shows Q.E.D. and opens Talisman.$(br2)An unnamed proof uses the local language's default title; a title you write is preserved exactly. Resources edits only the construction currently inscribed. Edit Proof reloads a Laboratory sequence; a preserved Theorem must be assembled again from Theorems."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Erase Or Reset?",
+      "text": "Erase takes two activations. It removes the talisman's inscription, authored name, saved Laboratory sequence, and resource preparation. The demonstrated Theorem remains.$(br2)Reset uses the same safeguard: $(thing)0$() becomes $(thing)0?$(). It clears only the current Laboratory sequence and spell name; the talisman's existing inscription remains."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Regions",
+      "text": "The Laboratory includes guided region steps: sphere, box, sample region, target filtering, block filtering, block positions, and average position.$(br2)A useful test chain is Nearby Living -> Sphere Region -> Targets In Region -> Up Vector -> Push Targets Plan -> Execute Plan."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Bindings",
+      "text": "A binding reads $(thing)target[input] <- source$(). Numbers such as #1 refer to steps in the Tree; compact values such as vec(x, y, z) are literal constructions.$(br2)Its color marks the type flowing through the binding. Hover it for complete rune names and technical ids."
+    }
+  ]
+}

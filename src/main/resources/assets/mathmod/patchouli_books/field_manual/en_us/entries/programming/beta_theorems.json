@@ -1,0 +1,48 @@
+{
+  "name": "Beta Theorems",
+  "category": "mathmod:programming",
+  "icon": "mathmod:programmed_talisman",
+  "priority": true,
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Rune Programmer organizes 29 editable spells as $(thing)theorems$(): ready programs whose formula and typed graph can be inspected before inscription.$(br2)The scrollable catalog is divided into Movement, Sensing, Control, Alchemy, and Metamagic. Hover a theorem to read its formula and full behavior."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Formula Shorthand",
+      "text": "A formula is a compact summary, not executable source. Its outer verb states the conclusion: $(thing)push$(), $(thing)blink$(), or $(thing)mark$(). Inside it, $(thing)self$(), $(thing)look$(), and $(thing)up$() name values, while relations such as $(thing)ray(self,12)$() and $(thing)nearest(4)$() compose the evidence.$(br2)Select a theorem to keep its formula above the numbered typed proof."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Keyboard And Narrator",
+      "text": "Press Tab until the palette gains a teal outline. Up/Down moves the ivory row; Enter or Space selects it. Home/End jumps to either edge.$(br2)The narrator reads the selected name, list position, formula or output type, and activation keys."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Movement",
+      "text": "$(li)Hop: a short vertical vector.$(li)Dash: look multiplied by 0.8.$(li)Vector Leap: normalized direction plus an upward component.$(li)Recoil: look multiplied by -0.65.$(li)Blink: safe teleport to a ray hit."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Local Movement",
+      "text": "$(li)Right Angle: a step on the local right axis.$(li)Planar Dash: horizontal forward motion independent of pitch.$(li)Oblique Leap: combines local left, up, and forward.$(br2)These are matrix-style transformations through the player's coordinate frame, not unique movement effects."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Advanced Movement",
+      "text": "$(li)Harmonic Step: sine and cosine form polar components.$(li)Orthogonal Step: up cross look gives a perpendicular direction.$(li)Quarter Turn: C4 acts on the look vector.$(li)Quadrature Leap: Simpson's rule estimates lift from sampled sine.$(br2)Each conclusion still reaches the ordinary push effect."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Sensing",
+      "text": "$(li)Ray Marker: marks the observed point.$(li)Ore Centroid: marks the mean of #c:ores blocks within radius 5.$(li)Life Centroid: marks the mean of nearby creatures.$(br2)Centroid spells fail without committing the plan when the queried set is empty."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Control",
+      "text": "$(li)Lift: raises the four nearest valid targets.$(li)Hostile Lift: only affects hostile creatures.$(li)Vector Wave: pushes six targets along the look direction.$(li)Horizon Ward: prioritizes the four farthest hostiles.$(br2)Control spells materialize an EffectPlan and normally require amethyst plus force attributes."
+    }
+  ]
+}

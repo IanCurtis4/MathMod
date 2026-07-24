@@ -1,0 +1,27 @@
+{
+  "name": "Target Queries",
+  "category": "mathmod:programming",
+  "icon": "minecraft:spyglass",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "MathMod now has bounded collection runes for the first complex casting slice.$(br2)The Lift preset builds an entity_list, filters non-player living entities, sorts targets deterministically by distance, keeps a capped nearest subset, then creates and executes an effect_plan."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "New Runes",
+      "text": "$(li)nearby_entities(Vec3) -> EntityList$(li)filter_entities(EntityList) -> EntityList$(li)nearest_entities / farthest_entities$(li)entity_positions(EntityList) -> Vec3List$(li)count_entities(EntityList) -> Number$(br2)Lift costs 1 amethyst shard in survival."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Blocks",
+      "text": "$(li)nearby_blocks(Vec3) -> BlockPosList$(li)block_positions(BlockPosList) -> Vec3List$(li)count_blocks(BlockPosList) -> Number$(li)average_position(Vec3List) -> Vec3$(br2)Block selectors accept any, air, block ids, block tags, or comma-separated selector lists."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Regions",
+      "text": "Target and block lists can now be narrowed by a reusable Region value with filter_entities_in_region and filter_blocks_in_region.$(br2)Use this when one shape should drive more than one part of a spell."
+    }
+  ]
+}

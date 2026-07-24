@@ -1,0 +1,57 @@
+{
+  "name": "Mathematical Runes",
+  "category": "mathmod:programming",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Mathematical runes compute values without changing the world. A spell may still require witnesses or catalysts to support their precision before its final effect executes.$(br2)Each primitive is meant to serve many proofs rather than disguise one fixed spell."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Scalar",
+      "text": "$(li)number_add / subtract$(li)number_multiply / divide$(li)number_clamp$(li)number_sin / number_cos$(br2)Angles use radians. Invalid operations such as division by zero fail the cast safely."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Vector",
+      "text": "$(li)vector_add / subtract$(li)vector_length / normalize$(li)vector_dot / cross$(li)vector_project / reflect$(li)vector_distance$(br2)Projection fails safely when its axis has zero length."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Frames",
+      "text": "$(li)player_frame$(li)transform_local_vector$(br2)Frames turn local coordinates into world vectors. See Coordinate Frames for practical theorems and Laboratory actions."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Sampled Calculus",
+      "text": "$(li)finite_difference: (f1-f0)/h$(li)simpson_integral: width*(f0+4fm+f1)/6$(br2)These are bounded numerical rules over explicit samples. They do not claim to differentiate or integrate arbitrary symbolic expressions."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Laboratory Parameters",
+      "text": "The Number Form opens a numeric input. Finite Difference asks for f(x), f(x+h), and h. Simpson Panel asks for a, b, f(a), f((a+b)/2), and f(b).$(br2)The bounds define the width; the three images are still samples supplied by the mathemagician."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Magnitude and Cost",
+      "text": "Sampled results with magnitude up to 1 add no cost. Above that, precision grows as ceil(log2(|result|)), capped at 8.$(br2)The server recomputes this from the normalized graph: changing only the interface cannot reduce the required evidence."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Cyclic Symmetry",
+      "text": "$(li)cyclic_element constructs an element of Cn.$(li)cyclic_compose adds residues.$(li)cyclic_inverse returns the identity partner.$(li)cyclic_rotate_y lets the element act on a vector.$(br2)Only integral orders from 2 through 64 are accepted."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Specialist Evidence",
+      "text": "$(li)Quartz: resonance, precision; catalyst.$(li)Copper: continuity; consumed.$(li)Lapis lazuli: symmetry; catalyst.$(li)Prismarine crystals: orientation; catalyst.$(br2)KubeJS may replace every mapping. These items are defaults, not universal lore."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Observation and Reduction",
+      "text": "$(li)entity_velocities reads motion in blocks per tick.$(li)vector_lengths produces a number list.$(li)sum, mean, and max reduce lists; empty lists yield zero.$(br2)Closed pure subgraphs are normalized before execution. World observations and effects are never treated as constants."
+    }
+  ]
+}

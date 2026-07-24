@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:stone" },
+  "priority": 0,
+  "density": 1.0,
+  "structural_strength": 3.0,
+  "brittleness": 0.45,
+  "elasticity": 0.03,
+  "thermal_resistance": 2.0,
+  "magical_resistance": 0.6,
+  "compression_mass_exponent": 0.0
+}

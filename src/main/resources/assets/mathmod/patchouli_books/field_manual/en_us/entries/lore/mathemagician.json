@@ -1,0 +1,17 @@
+{
+  "name": "The Mathemagician's Work",
+  "category": "mathmod:lore",
+  "icon": "mathmod:programmed_talisman",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A $(thing)mathemagician$() is a field researcher who makes a relation usable. They observe, choose assumptions, compose runes, and test the result against the world.$(br2)A failed experiment is not a curse. It is a note that a premise was missing, a boundary was wrong, or the construction asked for more than the available materials can witness."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Portable Notes",
+      "text": "A programmed talisman is a portable notebook that holds one inscribed demonstration. The Talisman tab inspects the proof bound to the item in hand; the Laboratory tests a construction; Theorems preserve demonstrations that have survived repeated use."
+    }
+  ]
+}

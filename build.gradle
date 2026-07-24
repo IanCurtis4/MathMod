@@ -1,0 +1,145 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
+}
+
+version = mod_version
+group = mod_group_id
+
+def hasAsciiPath = { File file ->
+    file.absolutePath.codePoints().allMatch { codePoint -> codePoint < 128 }
+}
+
+// Java argfiles used by Gradle workers can misread non-ASCII Windows paths.
+if (!hasAsciiPath(projectDir)) {
+    def defaultSafeRoot = System.getenv('SystemDrive') != null
+            ? "${System.getenv('SystemDrive')}/mathmod-build/${rootProject.name}"
+            : "${System.getProperty('java.io.tmpdir')}/mathmod-build/${rootProject.name}"
+    layout.buildDirectory = file(providers.environmentVariable('MATHMOD_BUILD_DIR').orElse(defaultSafeRoot).get())
+}
+
+base {
+    archivesName = mod_id
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '**/*.bbmodel'
+    exclude 'src/generated/**/.cache'
+}
+
+def generatedGameTestResources = layout.buildDirectory.dir('generated/game-test-resources')
+
+tasks.register('generateGameTestStructures', JavaExec) {
+    dependsOn tasks.named('compileJava')
+    classpath = files(sourceSets.main.output.classesDirs, configurations.runtimeClasspath)
+    mainClass = 'com.mathmod.gametest.GameTestFixtureGenerator'
+    args generatedGameTestResources.get().asFile.absolutePath
+    outputs.dir generatedGameTestResources
+}
+
+sourceSets.main.resources.srcDir(generatedGameTestResources)
+
+tasks.named('processResources') {
+    dependsOn tasks.named('generateGameTestStructures')
+}
+
+repositories {
+    mavenCentral()
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        def uiPreview = providers.environmentVariable('MATHMOD_UI_PREVIEW').orNull
+        def uiPreviewWorld = providers.environmentVariable('MATHMOD_UI_PREVIEW_WORLD').orElse('New World').get()
+        if (uiPreview != null && !uiPreview.isBlank()) {
+            systemProperty 'mathmod.uiPreview', uiPreview
+            argument '--quickPlaySingleplayer'
+            argument uiPreviewWorld
+            def uiPreviewWidth = providers.environmentVariable('MATHMOD_UI_PREVIEW_WIDTH').orNull
+            def uiPreviewHeight = providers.environmentVariable('MATHMOD_UI_PREVIEW_HEIGHT').orNull
+            if (uiPreviewWidth != null && uiPreviewHeight != null) {
+                argument '--width'
+                argument uiPreviewWidth
+                argument '--height'
+                argument uiPreviewHeight
+            }
+        }
+    }
+
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        argument '--nogui'
+    }
+
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    data {
+        arguments.addAll '--mod', project.mod_id,
+                '--all',
+                '--output', file('src/generated/resources/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath
+    }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version
+    ]
+
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.output + sourceSets.main.output + files(configurations.testRuntimeClasspath.filter(hasAsciiPath))
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+}

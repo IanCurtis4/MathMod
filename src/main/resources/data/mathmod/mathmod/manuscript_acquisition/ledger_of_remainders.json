@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:ledger_of_remainders",
+  "loot_pools": ["mathmod:village_cartographer", "mathmod:mathemagician_house"],
+  "loot_weight": 2,
+  "trade": {
+    "level": 4,
+    "emerald_cost": 16,
+    "requires_book": true,
+    "max_uses": 1,
+    "villager_xp": 20,
+    "weight": 2
+  }
+}

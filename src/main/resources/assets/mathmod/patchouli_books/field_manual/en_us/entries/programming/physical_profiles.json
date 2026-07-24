@@ -1,0 +1,37 @@
+{
+  "name": "Material Physics",
+  "category": "mathmod:programming",
+  "icon": "minecraft:iron_block",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A material has two ledgers. The exact item count pays for the spell; the physical profile describes how a future construct may behave. These ledgers never replace one another.$(br2)The first profile is resolved from the material's canonical default BlockState and its collision shape in an empty context. Neighbor-dependent world shapes are deferred."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The profile ladder",
+      "text": "A datapack profile wins over a KubeJS declaration, which wins over a built-in declaration. Exact block selectors beat tags. If no declaration matches, bounded hardness and blast resistance heuristics provide a fallback density. Unknown modded blocks remain valid candidates.$(br2)A profile can define density, strength, brittleness, elasticity, thermal resistance, magical resistance, and a compression exponent."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The first approximation",
+      "text": "The canonical collision shape is sampled as a union at resolution N = 16. Its occupied volume V is combined with density rho and bounded compactness C:$(br2)C = clamp(1 + a log1p(H) + b log1p(R), 1, 8)$(br)m = clamp(V rho C, 0, 256)$(br2)This is a stable gameplay quantity, not a real-world unit conversion."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Reading the preview",
+      "text": "The resource panel may show a physical estimate for a construct. The estimate is advisory and explicitly marked as such. The server resolves the canonical shape, active profile snapshot, mass-weighted center, and inertia again when the construct is launched.$(br2)A reload can change future estimates; it cannot rewrite a saved spell or a construct already in flight."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Starter materials",
+      "text": "The starter ledger includes white wool, oak planks, stone, glass, an iron block as common metal, and obsidian. Their values are examples for a pack author, not immutable laws.$(br2)Copy a profile into a datapack and change it within the documented bounds. Exact item payment and the P8 mass-equivalent cap still belong to the older ledger."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "What is still deferred",
+      "text": "Physical profiles currently do not grant terrain damage, penetration, explosions, permanent entity attributes, or uncapped impact force. Those effects need their own protection, transaction, rollback, and dedicated-server contracts.$(br2)For now, the profile is a measured promise about a material, not permission to break the world."
+    }
+  ]
+}

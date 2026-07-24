@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:white_wool" },
+  "priority": 0,
+  "density": 0.3,
+  "structural_strength": 0.5,
+  "brittleness": 0.2,
+  "elasticity": 0.15,
+  "thermal_resistance": 0.5,
+  "magical_resistance": 0.2,
+  "compression_mass_exponent": 0.0
+}

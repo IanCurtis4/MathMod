@@ -1,0 +1,18 @@
+{
+  "name": "O horizonte rotacionado",
+  "category": "mathmod:lore",
+  "icon": "mathmod:field_manuscript",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Uma descoberta de campo",
+      "text": "A página reúne várias mãos. Uma mediu um quarto de volta com cordas, outra o reduziu a quatro resíduos, e uma terceira desenhou a mesma ação como runa.$(br2)Nenhuma mão reivindica a primeira prova. Juntas, registram que uma direção pode ser transformada enquanto seu comprimento permanece testemunhado."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Construção recuperada",
+      "text": "Ler o manuscrito acrescenta $(thing)O horizonte rotacionado$() ao seu caderno de campo.$(br2)Ele revela o elemento cíclico e sua ação sobre um vetor, o Teorema $(thing)Quarto de volta$() e a Forma correspondente do Laboratório.$(br2)Cópias repetidas continuam legíveis e não são consumidas."
+    }
+  ]
+}

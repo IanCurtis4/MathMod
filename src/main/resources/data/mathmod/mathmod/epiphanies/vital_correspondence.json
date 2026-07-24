@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "title_key": "epiphany.mathmod.vital_correspondence.title",
+  "correlation": "mathmod:living_correlation",
+  "studies": [
+    {
+      "material": "mathmod:vital_salt",
+      "tier": 2,
+      "successful_casts": 2
+    },
+    {
+      "material": "mathmod:binding_resin",
+      "tier": 3,
+      "successful_casts": 2
+    }
+  ],
+  "grants": [
+    {
+      "kind": "rune",
+      "id": "mathmod:vital_infusion_plan"
+    },
+    {
+      "kind": "theorem",
+      "id": "mathmod:vital_infusion"
+    }
+  ]
+}

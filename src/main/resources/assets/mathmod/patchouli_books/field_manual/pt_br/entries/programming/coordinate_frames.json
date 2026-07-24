@@ -1,0 +1,22 @@
+{
+  "name": "Bases de coordenadas",
+  "category": "mathmod:programming",
+  "icon": "minecraft:compass",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Uma base de coordenadas define $(thing)direita$(), $(thing)cima$() e $(thing)frente$() em relação a um observador.$(br2)A base horizontal do jogador acompanha a rotação lateral e ignora a inclinação, então um vetor frontal local continua nivelado mesmo quando o jogador olha verticalmente."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Composição tipada",
+      "text": "$(thing)player_frame$(): Player -> Frame$(br)$(thing)transform_local_vector$(): Frame x Vector3 -> Vector3$(br2)Os componentes locais seguem a ordem (direita, cima, frente). A transformação é computação pura; apenas a runa Empurrar jogador altera o mundo."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "No Laboratório",
+      "text": "O grupo Geometria inclui Vetor da base direita, frontal e oblíqua. Seus glifos de eixos compartilham uma origem, mas cada seta identifica sua direção.$(br2)Adicione um deles e depois Empurrar jogador. O grafo editável mostra as duas runas de base, servindo como tutorial e atalho."
+    }
+  ]
+}

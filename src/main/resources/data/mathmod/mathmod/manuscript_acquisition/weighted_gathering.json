@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:weighted_gathering",
+  "loot_pools": ["mathmod:village_cartographer", "mathmod:mathemagician_house"],
+  "loot_weight": 1,
+  "trade": {
+    "level": 5,
+    "emerald_cost": 20,
+    "requires_book": true,
+    "max_uses": 1,
+    "villager_xp": 25,
+    "weight": 1
+  }
+}

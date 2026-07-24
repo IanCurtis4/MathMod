@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:bound_measure",
+  "title_key": "discovery.mathmod.bound_measure.title",
+  "patchouli_entry": "mathmod:lore/bound_measure",
+  "grants": [
+    {
+      "kind": "rune",
+      "id": "mathmod:soul_bind_entities_plan"
+    },
+    {
+      "kind": "theorem",
+      "id": "mathmod:soul_constraint"
+    }
+  ]
+}

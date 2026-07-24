@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "selector": { "type": "block", "id": "minecraft:oak_planks" },
+  "priority": 0,
+  "density": 0.6,
+  "structural_strength": 1.5,
+  "brittleness": 0.35,
+  "elasticity": 0.1,
+  "thermal_resistance": 0.8,
+  "magical_resistance": 0.3,
+  "compression_mass_exponent": 0.0
+}

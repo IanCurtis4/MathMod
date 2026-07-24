@@ -1,0 +1,12 @@
+{
+  "name": "Serialization",
+  "category": "mathmod:programming",
+  "icon": "minecraft:paper",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Programs have a versioned codec and are now stored as item data on the talisman.$(br2)Stable fields include nodes, edges, output node, and budget limit."
+    }
+  ]
+}

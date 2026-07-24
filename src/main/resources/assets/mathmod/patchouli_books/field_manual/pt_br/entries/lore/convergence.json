@@ -1,0 +1,18 @@
+{
+  "name": "A Convergência",
+  "category": "mathmod:lore",
+  "icon": "minecraft:compass",
+  "priority": true,
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nenhuma cultura inventou a matemagia. Em lugares e épocas distantes, observadores perceberam que o mundo responde às mesmas relações cuidadosas.$(br2)Uma direção pode ser comparada. Um limite pode ser declarado. Muitas posições podem revelar um centro. A descoberta recorrente dessas respostas é chamada de $(thing)Convergência$()."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Uma arte prática",
+      "text": "A Convergência não é uma fonte de poder e não substitui trabalho material. Ela é a observação de que uma construção completa e válida pode guiar uma mudança local no mundo.$(br2)Cada tradição deu nomes próprios aos resultados. Praticantes modernos usam $(thing)teorema$() para uma construção que pode ser repetida."
+    }
+  ]
+}

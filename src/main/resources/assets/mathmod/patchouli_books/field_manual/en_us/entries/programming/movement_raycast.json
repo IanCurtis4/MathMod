@@ -1,0 +1,17 @@
+{
+  "name": "Movement And Raycast",
+  "category": "mathmod:programming",
+  "icon": "minecraft:ender_eye",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The movement theorems include Hop, Dash, Vector Leap, Recoil, and Blink. Their formulas appear directly in the programmer catalog.$(br2)Ray Marker marks a hit point. Blink raycasts up to 12 blocks and teleports beside the hit block when there is room."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "New Runes",
+      "text": "$(li)scale_vector(Vec3, Number) -> Vec3$(li)raycast_block(Player, Number) -> RayHit$(li)ray_hit_position(RayHit) -> Vec3$(li)blink_self_to_hit(Player, RayHit) -> Unit$(br2)Runtime clamps movement, checks blink collision, and charges Blink's default 1 ender pearl cost only after a successful survival cast."
+    }
+  ]
+}

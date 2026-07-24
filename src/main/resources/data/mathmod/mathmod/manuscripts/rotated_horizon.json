@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "tradition": "mathmod:horizon_measurers",
+  "title_key": "discovery.mathmod.rotated_horizon.title",
+  "page_keys": ["manuscript.mathmod.rotated_horizon.page.1"],
+  "icon": "minecraft:compass",
+  "rarity": "uncommon",
+  "patchouli_entry": "mathmod:lore/rotated_horizon",
+  "theorem": "mathmod:quarter_turn"
+}

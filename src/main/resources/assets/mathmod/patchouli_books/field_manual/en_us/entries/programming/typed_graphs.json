@@ -1,0 +1,28 @@
+{
+  "name": "Typed Graphs",
+  "category": "mathmod:programming",
+  "icon": "mathmod:chalk",
+  "priority": true,
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A spell program is a directed acyclic graph.$(br2)Each node is a rune. Each edge connects one rune output to one named input on another rune. A graph has exactly one output node."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "MVP Types",
+      "text": "$(li)Unit$(li)Bool$(li)Number$(li)Vec3$(li)Entity$(li)Player$(li)BlockPos$(li)RayHit$(br2)A Number output cannot feed a Vec3 input unless a rune explicitly converts it."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Reading A Proof",
+      "text": "Theorem nodes read $(thing)#n Rune -> type$(). The number is a stable reference within that displayed proof.$(br2)Hover a node to see each named input bound to its source, the final-result marker, constants, and exact technical ids. Type-colored marks show what each rune produces."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Output Families",
+      "text": "The four-square mark in a graph header explains output domains: $(gold)scalar and logic$(), $(aqua)space and geometry$(), $(blue)actors$(), and $(red)effects$().$(br2)The color is a quick family cue, not the exact type. Hover the mark for its legend; read the node's arrow for the precise type."
+    }
+  ]
+}

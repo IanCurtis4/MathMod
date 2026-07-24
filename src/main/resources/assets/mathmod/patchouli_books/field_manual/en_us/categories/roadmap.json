@@ -1,0 +1,6 @@
+{
+  "name": "Roadmap",
+  "description": "The implementation epics that guide each new slice of the mod.",
+  "icon": "mathmod:rune_anchor",
+  "sortnum": 3
+}

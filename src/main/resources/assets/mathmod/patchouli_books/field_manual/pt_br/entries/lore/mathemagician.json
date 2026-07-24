@@ -1,0 +1,17 @@
+{
+  "name": "O ofício do matemágico",
+  "category": "mathmod:lore",
+  "icon": "mathmod:programmed_talisman",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Um $(thing)matemágico$() é um pesquisador de campo que torna uma relação utilizável. Ele observa, escolhe premissas, compõe runas e testa o resultado contra o mundo.$(br2)Um experimento falho não é maldição. Ele revela uma premissa ausente, um limite errado ou materiais insuficientes para testemunhar a construção."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Notas portáteis",
+      "text": "Um talismã programado é um caderno portátil que guarda uma demonstração inscrita. A aba Talismã inspeciona a prova vinculada ao item em mãos; o Laboratório testa uma construção; Teoremas preserva demonstrações que sobreviveram a usos repetidos."
+    }
+  ]
+}

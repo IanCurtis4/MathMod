@@ -1,0 +1,37 @@
+{
+  "name": "Corpos de constructo",
+  "category": "mathmod:programming",
+  "icon": "minecraft:stone",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Um corpo de constructo \u00e9 um objeto matem\u00e1tico transit\u00f3rio feito de uma regi\u00e3o limitada e de um material exato em forma de bloco.$(br2)Ele n\u00e3o \u00e9 uma estrutura colocada nem uma entidade persistente. O servidor controla material, movimento, colis\u00e3o e dura\u00e7\u00e3o."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A cadeia de Cavalieri",
+      "text": "$(li)solid_of_revolution(Vec3, Vec3) -> Region$(li)materialize_construct(Region) -> Construct Body$(li)compress_construct(Body, Number) -> Construct Body$(li)spin_construct(Body, Vec3, Number) -> Construct Body$(li)launch_construct(Body, Vec3, Vec3) -> Effect$(br2)O Proj\u00e9til de Cavalieri \u00e9 essa cadeia salva como teorema, n\u00e3o uma mega-runa escondida."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Material e parametro",
+      "text": "O teorema inicial nomeia minecraft:stone explicitamente. Programas personalizados podem trocar a constante de material pelo id exato de um item-bloco.$(br2)O bloco precisa ser um BlockItem comum. Fluidos, block entities, tags, variantes NBT e callbacks de coloca\u00e7\u00e3o ficam fora deste corte."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Custo e massa",
+      "text": "Os voxels candidatos determinam o limite de itens e a massa-equivalente do corpo. A compress\u00e3o muda a escala visual, mas n\u00e3o cria nem destr\u00f3i itens de origem.$(br2)Os proxies de trabalho s\u00e3o: linear = 0.5 * m * |v|^2; rotacional = 0.5 * I * omega^2; sobretaxa de compress\u00e3o = m * (1 / escala^3 - 1). S\u00e3o medidas de balanceamento, n\u00e3o unidades SI."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Limites",
+      "text": "A pr\u00e9via \u00e9 um limite superior. Uma conjura\u00e7\u00e3o pode usar menos voxels, mas nunca mais que 128. A escala fica entre 0.25 e 1, a velocidade angular no m\u00e1ximo pi/4, o disparo no m\u00e1ximo 2 e a dura\u00e7\u00e3o no m\u00e1ximo 100 ticks.$(br2)O corpo usa part\u00edculas como sua primeira apresenta\u00e7\u00e3o visual."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Quando o disparo falha",
+      "text": "Sem material exato n\u00e3o h\u00e1 conjura\u00e7\u00e3o. Um chunk descarregado, colis\u00e3o com bloco, estado inv\u00e1lido ou outro voo do dono encerra o corpo transit\u00f3rio sem alterar o terreno.$(br2)Prote\u00e7\u00f5es de claims e GameTests de servidor dedicado ainda fazem parte da pr\u00f3xima rodada de endurecimento do P8."
+    }
+  ]
+}

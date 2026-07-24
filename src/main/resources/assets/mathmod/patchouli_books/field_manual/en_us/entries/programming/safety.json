@@ -1,0 +1,17 @@
+{
+  "name": "Safety Limits",
+  "category": "mathmod:programming",
+  "icon": "minecraft:shield",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Executable programs are validated on the server before saving and before running.$(br2)Current limits: 64 nodes, 128 edges, maximum budget limit 128, and output type Unit for item or anchor execution."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Runtime",
+      "text": "Push strength and raycast range are clamped at runtime. KubeJS can tune definitions, but the MVP does not run spell behavior from JavaScript."
+    }
+  ]
+}

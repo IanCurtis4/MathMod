@@ -1,0 +1,28 @@
+{
+  "name": "Fragmentos de campo",
+  "category": "mathmod:lore",
+  "icon": "minecraft:paper",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Medidores de horizonte",
+      "text": "$(o)\"Um passo não é leste até que um observador forneça leste. De uma base ao caminhante, a mesma marca pode se tornar direita, frente ou retorno.\"$()$(br2)As notas sobreviventes descrevem direção como relação com um observador. As bases relativas ao jogador preservam essa abordagem."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Coletores de médias",
+      "text": "$(o)\"Não pergunte qual lanterna é a lanterna do meio. Pergunte onde todas as lanternas concordariam em se encontrar.\"$()$(br2)Eles usavam observações repetidas para localizar centros, prática refletida pelos teoremas de centroide e futuras consultas de alvo."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Construtores de limites",
+      "text": "$(o)\"Uma parede é uma resposta a um limite. A regra que diz onde uma parede pertence é a resposta mais durável.\"$()$(br2)Seus diagramas tratam uma área como condição. Regiões e âncoras herdam essa ideia."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Notas inacabadas",
+      "text": "Manuscritos dispersos mencionam jardins rotativos, caminhos que evitam solo frágil e marcas móveis divididas entre muitas mãos. São $(thing)conjecturas$(), não magias disponíveis ainda.$(br2)Quando uma conjectura puder ser implementada, ela deve voltar como tutorial ou teorema editável, não como efeito fixo escondido."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Field Ledger",
+  "category": "mathmod:basics",
+  "icon": "mathmod:field_ledger",
+  "extra_recipe_mappings": {
+    "mathmod:field_ledger": 0
+  },
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Knowledge Has Form",
+      "text": "A mathemagician does not learn merely by holding an object. The $(item)Field Ledger$(), crafted from a writable book and Rune Chalk, records materials used in successful proofs, epiphanies completed through practice, and discoveries read in the world.$(br2)Use it to inspect progress, routes, and granted constructions."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Harmonic Practice",
+      "text": "To seek $(thing)Harmonic Correspondence$(), successfully cast twice with $(item)Feather$() prepared in the proof and twice with $(item)Nether Quartz$().$(br2)The two materials belong to different tiers. Motion and resonance together reveal sine, cosine, their Laboratory Forms, and $(thing)Harmonic Step$()."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Field Discoveries",
+      "text": "Some constructions survive as manuscripts in village chests. Cartographers may preserve $(thing)The Rotated Horizon$(), $(thing)The Bound Measure$(), or $(thing)The Ledger Of Remainders$().$(br2)Each record reveals a construction and may point toward a later epiphany. Reading never consumes the manuscript."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Conjectures",
+      "text": "A locked catalog row remains visible as a conjecture. Hover it to learn which epiphany or field discovery gives a route to construction.$(br2)Knowledge limits inscription and editing, never the execution of an older valid talisman."
+    }
+  ]
+}

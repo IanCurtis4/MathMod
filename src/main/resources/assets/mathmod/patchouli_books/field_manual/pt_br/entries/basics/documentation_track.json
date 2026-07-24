@@ -1,0 +1,12 @@
+{
+  "name": "Trilha do livro",
+  "category": "mathmod:basics",
+  "icon": "patchouli:guide_book",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Este livro deve evoluir junto com o código.$(br2)Cada recurso deve adicionar ou atualizar pelo menos uma entrada dizendo:$(br)$(li)o que jogadores já podem fazer,$(li)o que está planejado mas indisponível,$(li)o que criadores de modpacks podem configurar."
+    }
+  ]
+}

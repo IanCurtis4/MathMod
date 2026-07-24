@@ -1,0 +1,17 @@
+{
+  "name": "Runas e tipos",
+  "category": "mathmod:lore",
+  "icon": "mathmod:chalk",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Uma runa não é uma palavra de comando. É uma afirmação sobre um valor: número, direção, observador, limite ou efeito pretendido.$(br2)As ligações precisam concordar sobre o que passa por elas. Um jogador não vira vetor por acidente, nem uma posição vira efeito. Por isso a notação possui tipos."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Marcas e âncoras",
+      "text": "O giz rúnico registra notação em um lugar. Uma âncora rúnica dá a essa notação um ponto de referência estável no mundo.$(br2)O grafo é a demonstração. Apenas a runa final de efeito pode alterar o mundo; as runas anteriores explicam por que ela pode fazer isso."
+    }
+  ]
+}

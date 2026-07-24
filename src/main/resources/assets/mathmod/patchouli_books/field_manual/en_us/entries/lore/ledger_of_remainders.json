@@ -1,0 +1,18 @@
+{
+  "name": "The Ledger Of Remainders",
+  "category": "mathmod:lore",
+  "icon": "mathmod:field_manuscript",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "A Keeper's Account",
+      "text": "Every proof in this narrow ledger is written twice: once at full price, then once after an earlier construction has simplified its demands.$(br2)The Keepers call the difference a remainder. They do not erase cost; they prove which part no longer needs repeating."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Recovered Construction",
+      "text": "Reading this manuscript records $(thing)The Ledger Of Remainders$() and reveals the $(thing)Axiom Of Parsimony$() and its planning rune.$(br2)Practice with Axiomatic Ink, then compare it with the stable resonance of Nether Quartz. A conserved remainder is an epiphany earned through repeated proofs, not a promise printed on the page."
+    }
+  ]
+}

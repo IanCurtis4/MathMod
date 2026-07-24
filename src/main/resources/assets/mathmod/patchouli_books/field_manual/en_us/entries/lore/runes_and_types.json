@@ -1,0 +1,17 @@
+{
+  "name": "Runes And Types",
+  "category": "mathmod:lore",
+  "icon": "mathmod:chalk",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A rune is not a command word. It is a small statement about a value: a number, a direction, an observer, a boundary, or an intended effect.$(br2)Links between runes must agree about what is being passed. A player cannot become a vector by accident, and a position cannot be treated as an effect. This is why the notation is typed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Marks And Anchors",
+      "text": "Rune chalk records notation at a place. A rune anchor gives that notation a stable point of reference in the world.$(br2)The graph is the demonstration. The final effect rune is the only part allowed to alter the world; the preceding runes explain why it may do so."
+    }
+  ]
+}

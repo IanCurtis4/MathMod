@@ -1,0 +1,41 @@
+{
+  "name": "Âncoras no mundo",
+  "category": "mathmod:basics",
+  "icon": "mathmod:rune_anchor",
+  "sortnum": 3,
+  "extra_recipe_mappings": {
+    "mathmod:rune_anchor": 0,
+    "mathmod:chalk": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Âncoras rúnicas são o primeiro portador de magia no mundo.$(br2)O Giz rúnico carrega um teorema de âncora escolhido. Use o giz no ar para trocar o teorema, depois use-o na âncora para inscrever essa construção."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Controles",
+      "text": "$(li)Giz no ar: troca o teorema.$(li)Descrição do giz: mostra o teorema escolhido.$(li)Giz na âncora: inscreve.$(li)Agache e use o giz na âncora: apaga a inscrição.$(li)Mão vazia: realiza a prova.$(li)Agache e use com a mão vazia: inspeciona o teorema."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Pulso com sacrifício",
+      "text": "Pulso com sacrifício consome uma oferenda de ametista largada em até 2,5 blocos da âncora, depois toca o mesmo marcador.$(br2)O seletor embutido aceita $(item)minecraft:amethyst_shard$() e tags comuns de gema de ametista quando o modpack fornecer."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Faísca de oferenda",
+      "text": "Faísca de oferenda consome o mesmo fragmento de ametista e conjura um $(item)minecraft:glowstone_dust$() na âncora.$(br2)Esta é a primeira runa pequena de criação de item: item fixo, quantidade fixa e execução no servidor."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Pulso de proteção",
+      "text": "Pulso de proteção consome uma oferenda de ametista e empurra criaturas vivas próximas para longe da âncora.$(br2)Ele é intencionalmente inofensivo: sem dano, sem explosões, e jogadores são ignorados."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Transdutor cinético",
+      "text": "Este teorema observa entidades em oito blocos, calcula a média de seus módulos de velocidade e a converte em potência de redstone de 0 a 15.$(br2)A medida é instantânea: ao realizar a prova, a âncora mantém o resultado por dez segundos. Realize-a novamente para obter uma nova leitura."
+    }
+  ]
+}

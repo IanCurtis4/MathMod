@@ -1,0 +1,42 @@
+{
+  "name": "Custos de recurso",
+  "category": "mathmod:programming",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Magias inscritas têm uma preparação de recursos persistida no talismã. O mod não escolhe todo custo automaticamente do inventário ao conjurar.$(br2)Use o talismã normalmente para conjurar. Agache e use para abrir os recursos da magia inscrita."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Escolha",
+      "text": "À direita ficam materiais de Java/KubeJS. Clique para adicionar 1; clique em Materiais preparados para remover 1. Passe o cursor para ver atributos.$(br2)Teclado: Tab foca a lista; setas ou Home/End escolhem; Enter/Espaço adiciona ou remove.$(br2)Limpar remove só a preparação. Custos fixos continuam no total."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Previsto ou inscrito",
+      "text": "O programador prevê itens fixos, atributos e orçamento antes da inscrição. Recursos só pode ser editado quando a construção exibida corresponde à magia inscrita.$(br2)Consumo total e Catalisadores totais combinam custos fixos do Teorema com materiais preparados. Esse é o plano completo usado ao conjurar."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Alterando uma prova",
+      "text": "Uma prova já vinculada ao talismã aparece como Inscrita e não pode ser inscrita de forma redundante.$(br2)Alterar apenas o nome de uma prova do Laboratório preserva sua preparação atual. Inscrever outro grafo começa pelos materiais recomendados para ele."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Falha ao conjurar",
+      "text": "Uma falha nomeia o primeiro déficit acionável: itens, atributos abstratos ou orçamento. Itens exatos usam nomes traduzidos; tags mantêm a notação técnica.$(br2)A barra de ação aponta para agachar e usar, onde a preparação pode ser alterada."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Atributos",
+      "text": "Os primeiros atributos são motion, force, precision, spatial, information, arcane, mechanical e stability.$(br2)Exemplos: push_self exige motion, raycast exige precision, consultas de alvo exigem information e blink exige spatial."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Itens de orçamento",
+      "text": "Materiais registrados podem aumentar o orçamento. Itens de orçamento de nível baixo são consumidos quando escolhidos pelo plano.$(br2)Materiais de nível 4 são catalisadores por padrão: precisam estar presentes, mas não são consumidos."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "dimension": "minecraft:the_nether",
+  "values": { "mathmod:resonance": -0.35 }
+}

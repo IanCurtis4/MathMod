@@ -1,0 +1,28 @@
+{
+  "name": "Grafos tipados",
+  "category": "mathmod:programming",
+  "icon": "mathmod:chalk",
+  "priority": true,
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Um programa de magia é um grafo dirigido acíclico.$(br2)Cada nó é uma runa. Cada aresta conecta a saída de uma runa a uma entrada nomeada de outra runa. O grafo tem exatamente um nó de saída."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Tipos MVP",
+      "text": "$(li)Unit$(li)Bool$(li)Number$(li)Vec3$(li)Entity$(li)Player$(li)BlockPos$(li)RayHit$(br2)Uma saída Number não alimenta uma entrada Vec3 sem uma runa que converta isso explicitamente."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Lendo uma prova",
+      "text": "Nós de Teoremas se leem como $(thing)#n Runa -> tipo$(). O número é uma referência estável dentro da prova exibida.$(br2)Passe o cursor para ver cada entrada ligada à origem, a marca de resultado final, constantes e ids técnicos exatos. Marcas coloridas mostram o tipo produzido."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Famílias de saída",
+      "text": "A marca de quatro quadrados no cabeçalho explica domínios de saída: $(gold)escalar e lógica$(), $(aqua)espaço e geometria$(), $(blue)atores$() e $(red)efeitos$().$(br2)A cor indica a família, não o tipo exato. Passe o cursor na marca para ver a legenda; leia a seta do nó para saber o tipo preciso."
+    }
+  ]
+}

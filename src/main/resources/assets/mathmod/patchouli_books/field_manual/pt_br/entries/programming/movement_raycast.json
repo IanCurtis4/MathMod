@@ -1,0 +1,17 @@
+{
+  "name": "Movimento e raycast",
+  "category": "mathmod:programming",
+  "icon": "minecraft:ender_eye",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Os teoremas de movimento incluem Pulo, Dash, Salto vetorial, Recuo e Blink. As fórmulas aparecem diretamente no catálogo do programador.$(br2)Raio marca um ponto atingido. Blink faz raycast até 12 blocos e teleporta ao lado do bloco atingido quando há espaço."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Novas runas",
+      "text": "$(li)scale_vector(Vec3, Number) -> Vec3$(li)raycast_block(Player, Number) -> RayHit$(li)ray_hit_position(RayHit) -> Vec3$(li)blink_self_to_hit(Player, RayHit) -> Unit$(br2)A execução limita o movimento, verifica a colisão e só cobra 1 pérola do Ender após um blink bem-sucedido em sobrevivência."
+    }
+  ]
+}

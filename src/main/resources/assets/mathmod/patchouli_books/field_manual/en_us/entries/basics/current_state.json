@@ -1,0 +1,23 @@
+{
+  "name": "What Exists Now",
+  "category": "mathmod:basics",
+  "icon": "mathmod:programmed_talisman",
+  "priority": true,
+  "sortnum": 0,
+  "extra_recipe_mappings": {
+    "mathmod:programmed_talisman": 0,
+    "mathmod:chalk": 1,
+    "mathmod:rune_anchor": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This build has playable item and world carriers.$(br2)$(li)Talismans inscribe Theorems or named Laboratory proofs.$(li)Sneak-use to inspect witnesses, catalysts, attributes, and budget.$(li)The field ledger now records Harmonic Correspondence through practice and The Rotated Horizon through exploration."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Items",
+      "text": "$(li)The $(thing)Programmed Talisman$() opens the Rune Programmer.$(li)The $(thing)Rune Chalk$() selects anchor theorems and inscribes their proofs.$(li)The $(thing)Rune Anchor$() holds an inscription centered in the world.$(li)The $(thing)Field Ledger$() shows private progress and routes.$(li)A $(thing)Field Manuscript$() records a discovery without being consumed."
+    }
+  ]
+}

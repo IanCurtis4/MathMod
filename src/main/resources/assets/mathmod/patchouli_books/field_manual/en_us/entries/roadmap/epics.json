@@ -1,0 +1,17 @@
+{
+  "name": "Epics",
+  "category": "mathmod:roadmap",
+  "icon": "minecraft:map",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The development roadmap lives in docs/EPICS.md and docs/MATHEMATICAL_GAMEPLAY_ROADMAP.md.$(br2)Current focus: spatial regions, reusable predicates, and bounded sampling."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Later",
+      "text": "$(li)Coordinate frames$(li)Fields and numerical derivatives$(li)Integration and distributions$(li)Bounded solvers$(li)Future lambda-like language depth"
+    }
+  ]
+}

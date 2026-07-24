@@ -1,0 +1,26 @@
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
+
+### IDEs ###
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+out/
+
+### Minecraft / NeoForge runs ###
+run/
+runs/
+src/generated/resources/.cache/
+
+### OS ###
+.DS_Store
+Thumbs.db

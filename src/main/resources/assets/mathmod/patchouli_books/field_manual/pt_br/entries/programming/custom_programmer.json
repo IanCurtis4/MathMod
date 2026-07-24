@@ -1,0 +1,47 @@
+{
+  "name": "O Laboratório",
+  "category": "mathmod:programming",
+  "icon": "mathmod:programmed_talisman",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "O Programador rúnico separa Teoremas preservados do trabalho no Laboratório.$(br2)O Laboratório mantém uma área de trabalho com passos rúnicos ordenados. Cada passo tem identidade estável para que o mesmo modelo possa virar um editor direto de grafos depois."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Demonstração",
+      "text": "O painel esquerdo organiza $(thing)Formas rúnicas$() em Fontes, Álgebra, Geometria, Consultas e Efeitos. Uma forma é um passo guiado que pode se expandir em várias runas tipadas.$(br2)Passe o cursor antes de aplicá-la: a prévia nomeia entradas reutilizadas da prova atual, premissas que serão inferidas e a quantidade exata de runas e vínculos adicionados."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Fechando a prova",
+      "text": "O talismã só inscreve uma prova cuja saída final seja $(thing)Unit$(): um efeito explícito no mundo.$(br2)Quando a prova não fecha, o diagnóstico vermelho informa o tipo de saída exigido e o tipo produzido agora. Leia esses dois tipos como o próximo problema da construção."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Notação compacta",
+      "text": "Um Laboratório estreito escreve cada Forma rúnica como fórmula curta: $(thing)|v|$() é o comprimento do vetor, $(thing)v·look$() é um produto escalar e $(thing)self∈R$() testa pertinência a uma região.$(br2)A busca aceita nome, categoria, tipo de saída, fórmula ou id técnico. Tab, setas, Enter, cursor e narração expõem as mesmas formas ordenadas e sua prévia de expansão."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Inscrição",
+      "text": "Enquanto o servidor verifica uma demonstração, os controles de inscrição aguardam. Uma prova confirmada mostra C.Q.D. e abre Talismã.$(br2)Sem nome, a prova usa o título padrão do idioma; um título seu é preservado. Recursos edita apenas a construção inscrita. Editar prova recarrega o Laboratório; um Teorema preservado deve ser montado novamente em Teoremas."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Apagar ou zerar?",
+      "text": "Apagar exige duas ativações. Ele remove a inscrição do talismã, o nome escrito, a sequência salva do Laboratório e a preparação de recursos. O Teorema demonstrado permanece.$(br2)Zerar usa a mesma proteção: $(thing)0$() vira $(thing)0?$(). Ele limpa apenas a sequência e o nome da magia no Laboratório; a inscrição existente no talismã permanece."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Regiões",
+      "text": "O Laboratório inclui passos guiados de região: esfera, caixa, amostrar região, filtrar alvos, filtrar blocos, posições de blocos e média de posições.$(br2)Uma cadeia útil para testar é Vivos próximos -> Região esférica -> Alvos na região -> Vetor para cima -> Plano de empurrão -> Executar plano."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Vínculos",
+      "text": "Um vínculo se lê $(thing)alvo[entrada] <- origem$(). Números como #1 indicam passos na Árvore; valores compactos como vec(x, y, z) são construções literais.$(br2)A cor marca o tipo que flui pelo vínculo. Passe o cursor para ver nomes completos das runas e ids técnicos."
+    }
+  ]
+}

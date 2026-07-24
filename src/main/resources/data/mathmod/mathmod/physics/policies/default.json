@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "shape_resolution": 16,
+  "default_density": 1.0,
+  "hardness_weight": 0.15,
+  "blast_resistance_weight": 0.05,
+  "fallback_base_mass": 0.2,
+  "fallback_hardness_weight": 0.5,
+  "fallback_blast_weight": 0.15,
+  "default_compression_mass_exponent": 0.0,
+  "default_structural_strength": 1.0,
+  "default_brittleness": 0.5,
+  "default_elasticity": 0.0,
+  "default_thermal_resistance": 1.0,
+  "default_magical_resistance": 0.0
+}

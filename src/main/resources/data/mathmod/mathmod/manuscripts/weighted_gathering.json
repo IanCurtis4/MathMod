@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "tradition": "mathmod:gatherers_of_means",
+  "title_key": "manuscript.mathmod.weighted_gathering.title",
+  "page_keys": ["manuscript.mathmod.weighted_gathering.page.1"],
+  "icon": "minecraft:amethyst_shard",
+  "rarity": "uncommon",
+  "patchouli_entry": "mathmod:lore/field_fragments"
+}

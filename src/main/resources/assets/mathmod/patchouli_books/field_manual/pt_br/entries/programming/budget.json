@@ -1,0 +1,17 @@
+{
+  "name": "Orçamento",
+  "category": "mathmod:programming",
+  "icon": "minecraft:emerald",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "O MVP do MathMod não usa mana nem tempo de recarga de magia.$(br2)Em vez disso, cada runa consome orçamento ao compilar. Materiais melhores podem aumentar o limite de um talismã ou âncora."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Por que orçamento?",
+      "text": "O orçamento dá uma alavanca de balanceamento na montagem. Requisitos de material das runas são a alavanca por uso: talismãs em sobrevivência consomem os itens configurados depois de uma magia bem-sucedida."
+    }
+  ]
+}

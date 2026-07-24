@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "mathmod:resonance",
+  "minimum": -16.0,
+  "maximum": 16.0,
+  "noise_amplitude": 0.35,
+  "noise_scale": 64,
+  "report_scale": 0.5
+}

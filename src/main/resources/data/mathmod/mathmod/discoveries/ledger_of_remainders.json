@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:ledger_of_remainders",
+  "title_key": "discovery.mathmod.ledger_of_remainders.title",
+  "patchouli_entry": "mathmod:lore/ledger_of_remainders",
+  "grants": [
+    {
+      "kind": "rune",
+      "id": "mathmod:parsimony_plan"
+    },
+    {
+      "kind": "theorem",
+      "id": "mathmod:axiom_of_parsimony"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Provas convergentes",
+  "category": "mathmod:lore",
+  "icon": "minecraft:writable_book",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Observadores independentes partiram de problemas locais e inventaram marcas diferentes para o que encontraram. Dois registros podem discordar na notação e ainda descrever a mesma relação tipada.$(br2)Um matemágico compara entradas, vínculos e resultado. Idade, distância ou autoridade não validam uma prova; a construção precisa resistir à inspeção e ao uso."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Registros comuns",
+      "text": "O catálogo de Teoremas preserva reconstruções modernas, não posse. Uma tradição de campo indica que a prova ecoa um método preservado.$(br2)Passe o cursor sobre um teorema para vê-la. Manuscritos futuros poderão guardar demonstrações alternativas, mas nenhum registro conjura ou reescreve um talismã sozinho."
+    }
+  ]
+}

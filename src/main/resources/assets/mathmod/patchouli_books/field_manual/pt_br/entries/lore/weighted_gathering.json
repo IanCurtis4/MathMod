@@ -1,0 +1,18 @@
+{
+  "name": "Reunião ponderada",
+  "category": "mathmod:lore",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "O resultado reunido",
+      "text": "$(o)\"Um resultado partilhado por muitas mãos ainda deve responder ao peso de cada mão.\"$()$(br2)Os Coletores de Médias descreviam uma concordância ponderada: um resultado formado por vários testemunhos, cada um contribuindo de acordo com uma medida declarada."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Uma conjectura",
+      "text": "A nota continua sendo uma conjectura. A Matemagia ainda não possui uma runa geral de distribuição ponderada, então este registro não concede nenhuma construção e não pode ser conjurado como magia.$(br2)Sua próxima prova exige coleções limitadas, pesos explícitos e um custo que cresça com o número de testemunhos."
+    }
+  ]
+}

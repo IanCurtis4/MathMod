@@ -1,0 +1,6 @@
+{
+  "name": "Rune Programming",
+  "description": "How spells are represented internally: typed nodes, directed edges, one output, and a budget.",
+  "icon": "mathmod:chalk",
+  "sortnum": 2
+}

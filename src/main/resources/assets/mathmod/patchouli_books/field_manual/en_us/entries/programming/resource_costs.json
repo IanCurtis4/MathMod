@@ -1,0 +1,42 @@
+{
+  "name": "Resource Costs",
+  "category": "mathmod:programming",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Inscribed spells have a resource loadout saved on the talisman. The mod does not choose every cost automatically from your inventory at cast time.$(br2)Use the talisman normally to cast. Sneak-use it to open the inscribed spell's resources."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Choosing",
+      "text": "The right side lists Java/KubeJS materials. Click one to add 1; click it under Prepared Materials to remove 1. Hover either list for all attributes.$(br2)Keyboard: Tab focuses a list; arrows or Home/End choose; Enter/Space adds or removes.$(br2)Clear removes prepared choices only. Fixed Theorem costs remain in the totals."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Projected Or Inscribed",
+      "text": "The programmer previews fixed items, attributes, and budget before inscription. Resources becomes editable only when the displayed construction matches the inscribed spell.$(br2)Total Consumed and Total Catalysts combine fixed Theorem costs with prepared materials. They are the complete plan used for casting."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Changing A Proof",
+      "text": "A proof already bound to the talisman is marked Inscribed and cannot be inscribed redundantly.$(br2)Changing only a Laboratory proof's name preserves its current preparation. Inscribing a different graph starts from that graph's recommended materials."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Failed Casts",
+      "text": "A failed cast names the first actionable deficit: missing items, abstract attributes, or resource budget. Exact items use localized names; tags retain their technical notation.$(br2)The action bar points back to sneak-use, where the complete preparation can be changed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Attributes",
+      "text": "The first attributes are motion, force, precision, spatial, information, arcane, mechanical, and stability.$(br2)Examples: push_self needs motion, raycast needs precision, target queries need information, and blink needs spatial."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Budget Items",
+      "text": "Registered materials can add budget. Lower-tier budget items are consumed when selected by the plan.$(br2)Tier 4 materials are catalysts by default: they must be present, but they are not consumed."
+    }
+  ]
+}

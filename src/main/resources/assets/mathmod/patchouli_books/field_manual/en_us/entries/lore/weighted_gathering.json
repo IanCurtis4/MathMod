@@ -1,0 +1,18 @@
+{
+  "name": "Weighted Gathering",
+  "category": "mathmod:lore",
+  "icon": "minecraft:amethyst_shard",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "The gathered result",
+      "text": "$(o)\"A result shared by many hands must still answer to the weight of each hand.\"$()$(br2)The Gatherers Of Means described a weighted agreement: a result formed from several witnesses, each contributing according to a declared measure."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A conjecture",
+      "text": "The note remains a conjecture. MathMod has no general weighted distribution rune yet, so this record grants no construction and cannot be cast as a spell.$(br2)Its next proof requires bounded collections, explicit weights, and a cost that grows with the number of witnesses."
+    }
+  ]
+}
