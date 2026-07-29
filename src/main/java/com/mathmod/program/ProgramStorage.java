@@ -7,6 +7,7 @@ import com.mathmod.runes.ProgramGraph;
 import com.mathmod.runes.ProgramValidator;
 import com.mathmod.runes.RuneDefinition;
 import com.mathmod.runes.ValidationResult;
+import com.mathmod.runes.ValidationIssue;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -46,6 +47,10 @@ public final class ProgramStorage {
         return GuidedWorkspacePersistence.read(stack);
     }
 
+    static ScopedSourceRead getScopedSource(ItemStack stack) {
+        return ScopedProgramPersistence.read(stack);
+    }
+
     public static ValidationResult validate(ProgramGraph graph) {
         MathModRuneBootstrap.bootstrap();
         return new ProgramValidator(MathModRuneBootstrap.registry()).validate(graph);
@@ -71,9 +76,9 @@ public final class ProgramStorage {
         List<ResourceSelection> resourcesToPersist = resourcesToPersist(stack, graph, recommendedResources);
         ValidationResult result = validateExecutable(graph, budgetBonus(graph, recommendedResources));
         if (result.valid() && stack.getItem() instanceof ProgrammedTalismanItem) {
-            stack.set(ModDataComponents.PROGRAM.get(), graph);
-            GuidedWorkspacePersistence.clear(stack);
-            ProgramResources.set(stack, resourcesToPersist);
+            if (!ScopedProgramComponentTransaction.apply(stack, new ScopedProgramComponentTransaction.State(
+                    graph, true, null, false, null, false, resourcesToPersist, !resourcesToPersist.isEmpty(),
+                    null, false, null, false))) return commitFailed(result);
         }
         return result;
     }
@@ -103,12 +108,11 @@ public final class ProgramStorage {
         List<ResourceSelection> resourcesToPersist = resourcesToPersist(stack, graph, recommendedResources);
         ValidationResult result = validateExecutable(graph, budgetBonus(graph, recommendedResources));
         if (result.valid() && stack.getItem() instanceof ProgrammedTalismanItem) {
-            stack.set(ModDataComponents.PROGRAM.get(), graph);
-            GuidedWorkspacePersistence.write(
-                    stack,
-                    GuidedWorkspaceState.create(name, customInvocations == null ? List.of() : customInvocations)
-            );
-            ProgramResources.set(stack, resourcesToPersist);
+            GuidedWorkspaceState state=GuidedWorkspaceState.create(name, customInvocations == null ? List.of() : customInvocations);
+            List<String> ids=state.invocationIds();
+            if (!ScopedProgramComponentTransaction.apply(stack, new ScopedProgramComponentTransaction.State(
+                    graph, true, null, false, state.name(), !state.name().isEmpty(), resourcesToPersist, !resourcesToPersist.isEmpty(),
+                    state, true, ids, !ids.isEmpty()))) return commitFailed(result);
         }
         return result;
     }
@@ -130,13 +134,17 @@ public final class ProgramStorage {
         return ProgramCosts.planForAvailableSelectors(graph, resources, Map.of(), true).budgetBonus();
     }
 
+    private static ValidationResult commitFailed(ValidationResult result) {
+        return new ValidationResult(java.util.stream.Stream.concat(result.issues().stream(),
+                java.util.stream.Stream.of(ValidationIssue.error("", "Program component commit failed"))).toList(), result.budgetUsed(), result.outputType());
+    }
+
     public static boolean clear(ItemStack stack) {
         if (!(stack.getItem() instanceof ProgrammedTalismanItem)) {
             return false;
         }
-        boolean removedProgram = stack.remove(ModDataComponents.PROGRAM.get()) != null;
-        GuidedWorkspacePersistence.clear(stack);
-        ProgramResources.clear(stack);
-        return removedProgram;
+        boolean removedProgram = stack.get(ModDataComponents.PROGRAM.get()) != null;
+        return ScopedProgramComponentTransaction.apply(stack, new ScopedProgramComponentTransaction.State(
+                null, false, null, false, null, false, null, false, null, false, null, false)) && removedProgram;
     }
 }

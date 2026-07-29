@@ -9,7 +9,7 @@ public record ScopedTypeCheckResult(
 ) {
     public ScopedTypeCheckResult {
         inferredType = inferredType == null ? Optional.empty() : inferredType;
-        issues = List.copyOf(issues);
+        issues = ScopedLanguageIssue.normalize(issues);
     }
 
     public boolean valid() {

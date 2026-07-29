@@ -64,6 +64,7 @@ final class ProgramInspectorPresentation {
                     normalized.map(ProgramInspectorPresentation::valueText).orElse("dynamic"),
                     normalized.isPresent(),
                     dependencies,
+                    inputNames(definition, incoming.getOrDefault(node.id(), List.of())),
                     layer,
                     row,
                     node.id().equals(graph.outputNodeId())
@@ -74,6 +75,33 @@ final class ProgramInspectorPresentation {
                 .map(edge -> new Edge(edge.fromNodeId(), edge.toNodeId(), edge.inputName()))
                 .toList();
         return new Model(surface, List.copyOf(nodes), edges);
+    }
+
+    static Narration narration(Model model, String selectedNodeId, ProgramGraphPresentation.Viewport viewport) {
+        return narration(model, selectedNodeId, viewport.zoom(), viewport.panX(), viewport.panY());
+    }
+
+    static Narration narration(Model model, String selectedNodeId, double zoom, double panX, double panY) {
+        Node selected = model.node(selectedNodeId);
+        if (selected == null) {
+            return null;
+        }
+        List<Node> ordered = model.orderedNodes();
+        int position = ordered.indexOf(selected) + 1;
+        String bindings = selected.inputNames().stream()
+                .map(input -> input + "=" + bindingSource(model, selected.id(), input))
+                .reduce((left, right) -> left + ", " + right)
+                .orElse("none");
+        return new Narration(selected.id(), position, ordered.size(), "out:" + selected.outputType(), bindings,
+                zoom, panX, panY);
+    }
+
+    private static String bindingSource(Model model, String targetId, String inputName) {
+        return model.edges().stream()
+                .filter(edge -> edge.toId().equals(targetId) && edge.inputName().equals(inputName))
+                .map(Edge::fromId)
+                .findFirst()
+                .orElse("unbound");
     }
 
     private static Map<String, Integer> layers(ProgramGraph graph, Map<String, List<ProgramEdge>> incoming) {
@@ -143,6 +171,13 @@ final class ProgramInspectorPresentation {
         return node.id() + " = " + operator + "(" + arguments + ")";
     }
 
+    private static List<String> inputNames(RuneDefinition definition, List<ProgramEdge> incoming) {
+        if (definition != null) {
+            return definition.inputs().stream().map(input -> input.name()).toList();
+        }
+        return incoming.stream().map(ProgramEdge::inputName).distinct().sorted().toList();
+    }
+
     private static String valueText(NormalizedValue value) {
         return switch (value) {
             case NormalizedValue.NumberValue number -> Double.toString(number.value());
@@ -174,6 +209,7 @@ final class ProgramInspectorPresentation {
             String normalizedValue,
             boolean normalized,
             List<String> dynamicDependencies,
+            List<String> inputNames,
             int layer,
             int row,
             boolean output
@@ -182,9 +218,14 @@ final class ProgramInspectorPresentation {
             materials = List.copyOf(materials);
             attributes = List.copyOf(attributes);
             dynamicDependencies = List.copyOf(dynamicDependencies);
+            inputNames = List.copyOf(inputNames);
         }
     }
 
     record Edge(String fromId, String toId, String inputName) {
+    }
+
+    record Narration(String nodeId, int position, int total, String outputSocket, String socketBindings,
+                     double zoom, double panX, double panY) {
     }
 }

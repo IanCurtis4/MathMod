@@ -123,6 +123,34 @@ class ScopedStructureValidatorTest {
         assertTrue(hasIssue(deep, ScopedLanguageIssue.Code.TYPE_DEPTH_LIMIT));
     }
 
+    @Test
+    void boundOneTwoThreeAndFourUseExactStructuralBoundaries() {
+        assertTrue(ScopedStructureValidator.validateStructure(source(new ScopedExpression.Lambda("x", RuneTypeExpression.value(RuneType.NUMBER), addTree(128)))).valid(), "BOUND-1 256 AST nodes");
+        assertTrue(hasIssue(ScopedStructureValidator.validateStructure(source(new ScopedExpression.Let("x", number("1"), addTree(128)))), ScopedLanguageIssue.Code.AST_LIMIT), "BOUND-1 exactly 257 AST nodes");
+        assertTrue(ScopedStructureValidator.validateStructure(source(nestedLets(16))).issues().stream().noneMatch(i -> i.code() == ScopedLanguageIssue.Code.BINDING_DEPTH_LIMIT), "BOUND-2 depth 16");
+        assertTrue(hasIssue(ScopedStructureValidator.validateStructure(source(nestedLets(17))), ScopedLanguageIssue.Code.BINDING_DEPTH_LIMIT), "BOUND-2 depth 17");
+        assertTrue(ScopedStructureValidator.validateStructure(source(applications(64))).issues().stream().noneMatch(i -> i.code() == ScopedLanguageIssue.Code.APPLICATION_LIMIT), "BOUND-3 64 applications");
+        assertTrue(hasIssue(ScopedStructureValidator.validateStructure(source(applications(65))), ScopedLanguageIssue.Code.APPLICATION_LIMIT), "BOUND-3 65 applications");
+        assertTrue(ScopedStructureValidator.validateStructure(source(number("1".repeat(160)))).issues().stream().noneMatch(i -> i.code() == ScopedLanguageIssue.Code.LITERAL_LIMIT), "BOUND-4 160 characters");
+        assertTrue(hasIssue(ScopedStructureValidator.validateStructure(source(number("1".repeat(161)))), ScopedLanguageIssue.Code.LITERAL_LIMIT), "BOUND-4 161 characters");
+    }
+
+    @Test
+    void tailFiveAndSevenRejectNestedEffectsAndTailEightRemainsDeferred() {
+        ScopedExpression effect = new ScopedExpression.RuneCall("mathmod:push_self", List.of());
+        assertTrue(hasIssue(validatePurity(new ScopedExpression.RuneCall("mathmod:number_abs", List.of(argument("value", effect)))), ScopedLanguageIssue.Code.EFFECT_NOT_IN_TAIL), "TAIL-5");
+        assertTrue(hasIssue(validatePurity(new ScopedExpression.RuneCall("mathmod:push_self", List.of(argument("value", effect)))), ScopedLanguageIssue.Code.EFFECT_NOT_IN_TAIL), "TAIL-7");
+        assertTrue(validatePurity(number("1")).valid(), "TAIL-8 classification: structural layer permits a pure non-Unit candidate; admission is deferred");
+    }
+
+    private static ScopedExpression addTree(int literals) {
+        ScopedExpression expression = number("1");
+        for (int i = 1; i < literals; i++) expression = new ScopedExpression.RuneCall("mathmod:number_add", List.of(argument("a", expression), argument("b", number("1"))));
+        return expression;
+    }
+    private static ScopedExpression nestedLets(int depth) { ScopedExpression e = number("1"); for (int i = 0; i < depth; i++) e = new ScopedExpression.Let("x", number("1"), e); return e; }
+    private static ScopedExpression applications(int count) { ScopedExpression e = number("1"); for (int i = 0; i < count; i++) e = new ScopedExpression.Application(new ScopedExpression.Lambda("x", RuneTypeExpression.value(RuneType.NUMBER), new ScopedExpression.ParameterReference(0)), e); return e; }
+
     private static ScopedValidationResult validatePurity(ScopedExpression expression) {
         return ScopedStructureValidator.validate(source(expression), runeId -> Optional.of(switch (runeId) {
             case "mathmod:number_abs" -> RunePurity.PURE;

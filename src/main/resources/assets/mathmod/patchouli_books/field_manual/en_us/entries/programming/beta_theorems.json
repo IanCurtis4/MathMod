@@ -12,7 +12,7 @@
     {
       "type": "patchouli:text",
       "title": "Formula Shorthand",
-      "text": "A formula is a compact summary, not executable source. Its outer verb states the conclusion: $(thing)push$(), $(thing)blink$(), or $(thing)mark$(). Inside it, $(thing)self$(), $(thing)look$(), and $(thing)up$() name values, while relations such as $(thing)ray(self,12)$() and $(thing)nearest(4)$() compose the evidence.$(br2)Select a theorem to keep its formula above the numbered typed proof."
+      "text": "A formula is a compact summary, not executable source or persisted Function source. Its outer verb states the conclusion: $(thing)push$(), $(thing)blink$(), or $(thing)mark$(). Inside it, $(thing)self$(), $(thing)look$(), and $(thing)up$() name values, while relations such as $(thing)ray(self,12)$() and $(thing)nearest(4)$() compose the evidence.$(br2)Select a theorem to keep its formula above the numbered typed proof."
     },
     {
       "type": "patchouli:text",
@@ -31,7 +31,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Advanced Movement",
+      "title": "Higher-order Movement",
       "text": "$(li)Harmonic Step: sine and cosine form polar components.$(li)Orthogonal Step: up cross look gives a perpendicular direction.$(li)Quarter Turn: C4 acts on the look vector.$(li)Quadrature Leap: Simpson's rule estimates lift from sampled sine.$(br2)Each conclusion still reaches the ordinary push effect."
     },
     {

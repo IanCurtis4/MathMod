@@ -77,14 +77,22 @@ public final class ProgramResources {
     }
 
     public static List<ResourceSelection> recommendedFor(ProgramGraph graph) {
+        return recommendedFor(graph, MathModRuneBootstrap.registry(), materials());
+    }
+
+    static List<ResourceSelection> recommendedFor(
+            ProgramGraph graph,
+            com.mathmod.runes.RuneRegistry runes,
+            List<RuneMaterialDefinition> materials
+    ) {
         Map<String, Integer> selected = new LinkedHashMap<>();
         Map<String, Integer> providedAttributes = new LinkedHashMap<>();
         int budgetBonus = 0;
         int providedTier = RuneTier.FUNDAMENTAL.level();
 
-        Map<String, Integer> fixed = ProgramCosts.requirementsFor(graph);
+        Map<String, Integer> fixed = ProgramCosts.requirementsFor(graph, runes);
         for (Map.Entry<String, Integer> entry : fixed.entrySet()) {
-            Optional<RuneMaterialDefinition> fixedMaterial = materialForSelector(entry.getKey());
+            Optional<RuneMaterialDefinition> fixedMaterial = materials.stream().filter(material -> material.itemOrTag().equals(entry.getKey())).findFirst();
             fixedMaterial.ifPresent(material -> {
                 addAttributes(providedAttributes, scale(material.attributes(), entry.getValue()));
             });
@@ -94,14 +102,14 @@ public final class ProgramResources {
             providedTier = Math.max(providedTier, fixedMaterial.map(RuneMaterialDefinition::tier).orElse(1));
         }
 
-        Map<String, Integer> requiredAttributes = ProgramCosts.attributeRequirementsFor(graph);
-        int requiredTier = ProgramTiers.requiredTier(graph).level();
-        int budgetUsed = ProgramStorage.validate(graph).budgetUsed();
+        Map<String, Integer> requiredAttributes = ProgramCosts.attributeRequirementsFor(graph, runes);
+        int requiredTier = ProgramTiers.requiredTier(graph, runes).level();
+        int budgetUsed = new ProgramValidator(runes).validate(graph).budgetUsed();
         boolean needsBudgetContribution = budgetUsed > graph.budgetLimit();
         int missingBudget = Math.max(0, budgetUsed - graph.budgetLimit() - budgetBonus);
         Map<String, Integer> missingAttributes = missingAttributes(requiredAttributes, providedAttributes);
 
-        List<RuneMaterialDefinition> candidates = materials().stream()
+        List<RuneMaterialDefinition> candidates = materials.stream()
                 .sorted(Comparator
                         .comparingInt(RuneMaterialDefinition::tier)
                         .thenComparingInt(RuneMaterialDefinition::budgetBonus)

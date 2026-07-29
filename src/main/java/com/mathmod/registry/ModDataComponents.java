@@ -3,6 +3,7 @@ package com.mathmod.registry;
 import com.mathmod.MathMod;
 import com.mathmod.program.GuidedWorkspaceState;
 import com.mathmod.program.ResourceSelection;
+import com.mathmod.program.ScopedSourceEnvelope;
 import com.mathmod.runes.ProgramGraph;
 import com.mathmod.runes.ProgramGraphStreamCodecs;
 import com.mojang.serialization.Codec;
@@ -63,6 +64,11 @@ public final class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("program_guided_workspace", builder -> builder
                     .persistent(GuidedWorkspaceState.CODEC)
                     .networkSynchronized(ByteBufCodecs.fromCodecWithRegistries(GuidedWorkspaceState.CODEC))
+                    .cacheEncoding());
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ScopedSourceEnvelope>> PROGRAM_SCOPED_SOURCE =
+            DATA_COMPONENTS.registerComponentType("program_scoped_source", builder -> builder
+                    .persistent(ScopedSourceEnvelope.CODEC)
                     .cacheEncoding());
 
     private ModDataComponents() {

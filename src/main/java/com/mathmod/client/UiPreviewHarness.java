@@ -16,6 +16,7 @@ import com.mathmod.item.ProgrammedTalismanItem;
 import com.mathmod.knowledge.FieldLedgerView;
 import com.mathmod.knowledge.KnowledgeDefinitions;
 import com.mathmod.knowledge.KnowledgeProgress;
+import com.mathmod.knowledge.KnowledgeService;
 import com.mathmod.knowledge.PlayerKnowledge;
 import com.mathmod.program.AnchorProgramPreset;
 import com.mathmod.program.CustomSpellAction;
@@ -28,9 +29,12 @@ import com.mathmod.program.ProgramStorage;
 import com.mathmod.program.ProgramSurface;
 import com.mathmod.program.PlayerProgramCosts;
 import com.mathmod.program.ResourceSelection;
+import com.mathmod.program.ScopedSourceEnvelope;
+import com.mathmod.program.ScopedFunctionalProjection;
 import com.mathmod.program.TalismanPreset;
 import com.mathmod.runes.ProgramGraph;
 import com.mathmod.registry.ModBlocks;
+import com.mathmod.registry.ModDataComponents;
 import com.mathmod.registry.ModItems;
 import com.mathmod.registry.ModMobEffects;
 import com.mathmod.screen.RuneProgrammerMenu;
@@ -40,6 +44,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.core.BlockPos;
@@ -68,12 +73,14 @@ import org.lwjgl.system.MemoryStack;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.IntBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 @EventBusSubscriber(modid = MathMod.MOD_ID, value = Dist.CLIENT)
 public final class UiPreviewHarness {
     private static final String PREVIEW = System.getProperty("mathmod.uiPreview", "").trim();
+    private static final String PREVIEW_LOCALE = System.getenv("MATHMOD_UI_PREVIEW_LOCALE") == null ? "" : System.getenv("MATHMOD_UI_PREVIEW_LOCALE").trim();
     private static final String MAX_LENGTH_PROOF_NAME = "Hipotese da Convergencia Celeste";
     private static int ticks;
     private static boolean opened;
@@ -94,6 +101,11 @@ public final class UiPreviewHarness {
     private static List<CustomSpellAction> laboratoryResetInitialActions = List.of();
     private static String laboratoryResetInitialName = "";
     private static int resourceMutationStep;
+    private static boolean functionalInspectorClickSent;
+    private static boolean functionalSavedTabSelected;
+    private static boolean functionalInteractionAudited;
+    private static boolean functionalNarrationAudited;
+    private static boolean previewLocaleConfigured;
     private static String mouseCatalogTargetId = "";
     private static String keyboardCatalogTargetId = "";
     private static boolean sawResourceQuantityTwo;
@@ -122,11 +134,15 @@ public final class UiPreviewHarness {
     private static boolean patchouliMatrixCaptureInFlight;
     private static boolean patchouliMatrixFrameReady;
     private static int patchouliMatrixOpenAttempts;
+    private static int authoringRegistryPreviewStep;
+    private static int authoringRegistryPreviewStepTick;
     private static final Field OVERLAY_MESSAGE_FIELD = overlayMessageField();
     private static final Field CUSTOM_WORKSPACE_FIELD = programmerField("customWorkspace");
     private static final Field CUSTOM_SPELL_NAME_FIELD = programmerField("customSpellName");
     private static final Field PRESET_SCROLL_FIELD = programmerField("presetPaletteScroll");
     private static final Field SELECTED_PRESET_FIELD = programmerField("selectedPreset");
+    private static final Field PARAMETER_ACTION_FIELD = programmerField("parameterAction");
+    private static final Field PARAMETER_BOXES_FIELD = programmerField("parameterBoxes");
     private static final Field MATERIAL_SCROLL_FIELD = resourcesField("materialScroll");
     private static final Method MOUSE_MOVE_CALLBACK = mouseMoveCallback();
 
@@ -160,6 +176,14 @@ public final class UiPreviewHarness {
         }
 
         ticks++;
+        if (!previewLocaleConfigured && !PREVIEW_LOCALE.isBlank()) {
+            minecraft.options.languageCode = PREVIEW_LOCALE;
+            minecraft.getLanguageManager().setSelected(PREVIEW_LOCALE);
+            minecraft.reloadResourcePacks();
+            previewLocaleConfigured = true;
+            ticks = 0;
+            return;
+        }
         if (!opened) {
             if (ticks < 40) {
                 return;
@@ -177,6 +201,15 @@ public final class UiPreviewHarness {
         if (anchorJourneyPreview()) {
             runAnchorJourneyPreview(minecraft);
             return;
+        }
+        if (authoringRegistryPalettePreview()) {
+            if (!(minecraft.screen instanceof RuneProgrammerScreen screen)) {
+                throw new IllegalStateException("Authoring registry preview left the Laboratory screen");
+            }
+            runAuthoringRegistryPreview(screen);
+            if (authoringRegistryPreviewStep < 3) {
+                return;
+            }
         }
 
         if (resourceHelpPreview()) {
@@ -246,6 +279,34 @@ public final class UiPreviewHarness {
                 );
             }
             return;
+        }
+
+        if (functionalProjectionPreview()) {
+            if (!functionalNarrationAudited) {
+                auditFunctionalNarrationStates();
+                functionalNarrationAudited = true;
+            }
+            if (!functionalSavedTabSelected && minecraft.screen instanceof RuneProgrammerScreen screen && ticks >= 5) {
+                clickWidget(screen, Component.translatable("screen.mathmod.rune_programmer.tab_saved"));
+                functionalSavedTabSelected = true;
+                ticks = 0;
+                return;
+            }
+            if (functionalSavedTabSelected && !functionalInspectorClickSent
+                    && minecraft.screen instanceof RuneProgrammerScreen screen && ticks >= 5) {
+                clickWidget(screen, Component.translatable("screen.mathmod.rune_inspector.open"));
+                functionalInspectorClickSent = true;
+                ticks = 0;
+                return;
+            }
+            if (!functionalInspectorClickSent) return;
+            if (!functionalInteractionAudited && minecraft.screen instanceof RuneInspectorScreen screen && ticks >= 4) {
+                auditFunctionalInspectorInteraction(minecraft, screen);
+                functionalInteractionAudited = true;
+                functionalInspectorClickSent = false;
+                ticks = 0;
+                return;
+            }
         }
 
         if (!isExpectedScreen(minecraft)) {
@@ -695,6 +756,10 @@ public final class UiPreviewHarness {
             return;
         }
         if (runeInspectorPreview()) {
+            if (functionalProjectionPreview()) {
+                openFunctionalProjectionProgrammer(minecraft);
+                return;
+            }
             minecraft.setScreen(new RuneInspectorScreen(
                     null,
                     ProgramSurface.inscribed(ProgramPresets.hop()).inspect()
@@ -787,7 +852,9 @@ public final class UiPreviewHarness {
                 Component.translatable("screen.mathmod.rune_programmer")
         );
         minecraft.setScreen(screen);
-        requireTheoremCatalogFormulaFit(minecraft, screen);
+        if (!PREVIEW.equalsIgnoreCase("authoring-registry-palette")) {
+            requireTheoremCatalogFormulaFit(minecraft, screen);
+        }
         requireTheoremStatementFit(minecraft, screen);
         if (PREVIEW.equalsIgnoreCase("keyboard-first-programmer")) {
             ProgrammerLayout previewLayout = previewLayout(screen);
@@ -889,6 +956,8 @@ public final class UiPreviewHarness {
             openLaboratory(screen);
             searchLaboratory(screen, "simpson");
             clickFirstCustomPaletteRow(screen);
+        } else if (PREVIEW.equalsIgnoreCase("authoring-registry-palette")) {
+            openLaboratory(screen);
         } else if (PREVIEW.equalsIgnoreCase("basis-icon-laboratory")) {
             openLaboratory(screen);
             focusPaletteAndMove(screen, 22, false);
@@ -1652,6 +1721,127 @@ public final class UiPreviewHarness {
         throw new IllegalStateException("Could not find preview widget: " + message.getString());
     }
 
+    private static void auditFunctionalInspectorInteraction(Minecraft minecraft, RuneInspectorScreen screen) {
+        requireFunctionalContainment(screen);
+        String authored = Component.translatable("screen.mathmod.rune_inspector.functional.panel.authored").getString();
+        String checked = Component.translatable("screen.mathmod.rune_inspector.functional.panel.checked").getString();
+        String graph = Component.translatable("screen.mathmod.rune_inspector.functional.panel.graph").getString();
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
+        requireNarration(screen, authored, "forward Tab must focus Authored");
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.authored"), "forward Tab authored focus");
+        String firstAuthoredRow = screen.getNarrationMessage().getString();
+        screen.keyPressed(GLFW.GLFW_KEY_DOWN, 0, 0);
+        requireNarration(screen, authored, "arrow navigation must retain Authored row narration");
+        if (firstAuthoredRow.equals(screen.getNarrationMessage().getString())) {
+            throw new IllegalStateException("Authored row navigation did not advance a multi-row projection");
+        }
+        screen.keyPressed(GLFW.GLFW_KEY_DOWN, 0, 0);
+        requireNarration(screen, "$.arguments[0].expression", "selected row narration must include structural path");
+        requireNarration(screen, Component.translatable("screen.mathmod.rune_inspector.functional.row.literal").getString(), "selected row narration must include kind");
+        requireNarration(screen, "1", "selected row narration must include displayed value");
+        for (int index = 0; index < 16; index++) {
+            screen.keyPressed(GLFW.GLFW_KEY_DOWN, 0, 0);
+            requireNarration(screen, authored, "Authored scroll navigation must remain bounded");
+        }
+        String lastAuthoredRow = screen.getNarrationMessage().getString();
+        screen.keyPressed(GLFW.GLFW_KEY_DOWN, 0, 0);
+        if (!lastAuthoredRow.equals(screen.getNarrationMessage().getString())) {
+            throw new IllegalStateException("Authored navigation wrapped past its final row");
+        }
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
+        requireNarration(screen, checked, "forward Tab must focus Checked");
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.checked"), "forward Tab checked focus");
+        clickWidget(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.checked"));
+        requireNarration(screen, checked, "pointer selector must use rendered Checked geometry");
+        screen.keyPressed(GLFW.GLFW_KEY_DOWN, 0, 0);
+        requireNarration(screen, checked, "arrow navigation must retain Checked row narration");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
+        requireNarration(screen, graph, "forward Tab must focus Graph");
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.graph"), "forward Tab graph focus");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.close"), "forward Tab close focus");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.authored"), "forward cycle must return to Authored");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 1);
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.close"), "backward cycle must return to Close");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 1);
+        requireFocused(screen, Component.translatable("screen.mathmod.rune_inspector.functional.panel.graph"), "backward cycle must return to Graph");
+        screen.keyPressed(GLFW.GLFW_KEY_TAB, 0, 1);
+        requireNarration(screen, checked, "Shift+Tab must return to Checked");
+        screen.keyPressed(GLFW.GLFW_KEY_ESCAPE, 0, 0);
+        if (!(minecraft.screen instanceof RuneProgrammerScreen)) {
+            throw new IllegalStateException("functional Inspector Escape did not return to its Programmer parent");
+        }
+    }
+
+    private static void requireFunctionalContainment(RuneInspectorScreen screen) {
+        try {
+            Method method = RuneInspectorScreen.class.getDeclaredMethod("functionalLayoutContained");
+            method.setAccessible(true);
+            if (!Boolean.TRUE.equals(method.invoke(screen))) {
+                Method diagnostic = RuneInspectorScreen.class.getDeclaredMethod("functionalLayoutDiagnostic");
+                diagnostic.setAccessible(true);
+                throw new IllegalStateException("functional headings or rows escape the bounded details panel: " + diagnostic.invoke(screen));
+            }
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not inspect functional layout containment", exception);
+        }
+    }
+
+    private static void auditFunctionalNarrationStates() {
+        ScopedFunctionalProjection.Row row = new ScopedFunctionalProjection.Row("$.value",
+                ScopedFunctionalProjection.RowKind.LITERAL, "1", "number", -1, 0);
+        assertFunctionalNarration(new ScopedFunctionalProjection(1, ScopedFunctionalProjection.SourceState.CURRENT_VALID,
+                        ScopedFunctionalProjection.AttemptState.SUCCESS, ScopedFunctionalProjection.GraphState.PRESENT,
+                        ScopedFunctionalProjection.GraphRelation.MISMATCH, List.of(row), List.of(row),
+                        List.of(new ScopedFunctionalProjection.Diagnostic(ScopedFunctionalProjection.Phase.MISMATCH,
+                                ScopedFunctionalProjection.Code.MISMATCH, "$")), 0),
+                "functional.source.current_valid", "functional.relation.mismatch", "functional.diagnostic.mismatch");
+        assertFunctionalNarration(unavailableProjection(ScopedFunctionalProjection.SourceState.CONFLICT,
+                        ScopedFunctionalProjection.Code.CONFLICT), "functional.source.conflict", "functional.diagnostic.conflict");
+        assertFunctionalNarration(unavailableProjection(ScopedFunctionalProjection.SourceState.CURRENT_UNREADABLE,
+                        ScopedFunctionalProjection.Code.UNREADABLE), "functional.source.current_unreadable", "functional.diagnostic.unreadable");
+        assertFunctionalNarration(unavailableProjection(ScopedFunctionalProjection.SourceState.UNSUPPORTED_VERSION,
+                        ScopedFunctionalProjection.Code.UNSUPPORTED), "functional.source.unsupported_version", "functional.diagnostic.unsupported");
+        assertFunctionalNarration(ScopedFunctionalProjection.unavailable(ScopedFunctionalProjection.GraphState.PRESENT),
+                "functional.source.stale", "functional.diagnostic.stale");
+        assertFunctionalNarration(new ScopedFunctionalProjection(1, ScopedFunctionalProjection.SourceState.CURRENT_VALID,
+                        ScopedFunctionalProjection.AttemptState.SUCCESS, ScopedFunctionalProjection.GraphState.ABSENT,
+                        ScopedFunctionalProjection.GraphRelation.NOT_COMPARABLE, List.of(row), List.of(row), List.of(), 0),
+                "functional.graph.absent", "functional.relation.not_comparable");
+    }
+
+    private static ScopedFunctionalProjection unavailableProjection(ScopedFunctionalProjection.SourceState source,
+                                                                     ScopedFunctionalProjection.Code code) {
+        return new ScopedFunctionalProjection(1, source, ScopedFunctionalProjection.AttemptState.NOT_RUN,
+                ScopedFunctionalProjection.GraphState.PRESENT, ScopedFunctionalProjection.GraphRelation.NOT_COMPARABLE,
+                List.of(), List.of(), List.of(new ScopedFunctionalProjection.Diagnostic(
+                ScopedFunctionalProjection.Phase.PERSISTENCE, code, "$")), 0);
+    }
+
+    private static void assertFunctionalNarration(ScopedFunctionalProjection projection, String... expectedKeys) {
+        String narration = new RuneInspectorScreen(null, ProgramSurface.inscribed(ProgramPresets.hop()).inspect(), projection)
+                .getNarrationMessage().getString();
+        for (String key : expectedKeys) {
+            String expected = Component.translatable("screen.mathmod.rune_inspector." + key).getString();
+            if (!narration.contains(expected)) {
+                throw new IllegalStateException("functional narration omitted " + key + ": " + narration);
+            }
+        }
+    }
+
+    private static void requireNarration(RuneInspectorScreen screen, String expected, String message) {
+        if (!screen.getNarrationMessage().getString().contains(expected)) {
+            throw new IllegalStateException(message + ": " + screen.getNarrationMessage().getString());
+        }
+    }
+
+    private static void requireFocused(RuneInspectorScreen screen, Component expected, String message) {
+        if (!(screen.getFocused() instanceof AbstractWidget widget) || !widget.getMessage().equals(expected)) {
+            throw new IllegalStateException(message + ": " + (screen.getFocused() == null ? "none" : screen.getFocused().toString()));
+        }
+    }
+
     private static void hoverWidget(
             Minecraft minecraft,
             net.minecraft.client.gui.screens.Screen screen,
@@ -1909,6 +2099,79 @@ public final class UiPreviewHarness {
         }
         if (activate) {
             screen.keyPressed(GLFW.GLFW_KEY_ENTER, 0, 0);
+        }
+    }
+
+    private static boolean authoringRegistryPalettePreview() {
+        return PREVIEW.equalsIgnoreCase("authoring-registry-palette");
+    }
+
+    private static void runAuthoringRegistryPreview(RuneProgrammerScreen screen) {
+        if (authoringRegistryPreviewStep == 0 && ticks >= 5) {
+            focusPaletteAndMove(screen, 0, true);
+            authoringRegistryPreviewStep = 1;
+            authoringRegistryPreviewStepTick = ticks;
+            return;
+        }
+        if (authoringRegistryPreviewStep == 1 && ticks >= authoringRegistryPreviewStepTick + 2) {
+            if (!laboratoryWorkspaceActions(screen).equals(List.of(CustomSpellAction.SELF))) {
+                throw new IllegalStateException("Keyboard Enter did not apply the expected non-parameterized Self form");
+            }
+            searchLaboratory(screen, "simpson");
+            if (firstCustomPaletteAction(screen) != CustomSpellAction.SIMPSON_INTEGRAL) {
+                throw new IllegalStateException("Laboratory search did not filter Simpson as the first registry form");
+            }
+            authoringRegistryPreviewStep = 2;
+            authoringRegistryPreviewStepTick = ticks;
+            return;
+        }
+        if (authoringRegistryPreviewStep == 2 && ticks >= authoringRegistryPreviewStepTick + 2) {
+            clickFirstCustomPaletteRow(screen);
+            requireSimpsonParameterDialog(screen);
+            authoringRegistryPreviewStep = 3;
+        }
+    }
+
+    private static CustomSpellAction firstCustomPaletteAction(RuneProgrammerScreen screen) {
+        ProgrammerLayout previewLayout = previewLayout(screen);
+        double guiY = (screen.height - previewLayout.height()) / 2.0D
+                + previewLayout.panelTop()
+                + 43.0D
+                + 16.0D
+                + 8.0D;
+        try {
+            Method actionAt = RuneProgrammerScreen.class.getDeclaredMethod("actionAt", double.class);
+            actionAt.setAccessible(true);
+            return (CustomSpellAction) actionAt.invoke(screen, guiY);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not inspect the filtered Laboratory palette", exception);
+        }
+    }
+
+    private static void requireSimpsonParameterDialog(RuneProgrammerScreen screen) {
+        if (PARAMETER_ACTION_FIELD == null || PARAMETER_BOXES_FIELD == null) {
+            throw new IllegalStateException("Could not inspect the Laboratory parameter dialog");
+        }
+        try {
+            if (PARAMETER_ACTION_FIELD.get(screen) != CustomSpellAction.SIMPSON_INTEGRAL) {
+                throw new IllegalStateException("Pointer activation did not open the Simpson descriptor dialog");
+            }
+            List<?> boxes = (List<?>) PARAMETER_BOXES_FIELD.get(screen);
+            List<EditBox> visible = boxes.stream().filter(EditBox.class::isInstance)
+                    .map(EditBox.class::cast).filter(box -> box.visible).toList();
+            if (visible.size() != 5 || visible.stream().anyMatch(box -> !isFiniteNumericDefault(box.getValue()))) {
+                throw new IllegalStateException("Simpson descriptor dialog did not retain valid numeric defaults");
+            }
+        } catch (IllegalAccessException exception) {
+            throw new IllegalStateException("Could not read the Laboratory parameter dialog", exception);
+        }
+    }
+
+    private static boolean isFiniteNumericDefault(String value) {
+        try {
+            return Double.isFinite(Double.parseDouble(value)) && !value.contains("simpson");
+        } catch (NumberFormatException exception) {
+            return false;
         }
     }
 
@@ -3291,7 +3554,69 @@ public final class UiPreviewHarness {
     }
 
     private static boolean runeInspectorPreview() {
-        return PREVIEW.equalsIgnoreCase("rune-inspector");
+        return PREVIEW.equalsIgnoreCase("rune-inspector")
+                || PREVIEW.equalsIgnoreCase("rune-inspector-functional");
+    }
+
+    private static boolean functionalProjectionPreview() {
+        return PREVIEW.equalsIgnoreCase("rune-inspector-functional");
+    }
+
+    private static void openFunctionalProjectionProgrammer(Minecraft minecraft) {
+        IntegratedServer server = minecraft.getSingleplayerServer();
+        if (server == null || minecraft.player == null) return;
+        var playerId = minecraft.player.getUUID();
+        server.execute(() -> {
+            ServerPlayer serverPlayer = server.getPlayerList().getPlayer(playerId);
+            if (serverPlayer == null) return;
+            ItemStack talisman = previewTalisman();
+            ProgramStorage.saveValidated(talisman, ProgramPresets.hop());
+            String source = functionalProjectionSource();
+            talisman.set(ModDataComponents.PROGRAM_SCOPED_SOURCE.get(),
+                    new ScopedSourceEnvelope(1, source.getBytes(StandardCharsets.UTF_8)));
+            serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, talisman);
+            serverPlayer.getInventory().setChanged();
+            auditLiveOpeningSnapshot(serverPlayer);
+            minecraft.execute(() -> {
+                if (minecraft.player != null) {
+                    minecraft.player.setItemInHand(InteractionHand.MAIN_HAND, talisman.copy());
+                }
+            });
+            ProgrammedTalismanItem.openProgrammer(serverPlayer, InteractionHand.MAIN_HAND);
+        });
+    }
+
+    private static void auditLiveOpeningSnapshot(ServerPlayer player) {
+        try {
+            var method = com.mathmod.program.ScopedFunctionalProjectionService.class.getDeclaredMethod(
+                    "openingSnapshot", ServerPlayer.class, InteractionHand.class, Runnable.class, Runnable.class);
+            method.setAccessible(true);
+            int[] compileCalls = {0};
+            PlayerKnowledge original = KnowledgeService.get(player);
+            Object result = method.invoke(null, player, InteractionHand.MAIN_HAND,
+                    (Runnable) () -> compileCalls[0]++,
+                    (Runnable) () -> KnowledgeService.replace(player, KnowledgeService.get(player).withSchemaVersion(original.schemaVersion() + 1)));
+            KnowledgeService.replace(player, original);
+            if (!(result instanceof com.mathmod.program.ScopedFunctionalProjection projection)
+                    || compileCalls[0] != 1
+                    || projection.sourceState() != com.mathmod.program.ScopedFunctionalProjection.SourceState.STALE
+                    || !projection.authoredRows().isEmpty() || !projection.checkedRows().isEmpty()) {
+                throw new IllegalStateException("live opening snapshot authority recheck did not fail closed");
+            }
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not audit live opening snapshot authority ordering", exception);
+        }
+    }
+
+    private static String functionalProjectionSource() {
+        StringBuilder arguments = new StringBuilder();
+        for (int index = 0; index < 4; index++) {
+            if (index > 0) arguments.append(',');
+            arguments.append("{\"input_name\":\"x").append(index)
+                    .append("\",\"expression\":{\"kind\":\"literal\",\"rune_type\":\"number\",\"value\":\"1\"}}");
+        }
+        return "{\"expression\":{\"kind\":\"rune_call\",\"rune_id\":\"future:x\",\"arguments\":[" + arguments + "]}"
+                + ",\"result_type\":{\"kind\":\"value\",\"rune_type\":\"number\"},\"budget_limit\":1}";
     }
 
     private static boolean patchouliMatrixPreview() {

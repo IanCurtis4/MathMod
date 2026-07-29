@@ -12,7 +12,7 @@
     {
       "type": "patchouli:text",
       "title": "Notação das fórmulas",
-      "text": "Uma fórmula é um resumo compacto, não código executável. Seu verbo externo declara a conclusão: $(thing)push$(), $(thing)blink$() ou $(thing)mark$(). Dentro dele, $(thing)self$(), $(thing)look$() e $(thing)up$() nomeiam valores; relações como $(thing)ray(self,12)$() e $(thing)nearest(4)$() compõem as evidências.$(br2)Selecione um teorema para manter sua fórmula acima da prova tipada numerada."
+      "text": "Uma fórmula é um resumo compacto, não código executável nem Fonte funcional persistida. Seu verbo externo declara a conclusão: $(thing)push$(), $(thing)blink$() ou $(thing)mark$(). Dentro dele, $(thing)self$(), $(thing)look$() e $(thing)up$() nomeiam valores; relações como $(thing)ray(self,12)$() e $(thing)nearest(4)$() compõem as evidências.$(br2)Selecione um teorema para manter sua fórmula acima da prova tipada numerada."
     },
     {
       "type": "patchouli:text",
@@ -31,7 +31,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Movimento avançado",
+      "title": "Movimento de ordem superior",
       "text": "$(li)Passo harmônico: seno e cosseno formam componentes polares.$(li)Passo ortogonal: cima vezes olhar dá uma direção perpendicular.$(li)Quarto de volta: C4 age no vetor do olhar.$(li)Salto por quadratura: Simpson estima o impulso por amostras do seno.$(br2)Cada conclusão ainda chega ao efeito comum de empurrão."
     },
     {

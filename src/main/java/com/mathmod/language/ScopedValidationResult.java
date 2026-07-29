@@ -4,7 +4,7 @@ import java.util.List;
 
 public record ScopedValidationResult(List<ScopedLanguageIssue> issues) {
     public ScopedValidationResult {
-        issues = List.copyOf(issues);
+        issues = ScopedLanguageIssue.normalize(issues);
     }
 
     public boolean valid() {

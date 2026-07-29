@@ -30,6 +30,9 @@ class UiPreviewMatrixTest {
                 .anyMatch(preview -> preview.mode().equals("laboratory-parameter-dialog")
                         && preview.width() == 640
                         && preview.height() == 480));
+        assertTrue(hasCase("authoring-registry-palette", "en_us", 1024, 800));
+        assertTrue(hasCase("authoring-registry-palette", "pt_br", 1024, 800));
+        assertTrue(hasCase("authoring-registry-palette", "pt_br", 640, 480));
         assertTrue(UiPreviewMatrix.cases().stream()
                 .anyMatch(preview -> preview.mode().equals("patchouli-manuscript-record")
                         && preview.locale().equals("pt_br")
@@ -58,6 +61,13 @@ class UiPreviewMatrixTest {
         assertTrue(hasCase("p9-defensive-resources", "en_us", 1024, 800));
         assertTrue(hasCase("p9-defensive-resources", "pt_br", 1024, 800));
         assertTrue(hasCase("p9-defensive-resources", "pt_br", 640, 480));
+    }
+
+    @Test
+    void functionalInspectorPreviewCoversTheServerBackedLocaleMatrix() {
+        assertTrue(hasCase("rune-inspector-functional", "en_us", 1024, 800));
+        assertTrue(hasCase("rune-inspector-functional", "pt_br", 1024, 800));
+        assertTrue(hasCase("rune-inspector-functional", "pt_br", 640, 480));
     }
 
     private static boolean hasCase(String mode, String locale, int width, int height) {

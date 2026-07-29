@@ -8,7 +8,8 @@ import java.util.Optional;
 public record ScopedLoweringResult(Optional<ProgramGraph> graph, List<ScopedLanguageIssue> issues) {
     public ScopedLoweringResult {
         graph = graph == null ? Optional.empty() : graph;
-        issues = List.copyOf(issues);
+        issues = ScopedLanguageIssue.normalize(issues);
+        if (!issues.isEmpty()) graph = Optional.empty();
     }
 
     public boolean valid() {

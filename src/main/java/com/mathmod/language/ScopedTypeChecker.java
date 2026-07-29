@@ -10,15 +10,25 @@ import java.util.Optional;
 /** Checks the functional authoring language before it is lowered into a ProgramGraph. */
 public final class ScopedTypeChecker {
     private final RuneRegistry runeRegistry;
+    private final ScopedCompileBudget budget;
 
     public ScopedTypeChecker(RuneRegistry runeRegistry) {
+        this(runeRegistry, null);
+    }
+
+    ScopedTypeChecker(RuneRegistry runeRegistry, ScopedCompileBudget budget) {
         this.runeRegistry = runeRegistry;
+        this.budget = budget;
     }
 
     public ScopedTypeCheckResult check(ScopedProgramSource source) {
+        if (budget == null) {
+            return new ScopedTypeChecker(runeRegistry, new ScopedCompileBudget()).check(source);
+        }
         List<ScopedLanguageIssue> issues = new ArrayList<>(
-                ScopedStructureValidator.validate(source, id -> runeRegistry.find(id).map(RuneDefinition::purity)).issues()
+                ScopedStructureValidator.validate(source, id -> runeRegistry.find(id).map(RuneDefinition::purity), budget).issues()
         );
+        if (!issues.isEmpty()) return new ScopedTypeCheckResult(Optional.empty(), issues);
         Optional<RuneTypeExpression> inferred = infer(source.expression(), List.of(), "$", issues);
         if (inferred.isPresent() && !inferred.get().equals(source.resultType())) {
             issue(issues, ScopedLanguageIssue.Code.TYPE_MISMATCH, "$",
@@ -37,6 +47,7 @@ public final class ScopedTypeChecker {
             String path,
             List<ScopedLanguageIssue> issues
     ) {
+        budget.charge(ScopedCompileBudget.Event.TYPE_NODE);
         if (expression instanceof ScopedExpression.Literal literal) return Optional.of(literal.type());
         if (expression instanceof ScopedExpression.ParameterReference parameter) {
             if (parameter.deBruijnIndex() >= environment.size()) return Optional.empty();
@@ -73,17 +84,19 @@ public final class ScopedTypeChecker {
             issue(issues, ScopedLanguageIssue.Code.DISABLED_RUNE, path,
                     "Rune " + call.runeId() + " is disabled");
         }
-        for (ScopedExpression.Argument argument : call.arguments()) {
+        for (int index = 0; index < call.arguments().size(); index++) {
+            ScopedExpression.Argument argument = call.arguments().get(index);
             Optional<com.mathmod.runes.RuneInput> input = definition.get().input(argument.inputName());
             if (input.isEmpty()) {
                 issue(issues, ScopedLanguageIssue.Code.UNEXPECTED_RUNE_INPUT, path,
                         "Rune " + call.runeId() + " has no input " + argument.inputName());
                 continue;
             }
-            Optional<RuneTypeExpression> argumentType = infer(argument.expression(), environment, path + "." + argument.inputName(), issues);
+            String argumentPath = path + ".arguments[" + index + "]";
+            Optional<RuneTypeExpression> argumentType = infer(argument.expression(), environment, argumentPath, issues);
             RuneTypeExpression expected = RuneTypeExpression.value(input.get().type());
             if (argumentType.isPresent() && !expected.equals(argumentType.get())) {
-                issue(issues, ScopedLanguageIssue.Code.TYPE_MISMATCH, path + "." + argument.inputName(),
+                issue(issues, ScopedLanguageIssue.Code.TYPE_MISMATCH, argumentPath,
                         "Input " + argument.inputName() + " expects " + expected + " but received " + argumentType.get());
             }
         }

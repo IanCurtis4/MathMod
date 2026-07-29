@@ -2,6 +2,7 @@ package com.mathmod.program;
 
 import com.mathmod.runes.ProgramGraph;
 import com.mathmod.runes.RuneTier;
+import com.mathmod.runes.RuneRegistry;
 
 public final class ProgramTiers {
     private ProgramTiers() {
@@ -11,6 +12,19 @@ public final class ProgramTiers {
         RuneTier required = RuneTier.FUNDAMENTAL;
         for (var node : graph.nodes()) {
             RuneTier nodeTier = ProgramStorage.definition(node.runeId())
+                    .map(definition -> definition.tier())
+                    .orElse(RuneTier.FUNDAMENTAL);
+            if (nodeTier.level() > required.level()) {
+                required = nodeTier;
+            }
+        }
+        return required;
+    }
+
+    static RuneTier requiredTier(ProgramGraph graph, RuneRegistry runes) {
+        RuneTier required = RuneTier.FUNDAMENTAL;
+        for (var node : graph.nodes()) {
+            RuneTier nodeTier = runes.find(node.runeId())
                     .map(definition -> definition.tier())
                     .orElse(RuneTier.FUNDAMENTAL);
             if (nodeTier.level() > required.level()) {

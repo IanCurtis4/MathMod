@@ -43,7 +43,7 @@ class ScopedTypeCheckerTest {
         registry.register(RuneDefinition.builder("test:emit")
                 .input("value", RuneType.NUMBER).output(RuneType.UNIT).purity(RunePurity.EFFECT).build());
         registry.register(RuneDefinition.builder("mathmod:constant_number")
-                .output(RuneType.NUMBER).purity(RunePurity.PURE).build());
+                .output(RuneType.NUMBER).purity(RunePurity.PURE).executorKey("constant_number").build());
         return registry;
     }
 

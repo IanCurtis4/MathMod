@@ -20,7 +20,8 @@ public sealed interface ScopedExpression permits
             if (encodedValue == null || encodedValue.isBlank()) {
                 throw new IllegalArgumentException("encodedValue must not be blank");
             }
-            encodedValue = encodedValue.trim();
+            // Literal grammar, including leading/trailing whitespace rejection,
+            // is owned by the trusted resolver. Preserve the authored payload.
         }
     }
 

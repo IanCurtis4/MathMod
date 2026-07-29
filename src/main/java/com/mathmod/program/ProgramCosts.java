@@ -176,9 +176,14 @@ public final class ProgramCosts {
     }
 
     public static Map<String, Integer> requirementsFor(ProgramGraph graph) {
+        MathModRuneBootstrap.bootstrap();
+        return requirementsFor(graph, MathModRuneBootstrap.registry());
+    }
+
+    static Map<String, Integer> requirementsFor(ProgramGraph graph, com.mathmod.runes.RuneRegistry runes) {
         Map<String, Integer> requirements = new LinkedHashMap<>();
         for (ProgramNode node : graph.nodes()) {
-            ProgramStorage.definition(node.runeId())
+            runes.find(node.runeId())
                     .map(RuneDefinition::materialRequirements)
                     .ifPresent(nodeRequirements -> {
                         for (MaterialRequirement requirement : nodeRequirements) {
@@ -190,9 +195,14 @@ public final class ProgramCosts {
     }
 
     public static Map<String, Integer> attributeRequirementsFor(ProgramGraph graph) {
+        MathModRuneBootstrap.bootstrap();
+        return attributeRequirementsFor(graph, MathModRuneBootstrap.registry());
+    }
+
+    static Map<String, Integer> attributeRequirementsFor(ProgramGraph graph, com.mathmod.runes.RuneRegistry runes) {
         Map<String, Integer> requirements = new LinkedHashMap<>();
         for (ProgramNode node : graph.nodes()) {
-            ProgramStorage.definition(node.runeId())
+            runes.find(node.runeId())
                     .map(RuneDefinition::attributeRequirements)
                     .ifPresent(nodeRequirements -> {
                         for (AttributeRequirement requirement : nodeRequirements) {
@@ -203,6 +213,49 @@ public final class ProgramCosts {
         ResultMagnitudeCosts.attributeRequirements(graph)
                 .forEach((attribute, amount) -> requirements.merge(attribute, amount, Integer::sum));
         return requirements;
+    }
+
+    static ProgramCostPlan structuralPlanFor(
+            ProgramGraph graph,
+            List<ResourceSelection> selections,
+            com.mathmod.runes.RuneRegistry runes,
+            List<RuneMaterialDefinition> materials
+    ) {
+        Map<String, Integer> fixedRequirements = requirementsFor(graph, runes);
+        Map<String, Integer> attributes = attributeRequirementsFor(graph, runes);
+        int budgetUsed = new com.mathmod.runes.ProgramValidator(runes).validate(graph).budgetUsed();
+        RuneTier requiredTier = ProgramTiers.requiredTier(graph, runes);
+        if (!validateFixedSelectors(fixedRequirements)) {
+            return emptyPlan(budgetUsed, graph.budgetLimit(), fixedRequirements, attributes, attributes, requiredTier, CastModifiers.none(), true);
+        }
+        Map<String, RuneMaterialDefinition> selectors = materials.stream().collect(Collectors.toMap(
+                RuneMaterialDefinition::itemOrTag, material -> material, (first, ignored) -> first, LinkedHashMap::new));
+        List<ProgramCostLine> lines = new ArrayList<>();
+        Map<String, Integer> provided = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : fixedRequirements.entrySet()) {
+            RuneMaterialDefinition material = selectors.get(entry.getKey());
+            if (material == null) {
+                return emptyPlan(budgetUsed, graph.budgetLimit(), fixedRequirements, attributes, attributes, requiredTier, CastModifiers.none(), true);
+            }
+            int quantity = entry.getValue();
+            Map<String, Integer> lineAttributes = scale(material.attributes(), quantity);
+            addAttributes(provided, lineAttributes);
+            addLine(lines, new ProgramCostLine(material.id(), material.itemOrTag(), quantity, material.consumed(), material.budgetBonus() * quantity, material.tier(), lineAttributes, "fixed"));
+        }
+        for (ResourceSelection selection : selections) {
+            RuneMaterialDefinition material = materialById(materials, selection.materialId()).orElse(null);
+            if (material == null) {
+                return emptyPlan(budgetUsed, graph.budgetLimit(), fixedRequirements, attributes, attributes, requiredTier, CastModifiers.none(), true);
+            }
+            Map<String, Integer> lineAttributes = scale(material.attributes(), selection.quantity());
+            addAttributes(provided, lineAttributes);
+            addLine(lines, new ProgramCostLine(material.id(), material.itemOrTag(), selection.quantity(), material.consumed(), material.budgetBonus() * selection.quantity(), material.tier(), lineAttributes, "selected"));
+        }
+        int bonus = lines.stream().mapToInt(ProgramCostLine::budgetBonus).sum();
+        RuneTier providedTier = contributingTier(lines, attributes, budgetUsed > graph.budgetLimit());
+        return new ProgramCostPlan(budgetUsed, graph.budgetLimit(), bonus, graph.budgetLimit() + bonus,
+                fixedRequirements, attributes, attributes, provided, missingAttributes(attributes, provided), lines, Map.of(),
+                requiredTier, providedTier, CastModifiers.none(), false);
     }
 
     public static String describe(Map<String, Integer> requirements) {

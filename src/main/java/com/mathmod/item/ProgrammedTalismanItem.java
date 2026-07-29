@@ -6,6 +6,9 @@ import com.mathmod.program.ProgramCosts;
 import com.mathmod.program.ProgramMessageComponents;
 import com.mathmod.program.ProgramNameComponents;
 import com.mathmod.program.ProgramStorage;
+import com.mathmod.program.ScopedFunctionalProjection;
+import com.mathmod.program.ScopedFunctionalProjectionService;
+import com.mathmod.program.ScopedFunctionalProjectionWireCodec;
 import com.mathmod.screen.RuneProgrammerMenu;
 import com.mathmod.screen.TalismanResourcesMenu;
 import net.minecraft.network.chat.Component;
@@ -58,14 +61,18 @@ public class ProgrammedTalismanItem extends Item {
     }
 
     public static void openProgrammer(ServerPlayer serverPlayer, InteractionHand usedHand) {
+        ScopedFunctionalProjection projection = ScopedFunctionalProjectionService.openingSnapshot(serverPlayer, usedHand);
         serverPlayer.openMenu(
                 new SimpleMenuProvider(
                         (containerId, inventory, menuPlayer) ->
-                                new RuneProgrammerMenu(containerId, inventory, usedHand),
+                                new RuneProgrammerMenu(containerId, inventory, usedHand, projection),
                         Component.translatable("screen.mathmod.rune_programmer")
-                ),
-                buffer -> buffer.writeEnum(usedHand)
-        );
+                  ),
+                  buffer -> {
+                      buffer.writeEnum(usedHand);
+                      ScopedFunctionalProjectionWireCodec.writeFailClosed(buffer, projection);
+                  }
+          );
     }
 
     public static void openResources(ServerPlayer serverPlayer, InteractionHand usedHand) {

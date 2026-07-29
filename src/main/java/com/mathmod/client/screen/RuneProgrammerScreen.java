@@ -1,6 +1,7 @@
 package com.mathmod.client.screen;
 
 import com.mathmod.MathMod;
+import com.mathmod.authoring.AuthoringMetadata;
 import com.mathmod.network.OpenProgrammerHelpPayload;
 import com.mathmod.network.ApplyCustomSpellInvocationPayload;
 import com.mathmod.network.UpdateCustomSpellNamePayload;
@@ -11,7 +12,6 @@ import com.mathmod.knowledge.PlayerKnowledge;
 import com.mathmod.program.CustomActionPreview;
 import com.mathmod.program.CustomInputSlot;
 import com.mathmod.program.CustomSpellAction;
-import com.mathmod.program.CustomNumericParameter;
 import com.mathmod.program.CustomSpellInvocation;
 import com.mathmod.program.CustomSpellStep;
 import com.mathmod.program.CustomSpellWorkspace;
@@ -99,8 +99,9 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
     private final List<Button> customButtons = new ArrayList<>();
     private final List<Button> clearProgramButtons = new ArrayList<>();
     private final InscriptionFeedbackTracker inscriptionFeedback = new InscriptionFeedbackTracker();
+    private final AuthoringPalettePresentation authoringPalette = AuthoringPalettePresentation.builtIns();
     private final PaletteCursor presetCursor = new PaletteCursor(ProgramPresets.talismanPresets().size());
-    private final PaletteCursor customCursor = new PaletteCursor(CustomSpellAction.values().length);
+    private final PaletteCursor customCursor = new PaletteCursor(authoringPalette.forms().size());
     private PaletteNavigator paletteNavigator;
     private WorkflowSealWidget workflowSeal;
     private TypeLegendWidget typeLegend;
@@ -472,7 +473,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
     private void openParameterDialog(CustomSpellAction action) {
         parameterAction = action;
         parameterError = "";
-        List<CustomNumericParameter> parameters = action.numericParameters();
+        List<AuthoringMetadata.Parameter> parameters = authoringPalette.find(action)
+                .map(form -> form.metadata().parameters()).orElse(List.of());
         int dialogX = leftPos + (imageWidth - 252) / 2;
         int dialogY = topPos + (imageHeight - parameterDialogHeight(parameters.size())) / 2;
         for (int index = 0; index < parameterBoxes.size(); index++) {
@@ -481,13 +483,13 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             box.setVisible(visible);
             box.active = visible;
             if (visible) {
-                CustomNumericParameter parameter = parameters.get(index);
+                AuthoringMetadata.Parameter parameter = parameters.get(index);
                 box.setPosition(dialogX + 142, dialogY + 35 + index * 24);
                 box.setValue(formatNumber(parameter.defaultValue()));
                 box.setTooltip(Tooltip.create(Component.translatable(
                         "screen.mathmod.rune_programmer.parameter.range",
-                        formatNumber(parameter.minValue()),
-                        formatNumber(parameter.maxValue())
+                        formatNumber(parameter.constraints().minimum()),
+                        formatNumber(parameter.constraints().maximum())
                 )));
             }
         }
@@ -522,9 +524,10 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             return;
         }
         Map<String, Double> values = new LinkedHashMap<>();
-        List<CustomNumericParameter> parameters = parameterAction.numericParameters();
+        List<AuthoringMetadata.Parameter> parameters = authoringPalette.find(parameterAction)
+                .map(form -> form.metadata().parameters()).orElse(List.of());
         for (int index = 0; index < parameters.size(); index++) {
-            CustomNumericParameter parameter = parameters.get(index);
+            AuthoringMetadata.Parameter parameter = parameters.get(index);
             double value;
             try {
                 value = Double.parseDouble(parameterBoxes.get(index).getValue().trim());
@@ -535,14 +538,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                 ).getString();
                 return;
             }
-            if (!Double.isFinite(value) || value < parameter.minValue() || value > parameter.maxValue()) {
-                parameterError = Component.translatable(
-                        "screen.mathmod.rune_programmer.parameter.out_of_range",
-                        Component.translatable(parameter.translationKey())
-                ).getString();
-                return;
-            }
-            values.put(parameter.key(), value);
+            values.put(parameter.key(), parameter.canonicalize(value));
         }
         if (parameterAction == CustomSpellAction.FINITE_DIFFERENCE
                 && Math.abs(values.get("step")) < 1.0E-9D) {
@@ -554,7 +550,9 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             parameterError = Component.translatable("screen.mathmod.rune_programmer.parameter.equal_bounds").getString();
             return;
         }
-        CustomSpellInvocation invocation = new CustomSpellInvocation(parameterAction, values);
+        Map<String, Double> canonical = authoringPalette.find(parameterAction)
+                .orElseThrow().canonicalArguments(values);
+        CustomSpellInvocation invocation = new CustomSpellInvocation(parameterAction, canonical);
         customWorkspace.apply(invocation);
         PacketDistributor.sendToServer(new ApplyCustomSpellInvocationPayload(invocation.persistentId()));
         closeParameterDialog();
@@ -1354,7 +1352,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         if (parameterAction == null) {
             return;
         }
-        List<CustomNumericParameter> parameters = parameterAction.numericParameters();
+        List<AuthoringMetadata.Parameter> parameters = authoringPalette.find(parameterAction)
+                .map(form -> form.metadata().parameters()).orElse(List.of());
         int dialogWidth = 252;
         int dialogHeight = parameterDialogHeight(parameters.size());
         int dialogX = originX + (imageWidth - dialogWidth) / 2;
@@ -1372,7 +1371,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                 false
         );
         for (int index = 0; index < parameters.size(); index++) {
-            CustomNumericParameter parameter = parameters.get(index);
+            AuthoringMetadata.Parameter parameter = parameters.get(index);
             int rowY = dialogY + 39 + index * 24;
             guiGraphics.drawString(
                     font,
@@ -1439,7 +1438,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             case PRESETS -> ProgramSurface.theorem(preview);
             case CUSTOM -> ProgramSurface.guided(GuidedWorkspaceState.create(customSpellName, customWorkspace.invocations()));
         };
-        minecraft.setScreen(new RuneInspectorScreen(this, source.inspect()));
+        minecraft.setScreen(new RuneInspectorScreen(this, source.inspect(),
+                currentTab == ProgrammerTab.SAVED ? menu.functionalProjection() : com.mathmod.program.ScopedFunctionalProjection.graphOnly()));
     }
 
     private Component paletteTitle() {
@@ -2274,7 +2274,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         int contentHeight = customContentHeight();
         int maxScroll = maxCustomPaletteScroll(contentHeight);
         customPaletteScroll = Math.min(customPaletteScroll, maxScroll);
-        List<CustomSpellAction> visibleActions = orderedActions();
+        List<AuthoringPalettePresentation.Form> visibleActions = orderedForms();
         if (visibleActions.isEmpty()) {
             renderWrapped(
                     guiGraphics,
@@ -2290,8 +2290,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
 
         guiGraphics.enableScissor(leftPos + PALETTE_X + 1, topPos + y - 2, leftPos + PALETTE_X + PALETTE_WIDTH - 1, topPos + y + height);
         int row = y - customPaletteScroll;
-        for (CustomSpellAction.Category category : CustomSpellAction.Category.values()) {
-            List<CustomSpellAction> categoryActions = actionsIn(category);
+        for (AuthoringMetadata.Category category : authoringPalette.categories()) {
+            List<AuthoringPalettePresentation.Form> categoryActions = formsIn(category);
             if (categoryActions.isEmpty()) {
                 continue;
             }
@@ -2301,16 +2301,17 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                         Component.translatable(category.translationKey()),
                         x,
                         row + 3,
-                        customCategoryColor(category),
+                        customCategoryColor(category.categoryId()),
                         false
                 );
                 guiGraphics.hLine(x + 68, x + width - 3, row + 7, MathGuiTheme.BORDER_STRONG);
             }
             row += CATEGORY_ROW_HEIGHT;
 
-            for (CustomSpellAction action : categoryActions) {
+            for (AuthoringPalettePresentation.Form form : categoryActions) {
+                CustomSpellAction action = form.legacyAction().orElse(null);
                 if (PaletteCursor.rowFits(row, PALETTE_ROW_HEIGHT, y, height)) {
-                    boolean unlocked = isActionUnlocked(action);
+                    boolean unlocked = action != null && isActionUnlocked(action);
                     boolean hovered = mouseX >= leftPos + x
                             && mouseX < leftPos + x + width
                             && mouseY >= topPos + row
@@ -2339,15 +2340,15 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                             unlocked ? typeColor(action.resultType()) : MathGuiTheme.MUTED
                     );
                     if (unlocked) {
-                        guiGraphics.blit(iconForRune(action.iconRuneId()), x + 3, row, 0.0F, 0.0F, RUNE_ICON_SIZE, RUNE_ICON_SIZE, 16, 16);
+                        guiGraphics.blit(iconForRune(form.metadata().icon().runeId().toString()), x + 3, row, 0.0F, 0.0F, RUNE_ICON_SIZE, RUNE_ICON_SIZE, 16, 16);
                     } else {
                         guiGraphics.drawString(font, "?", x + 5, row + 1, MathGuiTheme.MUTED, false);
                     }
                     drawClipped(
                             guiGraphics,
                             layout.compact()
-                                    ? action.compactNotation()
-                                    : Component.translatable(action.translationKey()).getString(),
+                                    ? form.compactFormula()
+                                    : formDisplayName(form),
                             x + RUNE_ICON_SIZE + 7,
                             row,
                             width - RUNE_ICON_SIZE - 7,
@@ -2443,13 +2444,13 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                     return true;
                 }
                 disarmResetCustom();
-                if (!action.numericParameters().isEmpty()) {
+                if (hasRegistryParameters(action)) {
                     openParameterDialog(action);
                 } else {
                     customWorkspace.apply(action);
                     refreshCustomPreview();
                 }
-                if (action.numericParameters().isEmpty() && minecraft != null && minecraft.gameMode != null) {
+                if (!hasRegistryParameters(action) && minecraft != null && minecraft.gameMode != null) {
                     minecraft.gameMode.handleInventoryButtonClick(
                             menu.containerId,
                             RuneProgrammerMenu.CUSTOM_ACTION_BUTTON_BASE + action.ordinal()
@@ -2521,13 +2522,14 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         }
         int relativeY = viewportY + customPaletteScroll;
         int row = 0;
-        for (CustomSpellAction.Category category : CustomSpellAction.Category.values()) {
-            List<CustomSpellAction> categoryActions = actionsIn(category);
+        for (AuthoringMetadata.Category category : authoringPalette.categories()) {
+            List<AuthoringPalettePresentation.Form> categoryActions = formsIn(category);
             if (categoryActions.isEmpty()) {
                 continue;
             }
             row += CATEGORY_ROW_HEIGHT;
-            for (CustomSpellAction action : categoryActions) {
+            for (AuthoringPalettePresentation.Form form : categoryActions) {
+                CustomSpellAction action = form.legacyAction().orElse(null);
                 if (relativeY >= row && relativeY < row + PALETTE_ROW_HEIGHT) {
                     return action;
                 }
@@ -2656,23 +2658,23 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                 .toList();
     }
 
-    private List<CustomSpellAction> actionsIn(CustomSpellAction.Category category) {
-        return java.util.Arrays.stream(CustomSpellAction.values())
-                .filter(action -> action.category() == category)
+    private List<AuthoringPalettePresentation.Form> formsIn(AuthoringMetadata.Category category) {
+        return authoringPalette.forms(category.categoryId()).stream()
                 .filter(this::matchesCustomSearch)
                 .toList();
     }
 
-    private boolean matchesCustomSearch(CustomSpellAction action) {
+    private boolean matchesCustomSearch(AuthoringPalettePresentation.Form form) {
+        CustomSpellAction action = form.legacyAction().orElse(null);
         return PaletteSearch.matches(
                 customSearch,
-                Component.translatable(action.translationKey()).getString(),
-                Component.translatable(action.category().translationKey()).getString(),
-                RuneTypePresentation.displayName(action.resultType()).getString(),
-                action.resultType().id(),
-                action.iconRuneId(),
-                action.name(),
-                action.compactNotation()
+                formDisplayName(form),
+                Component.translatable(categoryTranslationKey(form.metadata().categoryId())).getString(),
+                form.metadata().outputHint().orElse(""),
+                form.metadata().icon().runeId().toString(),
+                form.metadata().formId().toString(),
+                form.compactFormula(),
+                action == null ? form.technicalName() : action.name()
         );
     }
 
@@ -2684,12 +2686,12 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         return presets;
     }
 
+    private List<AuthoringPalettePresentation.Form> orderedForms() {
+        return authoringPalette.categories().stream().flatMap(category -> formsIn(category).stream()).toList();
+    }
+
     private List<CustomSpellAction> orderedActions() {
-        List<CustomSpellAction> actions = new ArrayList<>();
-        for (CustomSpellAction.Category category : CustomSpellAction.Category.values()) {
-            actions.addAll(actionsIn(category));
-        }
-        return actions;
+        return orderedForms().stream().flatMap(form -> form.legacyAction().stream()).toList();
     }
 
     private TalismanPreset keyboardPreset() {
@@ -2745,13 +2747,13 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                 return;
             }
             disarmResetCustom();
-            if (!action.numericParameters().isEmpty()) {
+            if (hasRegistryParameters(action)) {
                 openParameterDialog(action);
             } else {
                 customWorkspace.apply(action);
                 refreshCustomPreview();
             }
-            if (action.numericParameters().isEmpty() && minecraft != null && minecraft.gameMode != null) {
+            if (!hasRegistryParameters(action) && minecraft != null && minecraft.gameMode != null) {
                 minecraft.gameMode.handleInventoryButtonClick(
                         menu.containerId,
                         RuneProgrammerMenu.CUSTOM_ACTION_BUTTON_BASE + action.ordinal()
@@ -2777,6 +2779,10 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         if (minecraft != null && paletteNavigator != null) {
             paletteNavigator.playDownSound(minecraft.getSoundManager());
         }
+    }
+
+    private boolean hasRegistryParameters(CustomSpellAction action) {
+        return authoringPalette.find(action).map(form -> !form.metadata().parameters().isEmpty()).orElse(false);
     }
 
     private void ensurePresetCursorVisible() {
@@ -2808,13 +2814,14 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             return;
         }
         int row = 0;
-        for (CustomSpellAction.Category category : CustomSpellAction.Category.values()) {
-            List<CustomSpellAction> categoryActions = actionsIn(category);
+        for (AuthoringMetadata.Category category : authoringPalette.categories()) {
+            List<AuthoringPalettePresentation.Form> categoryActions = formsIn(category);
             if (categoryActions.isEmpty()) {
                 continue;
             }
             row += CATEGORY_ROW_HEIGHT;
-            for (CustomSpellAction action : categoryActions) {
+            for (AuthoringPalettePresentation.Form form : categoryActions) {
+                CustomSpellAction action = form.legacyAction().orElse(null);
                 if (action == target) {
                     customPaletteScroll = PaletteCursor.revealRow(
                             customPaletteScroll,
@@ -2837,7 +2844,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         CustomSpellAction action = keyboardAction();
         return action == null
                 ? Component.translatable("screen.mathmod.rune_programmer.search_empty", customSearch)
-                : Component.translatable(action.translationKey());
+                : registryFormTitle(action);
     }
 
     private Component paletteNarrationHint() {
@@ -2878,7 +2885,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
     private List<Component> customActionTooltip(CustomSpellAction action) {
         CustomActionPreview preview = customWorkspace.preview(action);
         List<Component> tooltip = new ArrayList<>();
-        tooltip.add(MathGuiTheme.tooltipPrimary(Component.translatable(action.translationKey())));
+        tooltip.add(MathGuiTheme.tooltipPrimary(registryFormTitle(action).copy()));
         KnowledgePolicy.requirementFor(action)
                 .filter(requirement -> !requirement.isSatisfiedBy(playerKnowledge()))
                 .ifPresent(requirement -> {
@@ -2992,8 +2999,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
     private int customContentHeight() {
         int categories = 0;
         int actions = 0;
-        for (CustomSpellAction.Category category : CustomSpellAction.Category.values()) {
-            int categorySize = actionsIn(category).size();
+        for (AuthoringMetadata.Category category : authoringPalette.categories()) {
+            int categorySize = formsIn(category).size();
             if (categorySize > 0) {
                 categories++;
                 actions += categorySize;
@@ -3259,6 +3266,37 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
             case METAMAGIC -> MathGuiTheme.GOLD;
             case QUERIES -> MathGuiTheme.GREEN;
             case EFFECTS -> MathGuiTheme.CORAL;
+        };
+    }
+
+    private String formDisplayName(AuthoringPalettePresentation.Form form) {
+        String key = form.metadata().translationKey();
+        return form.presentationName(I18n.exists(key) ? Component.translatable(key).getString() : null);
+    }
+
+    private Component registryFormTitle(CustomSpellAction action) {
+        return authoringPalette.find(action)
+                .map(form -> Component.literal(formDisplayName(form)))
+                .orElseGet(() -> Component.literal(action.persistentId()));
+    }
+
+    private String categoryTranslationKey(com.mathmod.util.NamespacedId categoryId) {
+        return authoringPalette.categories().stream()
+                .filter(category -> category.categoryId().equals(categoryId))
+                .map(AuthoringMetadata.Category::translationKey)
+                .findFirst()
+                .orElse("mathmod.authoring.technical." + categoryId.path());
+    }
+
+    private static int customCategoryColor(com.mathmod.util.NamespacedId categoryId) {
+        return switch (AuthoringPalettePresentation.categoryTone(categoryId)) {
+            case BLUE -> MathGuiTheme.BLUE;
+            case GOLD -> MathGuiTheme.GOLD;
+            case TEAL -> MathGuiTheme.TEAL;
+            case CORAL_SOFT -> MathGuiTheme.CORAL_SOFT;
+            case GREEN -> MathGuiTheme.GREEN;
+            case CORAL -> MathGuiTheme.CORAL;
+            case MUTED -> MathGuiTheme.MUTED;
         };
     }
 

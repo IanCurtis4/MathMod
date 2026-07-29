@@ -9,6 +9,8 @@ import com.mathmod.program.CustomSpellWorkspace;
 import com.mathmod.program.ProgramNames;
 import com.mathmod.program.ProgramPresets;
 import com.mathmod.program.ProgramStorage;
+import com.mathmod.program.ScopedFunctionalProjection;
+import com.mathmod.program.ScopedFunctionalProjectionWireCodec;
 import com.mathmod.registry.ModItems;
 import com.mathmod.registry.ModMenus;
 import com.mathmod.runes.ProgramGraph;
@@ -37,22 +39,38 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
     public static final int CUSTOM_ACTION_BUTTON_BASE = 100;
 
     private final InteractionHand hand;
+    private final Player menuPlayer;
+    private final ScopedFunctionalProjection functionalProjection;
+    private final ItemStack capturedProjectionTarget;
+    private boolean projectionValid = true;
     private final CustomSpellWorkspace customWorkspace = new CustomSpellWorkspace();
     private String customSpellName = "";
 
     public RuneProgrammerMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf data) {
-        this(containerId, inventory, data.readEnum(InteractionHand.class));
+        this(containerId, inventory, data.readEnum(InteractionHand.class), ScopedFunctionalProjectionWireCodec.read(data));
     }
 
     public RuneProgrammerMenu(int containerId, Inventory inventory, InteractionHand hand) {
+        this(containerId, inventory, hand, ScopedFunctionalProjection.unavailable());
+    }
+
+    public RuneProgrammerMenu(int containerId, Inventory inventory, InteractionHand hand, ScopedFunctionalProjection functionalProjection) {
         super(ModMenus.RUNE_PROGRAMMER.get(), containerId);
         this.hand = hand;
+        this.menuPlayer = inventory.player;
+        this.functionalProjection = functionalProjection;
+        this.capturedProjectionTarget = inventory.player.level().isClientSide ? ItemStack.EMPTY : inventory.player.getItemInHand(hand).copy();
+        addDataSlot(new net.minecraft.world.inventory.DataSlot() {
+            @Override public int get() { return projectionStillBound(inventory.player) ? 1 : 0; }
+            @Override public void set(int value) { projectionValid = value != 0; }
+        });
         loadStoredCustomWorkspace(inventory.player);
     }
 
     public InteractionHand hand() {
         return hand;
     }
+    public ScopedFunctionalProjection functionalProjection() { return projectionStillBound(menuPlayer) ? functionalProjection : ScopedFunctionalProjection.unavailable(functionalProjection.graphState()); }
 
     public boolean setCustomSpellName(Player player, String customSpellName) {
         if (!canMutateWorkspace(player)) {
@@ -82,6 +100,7 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
             ProgramGraph graph = selectedPreset.get().graph();
             ValidationResult result = ProgramStorage.saveValidated(stack, graph);
             if (result.valid()) {
+                invalidateProjection();
                 syncHeldStack(player, stack);
                 player.displayClientMessage(Component.translatable(
                         "item.mathmod.programmed_talisman.saved",
@@ -99,6 +118,7 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
 
         if (id == CLEAR_BUTTON) {
             ProgramStorage.clear(stack);
+            invalidateProjection();
             syncHeldStack(player, stack);
             player.displayClientMessage(Component.translatable("item.mathmod.programmed_talisman.cleared"), true);
             return true;
@@ -120,6 +140,7 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
                     customWorkspace.invocations()
             );
             if (result.valid()) {
+                invalidateProjection();
                 syncHeldStack(player, stack);
                 player.displayClientMessage(Component.translatable(
                         "item.mathmod.programmed_talisman.saved",
@@ -203,6 +224,14 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
     private boolean canMutateWorkspace(Player player) {
         return player.containerMenu == this && stillValid(player);
     }
+
+    private boolean projectionStillBound(Player player) {
+        if (!projectionValid || player.level().isClientSide) return projectionValid;
+        if (!ItemStack.isSameItemSameComponents(player.getItemInHand(hand), capturedProjectionTarget)) projectionValid = false;
+        return projectionValid;
+    }
+
+    private void invalidateProjection() { projectionValid = false; }
 
     private void syncHeldStack(Player player, ItemStack stack) {
         player.getInventory().setChanged();

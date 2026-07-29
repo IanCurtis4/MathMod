@@ -19,10 +19,23 @@ public final class ScopedStructureValidator {
             ScopedProgramSource source,
             Function<String, Optional<RunePurity>> purityLookup
     ) {
+        return validate(source, purityLookup, new ScopedCompileBudget());
+    }
+
+    static ScopedValidationResult validate(
+            ScopedProgramSource source,
+            Function<String, Optional<RunePurity>> purityLookup,
+            ScopedCompileBudget budget
+    ) {
         List<ScopedLanguageIssue> issues = new ArrayList<>();
         Counters counters = new Counters();
-        checkType(source.resultType(), "$.result_type", issues);
-        visit(source.expression(), "$", 0, 0, Position.TAIL, purityLookup, counters, issues);
+        try {
+            checkType(source.resultType(), "$.result_type", issues);
+            visit(source.expression(), "$", 0, 0, Position.TAIL, purityLookup, counters, issues, budget);
+        } catch (ScopedCompileBudget.LimitExceeded exceeded) {
+            issue(issues, ScopedLanguageIssue.Code.COMPILE_STEP_LIMIT, "$", "Scoped compilation exceeded its step limit");
+            return new ScopedValidationResult(issues);
+        }
         if (counters.nodes > ScopedLanguageLimits.MAX_AST_NODES) {
             issue(
                     issues,
@@ -52,8 +65,10 @@ public final class ScopedStructureValidator {
             Position position,
             Function<String, Optional<RunePurity>> purityLookup,
             Counters counters,
-            List<ScopedLanguageIssue> issues
+            List<ScopedLanguageIssue> issues,
+            ScopedCompileBudget budget
     ) {
+        budget.charge(ScopedCompileBudget.Event.STRUCTURAL_NODE);
         counters.nodes++;
         if (expression instanceof ScopedExpression.Literal literal) {
             checkType(literal.type(), path + ".type", issues);
@@ -124,7 +139,8 @@ public final class ScopedStructureValidator {
                         Position.VALUE,
                         purityLookup,
                         counters,
-                        issues
+                        issues,
+                        budget
                 );
             }
             return;
@@ -141,7 +157,8 @@ public final class ScopedStructureValidator {
                     Position.VALUE,
                     purityLookup,
                     counters,
-                    issues
+                    issues,
+                    budget
             );
             return;
         }
@@ -155,7 +172,8 @@ public final class ScopedStructureValidator {
                     Position.VALUE,
                     purityLookup,
                     counters,
-                    issues
+                    issues,
+                    budget
             );
             visit(
                     application.argument(),
@@ -165,7 +183,8 @@ public final class ScopedStructureValidator {
                     Position.VALUE,
                     purityLookup,
                     counters,
-                    issues
+                    issues,
+                    budget
             );
             return;
         }
@@ -178,7 +197,8 @@ public final class ScopedStructureValidator {
                 Position.VALUE,
                 purityLookup,
                 counters,
-                issues
+                issues,
+                budget
         );
         int nextDepth = bindingDepth + 1;
         checkBindingDepth(nextDepth, path, issues);
@@ -190,7 +210,8 @@ public final class ScopedStructureValidator {
                 position,
                 purityLookup,
                 counters,
-                issues
+                issues,
+                budget
         );
     }
 

@@ -152,6 +152,43 @@ Use `patchouli-matrix` to capture every PT-BR entry spread in one client session
 
 Use `patchouli-advanced-mathematics` to open the Sampled Calculus / Cyclic Symmetry spread directly. It must distinguish sampled calculus from symbolic functions and explain cyclic elements without presenting them as ordinary numbers. The following specialist-evidence page, covered by `patchouli-matrix`, names Quartz, Copper, Lapis Lazuli, and Prismarine Crystals as configurable examples rather than universal ingredients. Output: `run/client/screenshots/mathmod-patchouli-advanced-mathematics-preview.png`.
 
+## A0-LU-01 Current-Surface Content Requirements
+
+## L0-TM-04 Functional Projection
+
+Use `rune-inspector-functional` to capture the read-only server projection in
+EN and PT-BR at 1024x800, and PT-BR at 640x480 (GUI scale 2). The capture must
+show all three labels: authored source not executable, checked canonical
+binding from one server attempt and not persisted, and compiled graph as the
+executable authority. It must also keep a mismatch or stale diagnostic visible
+without obscuring the graph canvas. This is a presentation capture only: it
+must not send a request, compile locally, save, repair or migrate the talisman.
+
+These are content and evidence requirements for existing surfaces, not new
+preview modes. They are owned by the later screen integrator when executable
+coverage is needed.
+
+- The current Guided surface remains player-visible as `Theorems` and
+  `Laboratory`; no preview may present `Guided` as a new mode or persisted id.
+- The `Rune Inspector` preview must identify the projection as read-only and
+  must not label it `Advanced`.
+- Formula shorthand, including `f(x)`, must be described as compact
+  presentation. It must not be described as persisted Source or a textual
+  Function editor.
+- Current EN/PT-BR previews must use the same changed Patchouli entry pair and
+  must reject raw unresolved translation keys, mojibake, clipping, or English
+  leakage in PT-BR.
+- Inspector focus/narration evidence must cover the selected node, rune,
+  output type, purity, formula, cost, dynamic inputs, and the read-only state;
+  it must not depend on color alone.
+- Missing presentation evidence may show the bounded technical rune/form/
+  category identity, but must not select another form, invent a localized
+  identity, or change the graph.
+
+The requirements above consume only existing surfaces and ids. They do not
+authorize mutable Advanced editing, textual Source, Discipline selection, or
+notation-profile selection.
+
 ## Preview Matrix
 
 The current acceptance matrix is exposed by `UiPreviewMatrix` and is checked
@@ -414,6 +451,12 @@ Use `laboratory-form-reuse-tooltip` to load the existing Right Basis proof, filt
 Output: `run/client/screenshots/mathmod-laboratory-form-reuse-tooltip-preview.png`.
 
 ## Laboratory Search
+
+## Authoring Registry Palette
+
+Use `authoring-registry-palette` to open the Guided Laboratory through the normal programmer path and verify that the visible category/form order comes from the frozen authoring snapshot. Exercise pointer selection, keyboard traversal and Enter activation, a registry search query, a numeric descriptor dialog, and Inspector narration. Capture EN/PT-BR at 1024x800 with JEI and PT-BR at the 640x480 compact boundary; the technical fallback remains the form id/path when presentation is unavailable and must never substitute another form.
+
+The bounded `A0-TM-03F3` path first activates non-parameterized `Self` with keyboard Enter and asserts the Guided workspace mutation. It then focuses the actual Laboratory search box, asserts Simpson is the filtered first form, pointer-activates it, and asserts the active dialog plus all five finite numeric defaults. The same registry form presentation policy supplies the rendered row, tooltip, and palette narrator title; its unit evidence covers the technical-name fallback because built-in metadata intentionally has complete translations. Actual captures are retained under `run/client/screenshots/mathmod-authoring-registry-palette-{en_us-1024x800,pt_br-1024x800,pt_br-640x480}-preview.png`, with matching harness logs under `run/client/logs/authoring-registry-palette-*.log`.
 
 Use `laboratory-search` to focus the Laboratory search field and filter the rune catalog. Use `laboratory-search-localized` under PT-BR to search for `vetor` through translated labels. Use `laboratory-search-empty` to verify the explicit zero-result state and disabled palette navigation. A focused search field must use the shared teal outline, retain four pixels of horizontal text inset, and leave the unfocused name field on the subdued grid outline.
 
