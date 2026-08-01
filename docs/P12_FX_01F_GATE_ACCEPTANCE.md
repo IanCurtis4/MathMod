@@ -4,6 +4,12 @@
 **Reviewer:** Sol  
 **Decision:** `ACCEPT`
 
+> Later evidence: Sol completed the autonomous fixture work and found FX-R3,
+> a product `SNAPSHOT_FAILURE`, in
+> `docs/P12_FX_01_AUTONOMOUS_EVIDENCE.md`. The FX-R1/FX-R2 fixture acceptance
+> below remains valid; its old remaining-dependency list is superseded by the
+> current delivery board.
+
 ## Scope accepted
 
 Sol reviewed the handoff and real fixture delta for the bounded findings

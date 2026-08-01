@@ -6,6 +6,13 @@
 **Documentary decision:** `ACCEPT`  
 **Execution decision:** `P12-DS` remains `BLOCKED`
 
+> Operational supersession, 2026-08-01: the clean build, standalone backend
+> observations, five configuration profiles, multiplayer deferral and the
+> FX-R3 runtime failure are now recorded in
+> `docs/P12_FX_01_AUTONOMOUS_EVIDENCE.md` and
+> `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`. This document remains the frozen
+> fixture contract; its older current-state inventory is not the active board.
+
 ## 1. Decision
 
 The automated dependency is closed: `P12-TM-02` is `DONE` with `ACCEPT`, with

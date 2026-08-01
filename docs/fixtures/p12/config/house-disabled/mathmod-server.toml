@@ -1,8 +1,13 @@
 [manuscript_acquisition]
-manuscriptLootEnabled = true
-mathemagicianProfessionEnabled = true
-mathemagicianTradesEnabled = true
-mathemagicianHouseEnabled = false
-surplusPolicy = "KEEP"
-villageLootChanceNumerator = 1
-villageLootChanceDenominator = 3
+	manuscriptLootEnabled = true
+	mathemagicianProfessionEnabled = true
+	mathemagicianTradesEnabled = true
+	mathemagicianHouseEnabled = false
+	#Allowed Values: KEEP, TRADE_BACK
+	surplusPolicy = "KEEP"
+	# Default: 1
+	# Range: 0 ~ 1000
+	villageLootChanceNumerator = 1
+	# Default: 3
+	# Range: 1 ~ 1000
+	villageLootChanceDenominator = 3

@@ -4,6 +4,11 @@ Status: Terra High acceptance and ambiguity pass completed on 2026-07-22. Terra
 Medium automated slice completed on 2026-07-22: `gradlew test` and all nine
 required `runGameTestServer` cases passed.
 
+Operational update (2026-08-01): the immutable fixture observations and FX-R3
+snapshot failure are recorded in `docs/P12_FX_01_AUTONOMOUS_EVIDENCE.md`.
+DS-06/two-client evidence is explicitly retained as an unpassed experimental
+limitation in `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`.
+
 ## Purpose
 
 P12 does not add a gameplay family. It establishes the evidence required before
