@@ -7,22 +7,22 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The Rune Programmer organizes 29 editable spells as $(thing)theorems$(): ready programs whose formula and typed graph can be inspected before inscription.$(br2)The scrollable catalog is divided into Movement, Sensing, Control, Alchemy, and Metamagic. Hover a theorem to read its formula and full behavior."
+      "text": "The Rune Programmer organizes 29 editable spells as $(thing)theorems$(): ready programs with inspectable formulas and typed graphs.$(br2)The scrollable catalog covers Movement, Sensing, Control, Alchemy, and Metamagic. Hover a theorem for its formula and behavior.$(br2)$(thing)Factored Leap$() is available through the Rune Programmer."
     },
     {
       "type": "patchouli:text",
       "title": "Formula Shorthand",
-      "text": "A formula is a compact summary, not executable source or persisted Function source. Its outer verb states the conclusion: $(thing)push$(), $(thing)blink$(), or $(thing)mark$(). Inside it, $(thing)self$(), $(thing)look$(), and $(thing)up$() name values, while relations such as $(thing)ray(self,12)$() and $(thing)nearest(4)$() compose the evidence.$(br2)Select a theorem to keep its formula above the numbered typed proof."
+      "text": "A formula is a compact summary, not executable or persisted Function source. Its outer verb states the conclusion: $(thing)push$(), $(thing)blink$(), or $(thing)mark$(). Names such as $(thing)self$(), $(thing)look$(), and $(thing)up$() provide values; relations provide evidence.$(br2)Select a theorem to keep its formula above the numbered typed proof.$(br2)For Factored Leap, authored source, checked form, and compiled graph remain distinct. The source defines pure $(thing)halve$(), applies it to observed look and authored up, then lowers to the existing graph. The function does not survive at runtime."
     },
     {
       "type": "patchouli:text",
-      "title": "Keyboard And Narrator",
-      "text": "Press Tab until the palette gains a teal outline. Up/Down moves the ivory row; Enter or Space selects it. Home/End jumps to either edge.$(br2)The narrator reads the selected name, list position, formula or output type, and activation keys."
+      "title": "Keys And Narrator",
+      "text": "Tab outlines the palette. Up/Down moves the ivory row; Enter or Space selects. Home/End jumps to an edge.$(br2)The narrator reads name, position, formula or output type, and activation keys.$(br2)The functional Inspector separates authored source, checked form, compiled graph, and diagnostics. Focused rows stay readable in both languages and the compact viewport."
     },
     {
       "type": "patchouli:text",
-      "title": "Movement",
-      "text": "$(li)Hop: a short vertical vector.$(li)Dash: look multiplied by 0.8.$(li)Vector Leap: normalized direction plus an upward component.$(li)Recoil: look multiplied by -0.65.$(li)Blink: safe teleport to a ray hit."
+      "title": "Factored Leap",
+      "text": "$(li)Hop: a short vertical vector.$(li)Dash: look multiplied by 0.8.$(li)Vector Leap: normalized direction plus an upward component.$(li)Recoil: look multiplied by -0.65.$(li)Blink: safe teleport to a ray hit.$(br2)Factored Leap defines pure $(thing)halve$() once, applies it to look and authored up, adds the vectors, then ends at $(thing)push_self$(). Observations stay outside the lambda; beta reduction and lowering remove functional structure before execution.$(br2)Errors or stale authority never partially inscribe an item."
     },
     {
       "type": "patchouli:text",

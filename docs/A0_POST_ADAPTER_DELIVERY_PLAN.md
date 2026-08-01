@@ -116,7 +116,7 @@ downstream dependencies.
 
 ## 3. Task `A0-SOL-03` — A0-3 Adapter Gate
 
-**Owner:** Sol  
+**Owner:** Sol
 **Status:** `DONE` — `ACCEPT`
 
 ### Required documentation
@@ -613,3 +613,29 @@ The eight decisions are resolved in
 `docs/L0_SCOPED_SOURCE_PERSISTENCE_AND_COMPILE_CONTRACT.md`. The contract keeps
 wire/schema details unapproved, freezes the safe implementation sequence, and
 authorizes only `L0-TM-01` pure compile hardening as the next `READY` task.
+
+---
+
+## 11. Task `P12-SOL-01` — Foundation Beta Completion Sequencing
+
+**Owner:** Sol
+**Status:** `DONE` (`ACCEPT`)
+
+After A0, A1 read-only and L0 closure, Sol reassessed the release path against
+`docs/P12_SURVIVAL_READINESS_CONTRACT.md`,
+`docs/P12_P15_EVOLUTION_PLAN.md`, `docs/PRIORITY_ASSESSMENT.md` and the current
+runtime evidence.
+
+The accepted output is:
+
+```text
+docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md
+```
+
+Test-only `P12-TM-01` reproduced two production defects and is `NEEDS_FIX`.
+`docs/P12_TM_01_BLOCKER_REVIEW.md` makes bounded `P12-TM-01F` ready with
+ownership of `ConstructFlightManager.java`, `P8GameTests.java`, a new
+`P8AuthoritySurfaceTest.java` and its correction handoff.
+
+P12-TM-02, the dedicated-server matrix, manual first-use/accessibility
+evidence, A0-6 and P14/P15 remain blocked.

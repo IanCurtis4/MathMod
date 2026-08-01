@@ -534,6 +534,11 @@ Do not combine N2-N6 into one implementation change. Each slice has a separate r
   freezes evidence labels, GT-01 through GT-07 GameTest requirements, DS-01
   through DS-09 dedicated-server smoke rows, M-01 through M-03 manual checks,
   and the ambiguous-failure policy.
+- Active Sol completion contract:
+  `docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md`. Test-only `P12-TM-01`
+  reproduced two P8 flight defects; `docs/P12_TM_01_BLOCKER_REVIEW.md`
+  authorizes bounded `P12-TM-01F` in `ConstructFlightManager.java`.
+  P12-TM-02, dedicated-server and manual gates remain ordered downstream.
 - Distinguish pure tests, GameTests, dedicated smoke tests, manual multiplayer,
   and optional integration evidence.
 - Close P8 transaction/protection acceptance before enabling destructive

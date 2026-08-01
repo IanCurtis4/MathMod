@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "tradition": "mathmod:compounders_of_correspondence",
+  "title_key": "discovery.mathmod.bound_measure.title",
+  "page_keys": ["manuscript.mathmod.bound_measure.page.1"],
+  "icon": "mathmod:binding_resin",
+  "rarity": "rare",
+  "patchouli_entry": "mathmod:lore/bound_measure",
+  "theorem": "mathmod:soul_constraint"
+}

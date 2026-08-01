@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "tradition": "p12:missing_tradition",
+  "title_key": "manuscript.p12.broken_reference.title",
+  "page_keys": ["manuscript.mathmod.weighted_gathering.page.1"],
+  "icon": "minecraft:paper",
+  "rarity": "common",
+  "patchouli_entry": "mathmod:programming/kubejs"
+}

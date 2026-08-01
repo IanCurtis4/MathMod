@@ -48,4 +48,18 @@ class PatchouliPreviewMatrixTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void matrixCannotOpenBeforeConfiguredLocaleResourcesFinishReloading() throws Exception {
+        String harness = Files.readString(Path.of("src/main/java/com/mathmod/client/UiPreviewHarness.java"));
+        int matrixBranch = harness.indexOf("if (patchouliMatrixPreview())");
+        int matrixOpen = harness.indexOf("runPatchouliMatrixTick(minecraft)");
+        int localeBarrier = harness.indexOf("if (!previewLocaleReady(minecraft))", matrixBranch);
+
+        assertTrue(matrixBranch >= 0 && matrixOpen > matrixBranch);
+        assertTrue(localeBarrier > matrixBranch && localeBarrier < matrixOpen,
+                "Patchouli matrix must wait for the configured locale before opening an entry");
+        assertTrue(harness.contains("minecraft.reloadResourcePacks().thenRun(() -> previewLocaleReloadComplete = true)"));
+        assertTrue(harness.contains("return previewLocaleReloadComplete && PREVIEW_LOCALE.equals(minecraft.options.languageCode)"));
+    }
 }

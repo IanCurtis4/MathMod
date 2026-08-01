@@ -4,13 +4,13 @@
 
 **Current release:** `0.2.x` Foundation Beta
 
-**Active architecture item:** L0 first-theorem specification gate; A0 closed
+**Active architecture item:** P12 Foundation Beta survival-readiness closure
 
-**Active delivery window:** Cycle 2 A0 closed → Cycle 3 contract sequencing
+**Active delivery window:** Cycle 3 — Foundation Beta consolidation
 
 **Board owner:** Sol
 
-**Last updated:** 2026-07-29
+**Last updated:** 2026-08-01
 
 ---
 
@@ -243,8 +243,30 @@ frozen in `docs/L0_READONLY_FUNCTIONAL_PROJECTION_READINESS.md`. `L0-TM-04`
 and corrections F/F2/F3/F4 are `DONE` with `ACCEPT` in
 `docs/L0_TM_04_FINAL_GATE_ACCEPTANCE.md`. The final F4 delta closes bounded
 semantic-heading containment with production font geometry, an executable
-runtime oracle and EN-US/PT-BR evidence at 1024x800 and 640x480. Content remains
-blocked on its separately named theorem gate.
+runtime oracle and EN-US/PT-BR evidence at 1024x800 and 640x480.
+`L0-SOL-06` is `DONE` with `ACCEPT` in
+`docs/L0_FIRST_GAMEPLAY_THEOREM_SPECIFICATION.md`. It freezes
+`mathmod:factored_leap`, its canonical pure function, two applications,
+single terminal effect, lowering oracle, authority, teaching claims and exact
+Luna ownership. Sol review of the Luna handoff found the content conforming but
+the original PT-BR Patchouli evidence rendered EN-US. `L0-TM-04F5` corrected
+and proved the preview locale barrier and is `DONE` with `ACCEPT` in
+`docs/L0_TM_04F5_GATE_ACCEPTANCE.md`. Luna's bounded copy-fit correction is
+accepted in `docs/L0_LU_01_FINAL_GATE_ACCEPTANCE.md`: all eight spreads are
+localized, readable and unclipped, and 15/15 focused tests pass. `L0-LU-01`
+and `L0-LU-01F` are `DONE` with `ACCEPT`. The remaining Sol-owned internal
+integration amendment `L0-SOL-07` is accepted in
+`docs/L0_INTERNAL_GAMEPLAY_INTEGRATION_READINESS.md`. It freezes one
+`@ApiStatus.Internal` theorem-specific bridge into the existing compile and
+six-component transaction authorities. The final theorem gate is accepted in
+`docs/L0_TM_05_FINAL_GATE_ACCEPTANCE.md`: F2 closes the id/order-independent
+semantic oracle and the tooltip/no-false-success packet evidence. `L0-TM-05`,
+F and F2 are `DONE` with `ACCEPT`; 49/49 focused tests and 43/43 global
+GameTests pass, with 29 named L0 GameTests.
+The graph-oracle ambiguity raised during F is resolved in
+`docs/L0_TM_05F_GRAPH_ORACLE_CLARIFICATION.md`: semantic isomorphism is
+required, node ids/list order are non-semantic, and no production ownership
+was expanded.
 
 Therefore:
 
@@ -273,9 +295,19 @@ Therefore:
   `ACCEPT`;
 - `L0-TM-04` read-only functional projection is `DONE` with `ACCEPT`;
 - `L0-TM-04F`, F2, F3 and F4 are `DONE` with `ACCEPT`;
-- L0 atomic persistence and read-only projection gates are accepted; content
-  and theorem slices remain blocked behind the missing first-theorem
-  specification;
+- `L0-SOL-06` first gameplay theorem specification is `DONE` with `ACCEPT`;
+- `L0-LU-01` functional teaching and bilingual evidence is `DONE` with
+  `ACCEPT`;
+- `L0-TM-04F5` localized Patchouli preview-harness correction is `DONE` with
+  `ACCEPT`;
+- `L0-LU-01F` bilingual Patchouli copy-fit correction is `DONE` with `ACCEPT`;
+- `L0-SOL-07` exact internal integration-readiness amendment is `DONE` with
+  `ACCEPT`;
+- `L0-TM-05`, `L0-TM-05F` and `L0-TM-05F2` are `DONE` with final `ACCEPT`;
+- `L0-LU-02` post-implementation content alignment is `DONE` with `ACCEPT`;
+- `P12-SOL-01` Foundation Beta completion contract is `DONE` with `ACCEPT`;
+- `P12-TM-01` and bounded correction `P12-TM-01F` are `DONE` with `ACCEPT`
+  under `docs/P12_TM_01_FINAL_GATE_ACCEPTANCE.md`;
 - the Luna terminology/evidence inventory is `DONE`;
 - `A0-SOL-LU-01` terminology/content decision is `DONE`;
 - `A0-LU-01` is `DONE`;
@@ -285,7 +317,14 @@ Therefore:
 - the evidence-only correction `A0-TM-04F` is `DONE` with `ACCEPT`;
 - the A0 W4 gate is `DONE` with `ACCEPT`;
 - A0 Cycle 2 is closed;
-- no downstream implementation task may now be dispatched.
+- `P12-TM-02` is `DONE` with `ACCEPT` under
+  `docs/P12_TM_02_FINAL_GATE_ACCEPTANCE.md`; automated GT-05/06/07 are closed;
+- documentary `P12-SOL-02` is `DONE` with `ACCEPT` under
+  `docs/P12_DEDICATED_SERVER_FIXTURE_READINESS.md`;
+- `P12-FX-01F` is `DONE` with `ACCEPT` under
+  `docs/P12_FX_01F_GATE_ACCEPTANCE.md`;
+- `P12-FX-01` remains blocked only on immutable build, semantic fixture,
+  authenticated actor and sanitized external proof; `P12-DS` remains blocked.
 
 ---
 
@@ -333,8 +372,24 @@ Therefore:
 | `L0-TM-04F2` | Terra Medium integrator | `DONE` (`ACCEPT`) | F2R1–F2R6 closed | accepted read-only projection gate |
 | `L0-TM-04F3` | Terra Medium integrator | `DONE` (`ACCEPT`) | F3R1–F3R5 closed through F4 | accepted read-only projection gate |
 | `L0-TM-04F4` | Terra Medium integrator | `DONE` (`ACCEPT`) | F4R1 bounded heading containment closed | accepted read-only projection gate |
-| `L0-LU-01` | Luna | `BLOCKED` | first-theorem specification not frozen | bilingual evidence |
-| `L0-TM-05` | Terra Medium integrator | `BLOCKED` | server + persistence + UI + Luna gates | L0 gameplay closure |
+| `L0-SOL-06` | Sol | `DONE` (`ACCEPT`) | accepted projection + repository theorem capabilities | `L0-LU-01` |
+| `L0-LU-01` | Luna | `DONE` (`ACCEPT`) | frozen theorem content and bilingual evidence | `L0-SOL-07` |
+| `L0-TM-04F5` | Terra Medium integrator | `DONE` (`ACCEPT`) | `L0-LU-01-R1` localized preview defect | `L0-LU-01F` |
+| `L0-LU-01F` | Luna | `DONE` (`ACCEPT`) | accepted `L0-TM-04F5` harness correction | `L0-SOL-07` |
+| `L0-SOL-07` | Sol | `DONE` (`ACCEPT`) | accepted Luna content/evidence | `L0-TM-05` |
+| `L0-TM-05` | Terra Medium integrator | `DONE` (`ACCEPT`) | R1-R5 and F residuals closed | L0 gameplay closure |
+| `L0-TM-05F` | Terra Medium integrator | `DONE` (`ACCEPT`) | F-R1/F-R2 closed through F2 | L0 gameplay closure |
+| `L0-TM-05F2` | Terra Medium integrator | `DONE` (`ACCEPT`) | 49 focused; 29 L0 / 43 global GameTests | `L0-LU-02` |
+| `L0-LU-02` | Luna | `DONE` (`ACCEPT`) | bilingual p0 content and visual evidence accepted | L0 content closure |
+| `P12-SOL-01` | Sol | `DONE` (`ACCEPT`) | repository priority and P8 evidence boundary frozen | `P12-TM-01` |
+| `P12-TM-01` | Terra Medium | `DONE` (`ACCEPT`) | ten P8 GameTests + authority proof accepted | `P12-TM-01F` |
+| `P12-TM-01F` | Terra Medium | `DONE` (`ACCEPT`) | finite launch + loaded swept-volume correction accepted | `P12-TM-02` |
+| `P12-TM-02` | Terra Medium | `DONE` (`ACCEPT`) | 47 focused; P9 4, P10 5, P11 5; 58 global GameTests | `P12-SOL-02` |
+| `P12-SOL-02` | Sol | `DONE` (`ACCEPT`) | fixture/evidence contract frozen | `P12-FX-01` |
+| `P12-FX-01` | Sol + operator | `BLOCKED` (`ENVIRONMENT_FAILURE`) | clean revision, semantic fixture and authenticated actors | complete reproducible fixture proof |
+| `P12-FX-01F` | Terra Medium | `DONE` (`ACCEPT`) | FX-R1/FX-R2 closed | Sol/operator external continuation |
+| `P12-DS` | Sol + operator | `BLOCKED` | accepted corrected fixture plus complete Sol/operator proof | dedicated-server evidence |
+| `P12-M` | Sol + independent player | `BLOCKED` | stable build and observation fixture | manual first-use/accessibility evidence |
 | `A0-LU-INVENTORY` | Luna | `DONE` | frozen current ids | `A0-SOL-LU-01` |
 | `A0-SOL-LU-01` | Sol | `DONE` (`ACCEPT`) | completed Luna inventory | `A0-LU-01` |
 | `A0-LU-01` | Luna | `DONE` | accepted content and evidence | A0-4/A0-5 content |
@@ -343,15 +398,16 @@ Therefore:
 ### Tasks that may be dispatched now
 
 ```text
-None. The next action is a Sol-owned first-theorem specification gate.
+None — Sol/operator must close the external P12-FX-01 prerequisites first.
 ```
 
 ### Tasks that must not be dispatched yet
 
 ```text
 A0-6 external sources
-L0-LU-01
-L0-TM-05
+P12-DS
+P12-M
+P14/P15 terrain or dynamics expansion
 ```
 
 ---
@@ -362,10 +418,10 @@ Use these four role threads as the stable pipeline:
 
 | Thread | Current assignment | Next assignment |
 |---|---|---|
-| Sol | `L0-TM-04/F/F2/F3/F4` accepted | freeze the first-theorem specification |
+| Sol | `P12-FX-01F` accepted | resume P12-FX-01 only after clean revision and actor prerequisites |
 | Terra High | `L0-TH-01` complete with `APPROVE` | wait for later semantic gate |
-| Terra Medium | `L0-TM-04/F/F2/F3/F4` accepted | wait for accepted Luna + theorem gates |
-| Luna | content/evidence complete; no active ownership | wait for later `L0-LU-01` gate |
+| Terra Medium | `P12-FX-01F` complete with `ACCEPT` | wait for a later bounded task |
+| Luna | `L0-LU-02` accepted | wait for a later content gate |
 
 Do not manually switch the model within a thread. Keep the role stable and
 change only the assignment after the previous handoff is accepted.
@@ -1228,19 +1284,17 @@ sharing, projection, slice, and ownership decision is
 
 ### Dispatchable task
 
-`L0-SOL-04` is accepted in
-`docs/L0_ATOMIC_PERSISTENCE_READINESS.md`. The first implementation handoff was
-reviewed in `docs/L0_TM_03_GATE_REVIEW.md`. Only:
+The L0 sequence is closed and the next product priority is frozen in
+`docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md`. Only:
 
 ```text
-L0-TM-03F — bounded correction of L0-TM-03 R1–R6
+No model task is dispatchable; external P12-FX-01 prerequisites remain.
 ```
 
-The correction retains the exact accepted L0-SOL-04 ownership. It authorizes no
-new public API, networking, client surface, component identity or gameplay
-scope.
+The task is test-only. All production Java, networking, schemas, content and
+public APIs remain read-only.
 
-### Blocked downstream sequence
+### Current downstream sequence
 
 ```text
 L0-TM-01 NEEDS_FIX
@@ -1261,12 +1315,31 @@ L0-TM-01 NEEDS_FIX
     -> L0-TM-04F2 DONE (ACCEPT)
     -> L0-TM-04F3 DONE (ACCEPT)
     -> L0-TM-04F4 DONE (ACCEPT)
-    -> L0-LU-01 BLOCKED (first-theorem specification not frozen)
-    -> L0-TM-05 BLOCKED (accepted UI + Luna + theorem gates)
+    -> L0-SOL-06 DONE (ACCEPT)
+    -> L0-LU-01 DONE (ACCEPT)
+    -> L0-TM-04F5 DONE (ACCEPT)
+    -> L0-LU-01F DONE (ACCEPT)
+    -> L0-SOL-07 DONE (ACCEPT)
+    -> L0-TM-05 DONE (ACCEPT)
+    -> L0-TM-05F DONE (ACCEPT)
+    -> L0-TM-05F2 DONE (ACCEPT)
+    -> L0-LU-02 DONE (ACCEPT)
+    -> L0 GAMEPLAY/CONTENT SEQUENCE CLOSED
+
+P12-SOL-01 DONE (ACCEPT)
+    -> P12-TM-01 DONE (ACCEPT)
+    -> P12-TM-01F DONE (ACCEPT)
+    -> P12-TM-02 DONE (ACCEPT)
+    -> P12-SOL-02 DONE (ACCEPT)
+    -> P12-FX-01F DONE (ACCEPT)
+    -> P12-FX-01 BLOCKED (ENVIRONMENT_FAILURE)
+    -> P12-DS BLOCKED
+    -> P12-M BLOCKED
 ```
 
-The wire contract freezes codec/component identities but authorizes no Java
-implementation, persistence path, client surface, or gameplay theorem.
+The wire contract alone authorizes no Java implementation, persistence path,
+client surface or gameplay theorem. The later accepted gates now authorize
+only the completed slices shown above.
 
 ---
 
@@ -1381,13 +1454,13 @@ The task must name:
 
 Open or update the threads in this order:
 
-1. Treat `docs/L0_TM_04_FINAL_GATE_ACCEPTANCE.md` as the accepted read-only
-   projection gate. `L0-TM-04` and corrections F/F2/F3/F4 are closed.
-2. Sol must freeze the separate first-theorem specification before dispatching
-   `L0-LU-01`.
-3. Luna and Terra Medium remain idle; later content and theorem tasks remain
-   blocked on their named gates.
-4. Keep A0-6 external loaders in `BACKLOG`; the W4 decision requires a future
+1. Do not dispatch another model task yet.
+2. Sol/operator must provide a clean immutable revision, corrected semantic
+   fixture observations, all fresh-world profiles, two authenticated actors
+   and sanitized proof under `docs/P12_FX_01F_GATE_ACCEPTANCE.md`.
+3. Do not execute or claim DS-01 through DS-09 during fixture validation.
+4. Keep Luna and Terra High idle.
+5. Keep A0-6 external loaders in `BACKLOG`; the W4 decision requires a future
    Sol-owned contract before any semantic review or implementation.
 
 Do not start external loaders, persistence/schema changes, mutable functional
@@ -1421,7 +1494,26 @@ L0-TM-01 NEEDS_FIX
     -> L0-TM-04F2 DONE (ACCEPT)
     -> L0-TM-04F3 DONE (ACCEPT)
     -> L0-TM-04F4 DONE (ACCEPT)
-    -> L0-LU-01 BLOCKED (first-theorem specification not frozen)
+    -> L0-SOL-06 DONE (ACCEPT)
+    -> L0-LU-01 DONE (ACCEPT)
+    -> L0-TM-04F5 DONE (ACCEPT)
+    -> L0-LU-01F DONE (ACCEPT)
+    -> L0-SOL-07 DONE (ACCEPT)
+    -> L0-TM-05 DONE (ACCEPT)
+    -> L0-TM-05F DONE (ACCEPT)
+    -> L0-TM-05F2 DONE (ACCEPT)
+    -> L0-LU-02 DONE (ACCEPT)
+    -> L0 GAMEPLAY/CONTENT SEQUENCE CLOSED
+
+P12-SOL-01 DONE (ACCEPT)
+    -> P12-TM-01 DONE (ACCEPT)
+    -> P12-TM-01F DONE (ACCEPT)
+    -> P12-TM-02 DONE (ACCEPT)
+    -> P12-SOL-02 DONE (ACCEPT)
+    -> P12-FX-01F DONE (ACCEPT)
+    -> P12-FX-01 BLOCKED (ENVIRONMENT_FAILURE)
+    -> P12-DS BLOCKED
+    -> P12-M BLOCKED
 
 A0-6 BACKLOG
     -> requires a new Sol-owned contract

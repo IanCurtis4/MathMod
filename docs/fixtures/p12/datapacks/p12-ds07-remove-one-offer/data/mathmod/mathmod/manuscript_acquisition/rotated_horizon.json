@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "manuscript": "mathmod:rotated_horizon",
+  "loot_pools": ["mathmod:village_cartographer", "mathmod:mathemagician_house"],
+  "loot_weight": 4
+}

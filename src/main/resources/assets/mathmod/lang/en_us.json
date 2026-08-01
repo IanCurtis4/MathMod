@@ -117,6 +117,8 @@
   "screen.mathmod.rune_programmer.preset_orthogonal_step": "Orthogonal Step",
   "screen.mathmod.rune_programmer.preset_quarter_turn": "Quarter Turn",
   "screen.mathmod.rune_programmer.preset_quadrature_leap": "Quadrature Leap",
+  "screen.mathmod.rune_programmer.preset_factored_leap": "Factored Leap",
+  "screen.mathmod.rune_programmer.factored_leap_hint": "A bounded functional example: define halve once, apply it twice, and finish with one terminal push.",
   "screen.mathmod.rune_programmer.tab_saved": "Talisman",
   "screen.mathmod.rune_programmer.tab_presets": "Theorems",
   "screen.mathmod.rune_programmer.tab_custom": "Laboratory",

@@ -1,6 +1,6 @@
 # MathMod Priority Assessment
 
-Status: reassessed on 2026-07-22 after the P10 house and P11 physics slices.
+Status: reassessed by Sol on 2026-07-30 after A0, A1 read-only and L0 closure.
 
 This document consolidates the nearest actionable steps from the current MathMod
 planning documents. It is an ordering document, not a replacement for the
@@ -10,27 +10,30 @@ assessment should be updated.
 
 ## Decision Summary
 
-P0-P11 now form a substantial implemented foundation, but several slices still
-carry live acceptance gates. The active queue is:
+The repository now has accepted A0 built-in metadata, A1 read-only inspection
+and the complete L0 scoped-source/Factored Leap sequence. Several survival
+slices still carry live acceptance gates. The active queue is:
 
-1. **P12, consolidation:** close dedicated-server, reload, protection, economy,
-   narrator, real-modpack, and first-use evidence before calling dangerous
-   systems survival-ready.
-2. **P13, environmental fields:** add deterministic dimension/biome/height/
-   seed-derived correspondence fields, a true vector-field type, and bounded
-   observation without introducing mana.
-3. **P14, block mutation:** generalize P8 placement into a protected,
-   transactional break/remove/replace framework with explicit drop policies.
-4. **P15, field dynamics:** compose convergent, divergent, and rotational
-   fields into gravity, magnetism, pulses, vortices, and P14-gated destruction.
+1. **P12-TM-01F, P8 automated survival-boundary correction:** reject
+   non-finite construct motion, preflight loaded swept chunks and complete the
+   client-authority evidence under the bounded blocker review.
+2. **P12-TM-02, remaining automated consolidation:** close P9 target/refresh,
+   P10 reconciliation/configuration and P11 captured-snapshot variants.
+3. **P12-DS and P12-M:** execute the real dedicated-server/reload/reconnect,
+   first-use, ATM10 and narrator matrices.
+4. **0.3.0 gap audit:** after Foundation Beta consolidation, reconcile the
+   accepted read-only inspector with the remaining Inspectable Mathematics
+   release criteria.
 
-P13 architecture may proceed beside P12 because it is initially observational.
-P14 must not enable survival destruction until P12 closes P8's transaction and
-protection evidence. P15-A may ship entity-only effects after P13; P15-B terrain
-effects depend on P14.
+P13's existing observational slice remains experimental. No new P13/P14/P15
+authority is promoted while P12 is active. P14 must not enable survival
+destruction until P12 closes P8's transaction and protection evidence. A0-6
+external authoring sources remain backlog work rather than the next product
+priority.
 
 The detailed cross-document review and contract seeds are in
-`docs/P12_P15_EVOLUTION_PLAN.md`.
+`docs/P12_P15_EVOLUTION_PLAN.md`; the active exact ownership and gate are in
+`docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md`.
 
 ## Evaluation Method
 

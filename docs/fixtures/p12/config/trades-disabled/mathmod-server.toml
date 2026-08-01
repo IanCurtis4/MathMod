@@ -1,0 +1,8 @@
+[manuscript_acquisition]
+manuscriptLootEnabled = true
+mathemagicianProfessionEnabled = true
+mathemagicianTradesEnabled = false
+mathemagicianHouseEnabled = false
+surplusPolicy = "KEEP"
+villageLootChanceNumerator = 1
+villageLootChanceDenominator = 3

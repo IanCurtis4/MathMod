@@ -106,6 +106,7 @@ public final class UiPreviewHarness {
     private static boolean functionalInteractionAudited;
     private static boolean functionalNarrationAudited;
     private static boolean previewLocaleConfigured;
+    private static volatile boolean previewLocaleReloadComplete;
     private static String mouseCatalogTargetId = "";
     private static String keyboardCatalogTargetId = "";
     private static boolean sawResourceQuantityTwo;
@@ -171,16 +172,15 @@ public final class UiPreviewHarness {
         respawnRequested = false;
 
         if (patchouliMatrixPreview()) {
+            if (!previewLocaleReady(minecraft)) {
+                return;
+            }
             runPatchouliMatrixTick(minecraft);
             return;
         }
 
         ticks++;
-        if (!previewLocaleConfigured && !PREVIEW_LOCALE.isBlank()) {
-            minecraft.options.languageCode = PREVIEW_LOCALE;
-            minecraft.getLanguageManager().setSelected(PREVIEW_LOCALE);
-            minecraft.reloadResourcePacks();
-            previewLocaleConfigured = true;
+        if (!previewLocaleReady(minecraft)) {
             ticks = 0;
             return;
         }
@@ -3494,6 +3494,21 @@ public final class UiPreviewHarness {
         if (patchouliMatrixTicks >= 30) {
             patchouliMatrixCaptureRequested = true;
         }
+    }
+
+    /** Opens no preview content until its configured language resources are live. */
+    private static boolean previewLocaleReady(Minecraft minecraft) {
+        if (PREVIEW_LOCALE.isBlank()) {
+            return true;
+        }
+        if (!previewLocaleConfigured) {
+            minecraft.options.languageCode = PREVIEW_LOCALE;
+            minecraft.getLanguageManager().setSelected(PREVIEW_LOCALE);
+            previewLocaleConfigured = true;
+            minecraft.reloadResourcePacks().thenRun(() -> previewLocaleReloadComplete = true);
+            return false;
+        }
+        return previewLocaleReloadComplete && PREVIEW_LOCALE.equals(minecraft.options.languageCode);
     }
 
     private static void capturePatchouliMatrixFrame(Minecraft minecraft) {

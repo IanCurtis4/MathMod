@@ -28,7 +28,8 @@ public final class ConstructFlightManager {
     }
 
     static boolean launch(ServerPlayer owner, ConstructBody body, Vec3 origin, Vec3 velocity) {
-        if (velocity.length() > 2.0D || velocity.lengthSqr() <= VoxelRegion.EPSILON) return false;
+        if (!Double.isFinite(velocity.x) || !Double.isFinite(velocity.y) || !Double.isFinite(velocity.z)
+                || velocity.length() > 2.0D || velocity.lengthSqr() <= VoxelRegion.EPSILON) return false;
         if (FLIGHTS.stream().anyMatch(flight -> flight.owner().equals(owner.getUUID()))) return false;
         try {
             var item = ItemSelectors.exactItem(body.materialId());
@@ -83,10 +84,11 @@ public final class ConstructFlightManager {
     private static boolean tick(Flight flight) {
         if (flight.age() >= 100 || !flight.level().hasChunkAt(net.minecraft.core.BlockPos.containing(flight.position()))) return false;
         Vec3 next = flight.position().add(flight.velocity());
+        AABB sweep = new AABB(flight.position(), next).inflate(flight.body().collisionRadius());
+        if (!hasLoadedChunks(flight.level(), sweep)) return false;
         HitResult blockHit = flight.level().clip(new ClipContext(flight.position(), next,
                 ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, flight.collisionEntity()));
         if (blockHit.getType() != HitResult.Type.MISS) return false;
-        AABB sweep = new AABB(flight.position(), next).inflate(flight.body().collisionRadius());
         List<LivingEntity> targets = flight.level().getEntitiesOfClass(LivingEntity.class, sweep,
                 entity -> entity.isAlive() && !entity.getUUID().equals(flight.owner())).stream().limit(8).toList();
         if (!targets.isEmpty()) {
@@ -104,6 +106,20 @@ public final class ConstructFlightManager {
                 flight.body().collisionRadius() * 0.25D, flight.body().collisionRadius() * 0.25D,
                 flight.body().collisionRadius() * 0.25D, 0.01D);
         flight.advance(next);
+        return true;
+    }
+
+    private static boolean hasLoadedChunks(ServerLevel level, AABB sweptVolume) {
+        int minChunkX = Math.floorDiv((int) Math.floor(sweptVolume.minX), 16);
+        int maxChunkX = Math.floorDiv((int) Math.floor(sweptVolume.maxX), 16);
+        int minChunkZ = Math.floorDiv((int) Math.floor(sweptVolume.minZ), 16);
+        int maxChunkZ = Math.floorDiv((int) Math.floor(sweptVolume.maxZ), 16);
+        int probeY = (int) Math.floor(sweptVolume.minY);
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
+            for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++) {
+                if (!level.hasChunkAt(new net.minecraft.core.BlockPos(chunkX << 4, probeY, chunkZ << 4))) return false;
+            }
+        }
         return true;
     }
 

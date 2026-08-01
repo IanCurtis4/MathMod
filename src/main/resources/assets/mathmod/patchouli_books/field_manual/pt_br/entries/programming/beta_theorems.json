@@ -7,22 +7,22 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "O Programador rúnico organiza 29 magias editáveis como $(thing)teoremas$(): construções prontas cuja fórmula e grafo tipado podem ser inspecionados antes da inscrição.$(br2)A lista é rolável e separada em Movimento, Leitura, Controle, Alquimia e Metamagia. Passe o cursor sobre um teorema para ler a fórmula e seu comportamento completo."
+      "text": "O Programador rúnico organiza 29 magias editáveis como $(thing)teoremas$(): construções prontas com fórmulas e grafos tipados inspecionáveis.$(br2)O catálogo cobre Movimento, Leitura, Controle, Alquimia e Metamagia. Passe o cursor sobre um teorema para ver fórmula e comportamento.$(br2)$(thing)Salto fatorado$() está disponível pelo Programador rúnico."
     },
     {
       "type": "patchouli:text",
       "title": "Notação das fórmulas",
-      "text": "Uma fórmula é um resumo compacto, não código executável nem Fonte funcional persistida. Seu verbo externo declara a conclusão: $(thing)push$(), $(thing)blink$() ou $(thing)mark$(). Dentro dele, $(thing)self$(), $(thing)look$() e $(thing)up$() nomeiam valores; relações como $(thing)ray(self,12)$() e $(thing)nearest(4)$() compõem as evidências.$(br2)Selecione um teorema para manter sua fórmula acima da prova tipada numerada."
+      "text": "Uma fórmula é um resumo compacto, não código executável nem Fonte funcional persistida. Seu verbo externo declara a conclusão: $(thing)push$(), $(thing)blink$() ou $(thing)mark$(). Nomes como $(thing)self$(), $(thing)look$() e $(thing)up$() fornecem valores; relações fornecem evidências.$(br2)Selecione um teorema para manter sua fórmula acima da prova tipada numerada.$(br2)No Salto fatorado, fonte autoral, forma verificada e grafo compilado permanecem distintos. A fonte define a função pura $(thing)halve$(), aplica-a ao olhar observado e à subida autoral e então a reduz ao grafo existente. A função não permanece em tempo de execução."
     },
     {
       "type": "patchouli:text",
-      "title": "Teclado e narrador",
-      "text": "Pressione Tab até a paleta ganhar contorno ciano. As setas para cima e para baixo movem a linha marfim; Enter ou Espaço seleciona. Home/End salta para as pontas.$(br2)O narrador lê nome, posição na lista, fórmula ou tipo de saída e as teclas de ativação."
+      "title": "Teclas e narrador",
+      "text": "Tab contorna a paleta. As setas movem a linha marfim; Enter ou Espaço seleciona. Home/End salta para uma ponta.$(br2)O narrador lê nome, posição, fórmula ou tipo de saída e teclas de ativação.$(br2)O Inspetor funcional separa fonte autoral, forma verificada, grafo compilado e diagnósticos. As linhas focadas permanecem legíveis nos dois idiomas e na janela compacta."
     },
     {
       "type": "patchouli:text",
-      "title": "Movimento",
-      "text": "$(li)Pulo: vetor vertical curto.$(li)Dash: olhar multiplicado por 0,8.$(li)Salto vetorial: direção normalizada somada à subida.$(li)Recuo: multiplica o olhar por -0,65.$(li)Blink: teleporte seguro ao acerto de um raio."
+      "title": "Salto fatorado",
+      "text": "$(li)Pulo: vetor vertical curto.$(li)Dash: olhar multiplicado por 0,8.$(li)Salto vetorial: direção normalizada somada à subida.$(li)Recuo: olhar multiplicado por -0,65.$(li)Blink: teleporte seguro ao acerto de um raio.$(br2)Salto fatorado define $(thing)halve$() uma vez como função pura, aplica-a ao olhar e à subida autoral, soma os vetores e termina em $(thing)push_self$(). As observações ficam fora da lambda; redução beta e compilação removem a estrutura funcional antes da execução.$(br2)Erros ou autoridade obsoleta nunca inscrevem parcialmente um item."
     },
     {
       "type": "patchouli:text",

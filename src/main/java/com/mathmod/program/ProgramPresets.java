@@ -47,6 +47,7 @@ public final class ProgramPresets {
     public static final int CLEANSING_PROPOSITION_PRESET_ID = 34;
     public static final int RESISTANCE_LEMMA_PRESET_ID = 35;
     public static final int ABSORPTION_MANTLE_PRESET_ID = 36;
+    static final int FACTORED_LEAP_PRESET_ID = 37;
     public static final String AMETHYST_SACRIFICE_SELECTOR =
             AnchorPresetConfig.DEFAULT_SACRIFICE_SELECTOR;
     static final String LEGACY_AMETHYST_SACRIFICE_SELECTOR = "minecraft:amethyst_shard";
@@ -75,6 +76,7 @@ public final class ProgramPresets {
             preset(CLEANSING_PROPOSITION_PRESET_ID, "cleansing_proposition", TalismanPreset.Category.ALCHEMY, "cleansing_proposition", "cleanse(self)", "cleanse(self)", "mathmod:cleanse_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::cleansingProposition),
             preset(RESISTANCE_LEMMA_PRESET_ID, "resistance_lemma", TalismanPreset.Category.ALCHEMY, "resistance_lemma", "resist(self,30,II)", "resist(self,II)", "mathmod:resistance_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::resistanceLemma),
             preset(ABSORPTION_MANTLE_PRESET_ID, "absorption_mantle", TalismanPreset.Category.ALCHEMY, "absorption_mantle", "absorb(self,30,II)", "absorb(self,II)", "mathmod:absorption_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::absorptionMantle),
+            preset(FACTORED_LEAP_PRESET_ID, "factored_leap", TalismanPreset.Category.MOVEMENT, "factored_leap", "let halve(v)=v*0.5 in push(self,halve(look)+halve((0,1,0)))", "push(halve(look)+halve(up))", "mathmod:scale_vector", TalismanPreset.Provenance.HORIZON_MEASURERS, FactoredLeapTheorem::presentationGraph),
             preset(MERCURIAL_STEP_PRESET_ID, "mercurial_step", TalismanPreset.Category.ALCHEMY, "mercurial_step", "apply(speed,self,20,2)", "speed(self,II)", "mathmod:speed_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::mercurialStep),
             preset(UMBRAL_VEIL_PRESET_ID, "umbral_veil", TalismanPreset.Category.ALCHEMY, "umbral_veil", "apply(invis,self,30,1)", "invis(self,30)", "mathmod:invisibility_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::umbralVeil),
             preset(NOCTILUCENT_SIGHT_PRESET_ID, "noctilucent_sight", TalismanPreset.Category.ALCHEMY, "noctilucent_sight", "apply(night,self,60,1)", "night(self,60)", "mathmod:night_vision_entities_plan", TalismanPreset.Provenance.COMPOUNDERS_OF_CORRESPONDENCE, ProgramPresets::noctilucentSight),

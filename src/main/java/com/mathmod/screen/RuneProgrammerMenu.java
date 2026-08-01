@@ -11,6 +11,7 @@ import com.mathmod.program.ProgramPresets;
 import com.mathmod.program.ProgramStorage;
 import com.mathmod.program.ScopedFunctionalProjection;
 import com.mathmod.program.ScopedFunctionalProjectionWireCodec;
+import com.mathmod.program.ScopedFunctionalInscriptionEntryPoint;
 import com.mathmod.registry.ModItems;
 import com.mathmod.registry.ModMenus;
 import com.mathmod.runes.ProgramGraph;
@@ -95,6 +96,18 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
                         "knowledge.mathmod.construction.locked",
                         Component.translatable(requirement.orElseThrow().titleTranslationKey())
                 ), true);
+                return true;
+            }
+            if (selectedPreset.get().id().equals("mathmod:factored_leap")) {
+                if (!(player instanceof ServerPlayer serverPlayer)) return false;
+                boolean success = ScopedFunctionalInscriptionEntryPoint.tryInscribeFactoredLeap(
+                        serverPlayer, hand, () -> serverPlayer.containerMenu == this && stillValid(serverPlayer));
+                if (success) {
+                    invalidateProjection();
+                    syncHeldStack(player, stack);
+                    player.displayClientMessage(Component.translatable(
+                            "item.mathmod.programmed_talisman.saved", 21, 24), true);
+                }
                 return true;
             }
             ProgramGraph graph = selectedPreset.get().graph();

@@ -117,6 +117,8 @@
   "screen.mathmod.rune_programmer.preset_orthogonal_step": "Passo ortogonal",
   "screen.mathmod.rune_programmer.preset_quarter_turn": "Quarto de volta",
   "screen.mathmod.rune_programmer.preset_quadrature_leap": "Salto por quadratura",
+  "screen.mathmod.rune_programmer.preset_factored_leap": "Salto fatorado",
+  "screen.mathmod.rune_programmer.factored_leap_hint": "Um exemplo funcional delimitado: defina halve uma vez, aplique-a duas vezes e termine com um único empurrão terminal.",
   "screen.mathmod.rune_programmer.tab_saved": "Talismã",
   "screen.mathmod.rune_programmer.tab_presets": "Teoremas",
   "screen.mathmod.rune_programmer.tab_custom": "Laboratório",

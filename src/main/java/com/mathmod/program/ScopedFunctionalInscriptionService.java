@@ -27,7 +27,8 @@ final class ScopedFunctionalInscriptionService {
   final ScopedSourceEnvelope sourceEnvelope;
   try { sourceEnvelope=ScopedSourceWireCodec.encode(source); } catch (RuntimeException failure) { return ScopedCommitResult.COMMIT_FAILED; }
   String acceptedName=ProgramNames.sanitizeOptional(name);
-  var candidate=new ScopedProgramComponentTransaction.State(graph,true,sourceEnvelope,true,acceptedName,!acceptedName.isEmpty(),resources,!resources.isEmpty(),null,false,null,false);
+  boolean hasName=!acceptedName.isEmpty(); boolean hasResources=!resources.isEmpty();
+  var candidate=new ScopedProgramComponentTransaction.State(graph,true,sourceEnvelope,true,hasName?acceptedName:null,hasName,hasResources?resources:null,hasResources,null,false,null,false);
   if(authority.cancellation().cancelled())return ScopedCommitResult.REQUEST_CANCELLED;
   if(authority.target().get()!=stack||!(stack.getItem() instanceof ProgrammedTalismanItem))return ScopedCommitResult.TARGET_STALE;
   if(stack.getCount()!=stackCopy.getCount()||!net.minecraft.world.item.ItemStack.isSameItemSameComponents(stackCopy,stack))return ScopedCommitResult.TARGET_STALE;

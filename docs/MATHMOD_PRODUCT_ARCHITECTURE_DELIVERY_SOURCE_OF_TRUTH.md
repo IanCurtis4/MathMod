@@ -420,6 +420,15 @@ Primary goals:
 - characterize public ids and persistence behavior;
 - avoid major new product systems.
 
+**Active completion contract (2026-07-30):**
+`docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md` accepts P12 as the next
+delivery gate. Test-only `P12-TM-01` reproduced NaN-velocity and
+unloaded-sweep production defects and is `NEEDS_FIX`.
+`docs/P12_TM_01_BLOCKER_REVIEW.md` authorizes bounded `P12-TM-01F` as `READY`.
+P12-TM-02, the real dedicated-server matrix and manual
+first-use/accessibility evidence remain blocked in that order. A0-6 and
+P14/P15 expansion remain deferred.
+
 Exit:
 
 - the current feature set has an honest support classification;
@@ -657,7 +666,7 @@ MathMod has two top-level tracks.
 
 ### 8.1 Survival and world track
 
-- P12: consolidation;
+- P12: consolidation — active; `P12-TM-01F` ready;
 - P13: environmental correspondence hardening;
 - P14: transactional mutation;
 - P15-A: entity-only field dynamics;
@@ -750,7 +759,7 @@ Dependency leverage: **Very High**
 
 **Goal:** make the existing functional AST a supported persisted authoring source.
 
-**Contract status (2026-07-28):** source authority and pure compilation are
+**Contract status (2026-07-29):** source authority and pure compilation are
 accepted in `docs/L0_SCOPED_SOURCE_PERSISTENCE_AND_COMPILE_CONTRACT.md`,
 `docs/L0_TM_01_FINAL_GATE_ACCEPTANCE.md`, and
 `docs/L0_PURE_COMPILE_SEMANTIC_REVIEW.md`. The persistent component identity,
@@ -763,8 +772,24 @@ and bounded correction are accepted in
 `docs/L0_TM_02_FINAL_GATE_ACCEPTANCE.md`, with 30/30 focused tests. Exact
 codec/component, source/result binding, atomic item transition, rollback and
 GameTest ownership are accepted in
-`docs/L0_ATOMIC_PERSISTENCE_READINESS.md`; `L0-TM-03` is ready. Networking
-remains excluded.
+`docs/L0_ATOMIC_PERSISTENCE_READINESS.md` and
+`docs/L0_TM_03_FINAL_GATE_ACCEPTANCE.md`. The bounded read-only projection is
+accepted in `docs/L0_TM_04_FINAL_GATE_ACCEPTANCE.md`. The first gameplay theorem
+identity, source semantics, lowering oracle, player outcome, teaching scope and
+Luna ownership are frozen in
+`docs/L0_FIRST_GAMEPLAY_THEOREM_SPECIFICATION.md`. The first Luna content delta
+is conforming, but its original PT-BR Patchouli captures rendered EN-US. The
+bounded preview-harness correction `L0-TM-04F5` is accepted in
+`docs/L0_TM_04F5_GATE_ACCEPTANCE.md`. The resulting localized captures expose
+copy overflow in EN-US and PT-BR p0/p2; Luna's bounded correction and all eight
+final captures are accepted in `docs/L0_LU_01_FINAL_GATE_ACCEPTANCE.md`.
+The remaining boundary is accepted in
+`docs/L0_INTERNAL_GAMEPLAY_INTEGRATION_READINESS.md`. The final theorem gate is
+accepted in `docs/L0_TM_05_FINAL_GATE_ACCEPTANCE.md`. The F2 evidence closes
+the id/order-independent semantic graph oracle and executes tooltip-equivalent
+reads plus actual outbound-packet observation for failure paths. `L0-TM-05`,
+F and F2 are `DONE` with `ACCEPT`; the accepted transaction machine remains
+the sole commit authority and networking remains unchanged.
 
 Delivery order:
 
@@ -776,11 +801,14 @@ Delivery order:
 5. server compile service readiness, immutable registry generation and server
    service implementation — complete;
 6. approved codec, optional source component and atomic
-   graph/source/name/resource/Guided integration — ready;
-7. persistence acceptance and projection readiness;
-8. read-only source/reduced/graph Inspector projection;
-9. bilingual teaching, narration, and previews;
-10. one explicit-function gameplay theorem.
+   graph/source/name/resource/Guided integration — complete;
+7. persistence acceptance and projection readiness — complete;
+8. read-only source/reduced/graph Inspector projection — complete;
+9. first-theorem specification and bilingual teaching/evidence — complete;
+10. exact internal integration-readiness amendment — complete;
+11. one explicit-function gameplay theorem — complete (`ACCEPT`);
+12. post-implementation bilingual content alignment — complete (`ACCEPT`) in
+    `docs/L0_LU_02_GATE_ACCEPTANCE.md`.
 
 Benefit: **Very High**  
 Cost: **High**  
