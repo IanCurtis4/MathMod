@@ -327,10 +327,18 @@ Therefore:
   five configuration-parser observations in
   `docs/P12_FX_01_AUTONOMOUS_EVIDENCE.md`;
 - the corrected DS-02 fixture exposed FX-R3: a rejected same-resource override
-  publishes a reduced knowledge generation. `P12-FX-01` is `NEEDS_FIX` with a
-  concrete `SNAPSHOT_FAILURE`;
-- `P12-TM-03` is `READY` under
+  published a reduced knowledge generation and originally put `P12-FX-01` in
+  `NEEDS_FIX` with a concrete `SNAPSHOT_FAILURE`;
+- `P12-TM-03` was dispatched under
   `docs/P12_KNOWLEDGE_RELOAD_CORRECTION_GATE.md`;
+- Terra Medium's listener-only blocker was accepted in
+  `docs/P12_TM_03_BLOCKER_RESOLUTION.md`; R1-R4 from the first delivered delta
+  were recorded in `docs/P12_TM_03_GATE_REVIEW.md` and are now closed by F2;
+- `P12-TM-03`, F and F2 are `DONE` with `ACCEPT` under
+  `docs/P12_TM_03_FINAL_GATE_ACCEPTANCE.md`: 17 focused JUnit, 526 global
+  JUnit and 59/59 global GameTests pass, including the named real-load test;
+- `P12-FX-01` is no longer blocked by a known product defect; it is `BLOCKED`
+  on a clean immutable commit/JAR and the corrected standalone DS-02 recheck;
 - DS-06 and any truly two-client evidence are `BACKLOG`, not passed or waived,
   under `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`;
 - `P12-DS` remains blocked.
@@ -395,11 +403,13 @@ Therefore:
 | `P12-TM-01F` | Terra Medium | `DONE` (`ACCEPT`) | finite launch + loaded swept-volume correction accepted | `P12-TM-02` |
 | `P12-TM-02` | Terra Medium | `DONE` (`ACCEPT`) | 47 focused; P9 4, P10 5, P11 5; 58 global GameTests | `P12-SOL-02` |
 | `P12-SOL-02` | Sol | `DONE` (`ACCEPT`) | fixture/evidence contract frozen | `P12-FX-01` |
-| `P12-FX-01` | Sol + operator | `NEEDS_FIX` (`SNAPSHOT_FAILURE`) | FX-R3 reduced knowledge generation | `P12-TM-03` correction and runtime recheck |
+| `P12-FX-01` | Sol + operator | `BLOCKED` | clean immutable accepted commit/JAR plus standalone DS-02 recheck | complete reproducible fixture proof |
 | `P12-FX-01F` | Terra Medium | `DONE` (`ACCEPT`) | FX-R1/FX-R2 closed | Sol/operator external continuation |
-| `P12-TM-03` | Terra Medium | `READY` | FX-R3 frozen correction gate | corrected immutable runtime recheck |
+| `P12-TM-03` | Terra Medium | `DONE` (`ACCEPT`) | paired atomic publication accepted | external runtime recheck |
+| `P12-TM-03F` | Terra Medium | `DONE` (`ACCEPT`) | R1-R4 closed through F2 | external runtime recheck |
+| `P12-TM-03F2` | Terra Medium | `DONE` (`ACCEPT`) | reproducible real-load GameTest; 59/59 global | external runtime recheck |
 | `P12-DS-MP` | Sol + operator | `BACKLOG` | two distinct authenticated accounts | DS-06 multiplayer evidence |
-| `P12-DS` | Sol + operator | `BLOCKED` | accepted P12-TM-03 plus corrected standalone recheck | single-client dedicated-server evidence |
+| `P12-DS` | Sol + operator | `BLOCKED` | accepted P12-TM-03F2 plus corrected standalone recheck | single-client dedicated-server evidence |
 | `P12-M` | Sol + independent player | `BLOCKED` | stable build and observation fixture | manual first-use/accessibility evidence |
 | `A0-LU-INVENTORY` | Luna | `DONE` | frozen current ids | `A0-SOL-LU-01` |
 | `A0-SOL-LU-01` | Sol | `DONE` (`ACCEPT`) | completed Luna inventory | `A0-LU-01` |
@@ -409,7 +419,7 @@ Therefore:
 ### Tasks that may be dispatched now
 
 ```text
-P12-TM-03 — Terra Medium knowledge reload atomicity correction.
+None — commit the accepted P12-TM-03/F/F2 delta and restore a clean tree first.
 ```
 
 ### Tasks that must not be dispatched yet
@@ -430,9 +440,9 @@ Use these four role threads as the stable pipeline:
 
 | Thread | Current assignment | Next assignment |
 |---|---|---|
-| Sol | autonomous fixture review complete | review `P12-TM-03` handoff, then rerun DS-02 |
+| Sol | `P12-TM-03F2` accepted | after clean commit/build, rerun standalone DS-02 |
 | Terra High | `L0-TH-01` complete with `APPROVE` | wait for later semantic gate |
-| Terra Medium | `P12-TM-03` `READY` | implement only the frozen knowledge reload correction |
+| Terra Medium | `P12-TM-03/F/F2` `DONE` with `ACCEPT` | wait; ownership released |
 | Luna | `L0-LU-02` accepted | wait for a later content gate |
 
 Do not manually switch the model within a thread. Keep the role stable and
@@ -1300,12 +1310,11 @@ The L0 sequence is closed and the next product priority is frozen in
 `docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md`. Only:
 
 ```text
-P12-TM-03 is dispatchable under the frozen reload-atomicity correction gate.
+No model task is dispatchable; Sol/operator needs a clean immutable revision.
 ```
 
-Only the single production listener and focused tests listed in
-`docs/P12_KNOWLEDGE_RELOAD_CORRECTION_GATE.md` are writable. Networking,
-schemas, content and public APIs remain read-only.
+All P12-TM-03 ownership is released. Networking, schemas, content and public
+APIs remain read-only.
 
 ### Current downstream sequence
 
@@ -1345,8 +1354,10 @@ P12-SOL-01 DONE (ACCEPT)
     -> P12-TM-02 DONE (ACCEPT)
     -> P12-SOL-02 DONE (ACCEPT)
     -> P12-FX-01F DONE (ACCEPT)
-    -> P12-FX-01 NEEDS_FIX (SNAPSHOT_FAILURE)
-    -> P12-TM-03 READY
+    -> P12-TM-03 DONE (ACCEPT)
+    -> P12-TM-03F DONE (ACCEPT)
+    -> P12-TM-03F2 DONE (ACCEPT)
+    -> P12-FX-01 BLOCKED (CLEAN IMMUTABLE RUNTIME RECHECK)
     -> P12-DS BLOCKED
     -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED
@@ -1469,14 +1480,15 @@ The task must name:
 
 Open or update the threads in this order:
 
-1. Dispatch only `P12-TM-03` to Terra Medium under
-   `docs/P12_KNOWLEDGE_RELOAD_CORRECTION_GATE.md`.
-2. Keep `P12-FX-01` in `NEEDS_FIX` and `P12-DS` blocked until Sol accepts the
-   handoff and reproduces the corrected standalone DS-02 sequence.
-3. Keep DS-06/two-client evidence in `P12-DS-MP BACKLOG`; it is neither a pass
-   nor a prerequisite for implementing P12-TM-03.
-4. Keep Luna and Terra High idle.
-5. Keep A0-6 external loaders in `BACKLOG`; the W4 decision requires a future
+1. Do not dispatch another model task.
+2. Commit the accepted P12-TM-03/F/F2 implementation, tests, handoffs and Sol
+   gate documents; exclude runtime logs and restore a clean working tree.
+3. Sol must then rebuild/hash the immutable JAR and reproduce the corrected
+   standalone DS-02 sequence. Keep `P12-DS` blocked until that result.
+4. Keep DS-06/two-client evidence in `P12-DS-MP BACKLOG`; it is neither a pass
+   nor a prerequisite for the single-client recheck.
+5. Keep Luna and Terra High idle.
+6. Keep A0-6 external loaders in `BACKLOG`; the W4 decision requires a future
    Sol-owned contract before any semantic review or implementation.
 
 Do not start external loaders, persistence/schema changes, mutable functional
@@ -1527,8 +1539,10 @@ P12-SOL-01 DONE (ACCEPT)
     -> P12-TM-02 DONE (ACCEPT)
     -> P12-SOL-02 DONE (ACCEPT)
     -> P12-FX-01F DONE (ACCEPT)
-    -> P12-FX-01 NEEDS_FIX (SNAPSHOT_FAILURE)
-    -> P12-TM-03 READY
+    -> P12-TM-03 DONE (ACCEPT)
+    -> P12-TM-03F DONE (ACCEPT)
+    -> P12-TM-03F2 DONE (ACCEPT)
+    -> P12-FX-01 BLOCKED (CLEAN IMMUTABLE RUNTIME RECHECK)
     -> P12-DS BLOCKED
     -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED

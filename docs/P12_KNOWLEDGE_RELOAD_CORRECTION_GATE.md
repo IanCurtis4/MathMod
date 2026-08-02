@@ -3,7 +3,25 @@
 **Task:** `P12-TM-03`  
 **Date:** 2026-08-01  
 **Owner:** Terra Medium  
-**Status:** `READY`
+**Status:** `P12-TM-03/P12-TM-03F/P12-TM-03F2 DONE` with `ACCEPT`
+
+**Ownership amendment:** the concrete listener-only blocker is accepted in
+`docs/P12_TM_03_BLOCKER_RESOLUTION.md`. That document expands the exact
+production/test ownership and requires one paired atomic publication point.
+It does not weaken any semantic or command below.
+
+**Current review:** the delivered paired-publication delta has four remaining
+findings in `docs/P12_TM_03_GATE_REVIEW.md`. That review is the writable scope
+and dispatch authority for P12-TM-03F.
+
+**F review:** production closes the structural findings, but its real-load
+JUnit oracle depends on undeclared external build state. The reproducible
+GameTest correction and exact test-only ownership are frozen in
+`docs/P12_TM_03F_GATE_REVIEW.md`, which is now the dispatch authority.
+
+**Final acceptance:** F2 replaces that oracle with one self-contained NeoForge
+GameTest. The complete automated gate and reproduced evidence are accepted in
+`docs/P12_TM_03_FINAL_GATE_ACCEPTANCE.md`. All TM ownership is released.
 
 ## Purpose
 
@@ -36,7 +54,7 @@ networking, client or UI work.
 
 ## Ownership
 
-Production file authorized:
+Initially authorized production file:
 
 ```text
 src/main/java/com/mathmod/knowledge/KnowledgeDefinitionReloadListener.java
@@ -56,10 +74,10 @@ Handoff:
 docs/handoffs/P12_TM_03_HANDOFF.md
 ```
 
-The existing registry tests may be edited only if needed to express the
-reload atomicity vectors. No other production file is authorized. Stop and
-escalate with a concrete counterexample if a correct implementation requires
-additional production ownership.
+The original listener-only boundary proved insufficient. The superseding exact
+ownership is frozen in `docs/P12_TM_03_BLOCKER_RESOLUTION.md`. No file beyond
+that amendment is authorized. Stop and escalate with a new concrete
+counterexample if the corrected implementation still requires more ownership.
 
 ## Required focused vectors
 

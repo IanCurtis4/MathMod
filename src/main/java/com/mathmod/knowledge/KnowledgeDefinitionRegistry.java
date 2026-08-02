@@ -28,54 +28,82 @@ final class KnowledgeDefinitionRegistry {
     }
 
     synchronized void registerKube(EpiphanyDefinition definition) {
-        Map<NamespacedId, EpiphanyDefinition> candidate = new LinkedHashMap<>(kubeEpiphanies);
-        candidate.put(definition.id(), definition);
-        KnowledgeDefinitionSnapshot next = buildSnapshot(
-                candidate,
-                kubeDiscoveries,
-                dataEpiphanies,
-                dataDiscoveries
-        );
-        kubeEpiphanies.clear();
-        kubeEpiphanies.putAll(candidate);
-        snapshot = next;
+        commit(prepareKube(definition));
     }
 
     synchronized void registerKube(DiscoveryDefinition definition) {
-        Map<NamespacedId, DiscoveryDefinition> candidate = new LinkedHashMap<>(kubeDiscoveries);
-        candidate.put(definition.id(), definition);
-        KnowledgeDefinitionSnapshot next = buildSnapshot(
-                kubeEpiphanies,
-                candidate,
-                dataEpiphanies,
-                dataDiscoveries
-        );
-        kubeDiscoveries.clear();
-        kubeDiscoveries.putAll(candidate);
-        snapshot = next;
+        commit(prepareKube(definition));
     }
 
     synchronized void publishData(
             Map<NamespacedId, EpiphanyDefinition> epiphanies,
             Map<NamespacedId, DiscoveryDefinition> discoveries
     ) {
-        Map<NamespacedId, EpiphanyDefinition> boundedEpiphanies =
-                bounded(epiphanies, MAX_EPIPHANIES, "epiphany");
-        Map<NamespacedId, DiscoveryDefinition> boundedDiscoveries =
-                bounded(discoveries, MAX_DISCOVERIES, "discovery");
-        KnowledgeDefinitionSnapshot next = buildSnapshot(
-                kubeEpiphanies,
-                kubeDiscoveries,
-                boundedEpiphanies,
-                boundedDiscoveries
-        );
-        dataEpiphanies = boundedEpiphanies;
-        dataDiscoveries = boundedDiscoveries;
-        snapshot = next;
+        commit(prepareData(epiphanies, discoveries));
     }
 
     KnowledgeDefinitionSnapshot snapshot() {
         return snapshot;
+    }
+
+    synchronized Prepared prepareData(
+            Map<NamespacedId, EpiphanyDefinition> epiphanies,
+            Map<NamespacedId, DiscoveryDefinition> discoveries
+    ) {
+        return prepare(kubeEpiphanies, kubeDiscoveries,
+                bounded(epiphanies, MAX_EPIPHANIES, "epiphany"),
+                bounded(discoveries, MAX_DISCOVERIES, "discovery"));
+    }
+
+    synchronized Prepared prepareCurrent() {
+        return prepare(kubeEpiphanies, kubeDiscoveries, dataEpiphanies, dataDiscoveries);
+    }
+
+    synchronized Prepared prepareKube(EpiphanyDefinition definition) {
+        Map<NamespacedId, EpiphanyDefinition> candidate = new LinkedHashMap<>(kubeEpiphanies);
+        candidate.put(definition.id(), definition);
+        return prepare(candidate, kubeDiscoveries, dataEpiphanies, dataDiscoveries);
+    }
+
+    synchronized Prepared prepareKube(DiscoveryDefinition definition) {
+        Map<NamespacedId, DiscoveryDefinition> candidate = new LinkedHashMap<>(kubeDiscoveries);
+        candidate.put(definition.id(), definition);
+        return prepare(kubeEpiphanies, candidate, dataEpiphanies, dataDiscoveries);
+    }
+
+    synchronized void commit(Prepared prepared) {
+        kubeEpiphanies.clear();
+        kubeEpiphanies.putAll(prepared.kubeEpiphanies());
+        kubeDiscoveries.clear();
+        kubeDiscoveries.putAll(prepared.kubeDiscoveries());
+        dataEpiphanies = prepared.dataEpiphanies();
+        dataDiscoveries = prepared.dataDiscoveries();
+        snapshot = prepared.snapshot();
+    }
+
+    private Prepared prepare(
+            Map<NamespacedId, EpiphanyDefinition> kubeEpiphanies,
+            Map<NamespacedId, DiscoveryDefinition> kubeDiscoveries,
+            Map<NamespacedId, EpiphanyDefinition> dataEpiphanies,
+            Map<NamespacedId, DiscoveryDefinition> dataDiscoveries
+    ) {
+        return new Prepared(kubeEpiphanies, kubeDiscoveries, dataEpiphanies, dataDiscoveries,
+                buildSnapshot(kubeEpiphanies, kubeDiscoveries, dataEpiphanies, dataDiscoveries));
+    }
+
+    record Prepared(
+            Map<NamespacedId, EpiphanyDefinition> kubeEpiphanies,
+            Map<NamespacedId, DiscoveryDefinition> kubeDiscoveries,
+            Map<NamespacedId, EpiphanyDefinition> dataEpiphanies,
+            Map<NamespacedId, DiscoveryDefinition> dataDiscoveries,
+            KnowledgeDefinitionSnapshot snapshot
+    ) {
+        Prepared {
+            kubeEpiphanies = Map.copyOf(kubeEpiphanies);
+            kubeDiscoveries = Map.copyOf(kubeDiscoveries);
+            dataEpiphanies = Map.copyOf(dataEpiphanies);
+            dataDiscoveries = Map.copyOf(dataDiscoveries);
+        }
     }
 
     private void rebuild() {

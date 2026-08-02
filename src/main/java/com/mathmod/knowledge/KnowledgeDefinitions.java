@@ -142,22 +142,49 @@ public final class KnowledgeDefinitions {
     }
 
     public static KnowledgeDefinitionSnapshot snapshot() {
-        return REGISTRY.snapshot();
+        return KnowledgeReloadPublication.definitions();
     }
 
     public static void registerKube(EpiphanyDefinition definition) {
-        REGISTRY.registerKube(definition);
+        KnowledgeReloadPublication.registerKube(definition);
     }
 
     public static void registerKube(DiscoveryDefinition definition) {
-        REGISTRY.registerKube(definition);
+        KnowledgeReloadPublication.registerKube(definition);
     }
 
     static void publishData(
             java.util.Map<NamespacedId, EpiphanyDefinition> epiphanies,
             java.util.Map<NamespacedId, DiscoveryDefinition> discoveries
     ) {
-        REGISTRY.publishData(epiphanies, discoveries);
+        KnowledgeReloadPublication.publishDefinitions(epiphanies, discoveries);
+    }
+
+    static KnowledgeDefinitionRegistry.Prepared prepareData(
+            java.util.Map<NamespacedId, EpiphanyDefinition> epiphanies,
+            java.util.Map<NamespacedId, DiscoveryDefinition> discoveries
+    ) {
+        return REGISTRY.prepareData(epiphanies, discoveries);
+    }
+
+    static KnowledgeDefinitionRegistry.Prepared prepareCurrent() {
+        return REGISTRY.prepareCurrent();
+    }
+
+    static KnowledgeDefinitionRegistry.Prepared prepareKube(EpiphanyDefinition definition) {
+        return REGISTRY.prepareKube(definition);
+    }
+
+    static KnowledgeDefinitionRegistry.Prepared prepareKube(DiscoveryDefinition definition) {
+        return REGISTRY.prepareKube(definition);
+    }
+
+    static void commit(KnowledgeDefinitionRegistry.Prepared prepared) {
+        REGISTRY.commit(prepared);
+    }
+
+    static KnowledgeDefinitionSnapshot rawSnapshot() {
+        return REGISTRY.snapshot();
     }
 
     public static PlayerKnowledge grantP2P3LegacyAccess(PlayerKnowledge knowledge) {

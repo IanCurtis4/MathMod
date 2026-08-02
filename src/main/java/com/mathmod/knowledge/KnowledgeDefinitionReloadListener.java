@@ -15,6 +15,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,19 +45,22 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
                         backgroundExecutor
                 )
                 .thenCompose(barrier::wait)
-                .thenAcceptAsync(this::apply, gameExecutor);
+                .thenAcceptAsync(KnowledgeDefinitionReloadListener::apply, gameExecutor);
     }
 
-    static LoadResult load(ResourceManager resources) {
+    static CandidatePublication.LoadResult load(ResourceManager resources) {
+        List<String> failures = new ArrayList<>();
         Map<NamespacedId, EpiphanyDefinition> epiphanies = loadDefinitions(
                 resources,
                 EPIPHANY_PATH,
-                KnowledgeDefinitionReloadListener::parseEpiphany
+                KnowledgeDefinitionReloadListener::parseEpiphany,
+                failures
         );
         Map<NamespacedId, DiscoveryDefinition> discoveries = loadDefinitions(
                 resources,
                 DISCOVERY_PATH,
-                KnowledgeDefinitionReloadListener::parseDiscovery
+                KnowledgeDefinitionReloadListener::parseDiscovery,
+                failures
         );
         Map<KnowledgeKey, KnowledgeKey> aliases = new LinkedHashMap<>();
         resources.listResources(ALIAS_PATH, KnowledgeDefinitionReloadListener::isJson)
@@ -69,6 +73,7 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
                         NamespacedId to = NamespacedId.parse(requiredText(json, "to"));
                         aliases.put(new KnowledgeKey(kind, from), new KnowledgeKey(kind, to));
                     } catch (Exception exception) {
+                        failures.add("alias " + location + ": " + exception.getMessage());
                         MathMod.LOGGER.error(
                                 "Rejected knowledge alias {} from {}: {}",
                                 location,
@@ -77,80 +82,60 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
                         );
                     }
                 });
-        return new LoadResult(epiphanies, discoveries, aliases);
+        return new CandidatePublication.LoadResult(epiphanies, discoveries, aliases, failures);
     }
 
-    private void apply(LoadResult result) {
-        Map<NamespacedId, EpiphanyDefinition> epiphanies =
-                validEpiphanies(result.epiphanies());
-        Map<NamespacedId, DiscoveryDefinition> discoveries =
-                validDiscoveries(result.discoveries());
-        boolean definitionsPublished = true;
-        try {
-            KnowledgeDefinitions.publishData(epiphanies, discoveries);
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            definitionsPublished = false;
-            MathMod.LOGGER.error(
-                    "Knowledge definitions were not published; the previous definition snapshot remains active: {}",
-                    exception.getMessage()
-            );
+    static void apply(CandidatePublication.LoadResult result) {
+        CandidatePublication.apply(result);
+    }
+
+    static final class CandidatePublication {
+        private CandidatePublication() {
         }
-        boolean aliasesPublished = true;
-        try {
-            KnowledgeAliases.publishData(result.aliases());
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            aliasesPublished = false;
-            MathMod.LOGGER.error(
-                    "Knowledge aliases were not published; the previous alias snapshot remains active: {}",
-                    exception.getMessage()
-            );
-        }
-        if (definitionsPublished || aliasesPublished) {
+
+        static void apply(LoadResult result) {
+            try {
+                validate(result);
+                KnowledgeReloadPublication.publish(
+                        result.epiphanies(), result.discoveries(), result.aliases());
+            } catch (IllegalArgumentException | IllegalStateException exception) {
+                MathMod.LOGGER.error(
+                        "Knowledge reload rejected before publication; previous definition and alias snapshots remain active: {}",
+                        exception.getMessage()
+                );
+                return;
+            }
             MathMod.LOGGER.info(
-                    "Knowledge reload published definitions={} ({} epiphanies, {} discoveries), aliases={} ({})",
-                    definitionsPublished,
-                    epiphanies.size(),
-                    discoveries.size(),
-                    aliasesPublished,
+                    "Knowledge reload published {} epiphanies, {} discoveries, and {} aliases",
+                    result.epiphanies().size(),
+                    result.discoveries().size(),
                     result.aliases().size()
             );
         }
-    }
 
-    private static Map<NamespacedId, EpiphanyDefinition> validEpiphanies(
-            Map<NamespacedId, EpiphanyDefinition> definitions
-    ) {
-        Map<NamespacedId, EpiphanyDefinition> valid = new LinkedHashMap<>();
-        definitions.forEach((id, definition) -> {
-            try {
-                KnowledgeDefinitions.validateDefinition(
-                        definition,
-                        MathModRuneBootstrap.registry()
-                );
-                valid.put(id, definition);
-            } catch (IllegalStateException exception) {
-                MathMod.LOGGER.error("Rejected epiphany {}: {}", id, exception.getMessage());
+        private static void validate(LoadResult result) {
+            if (!result.failures().isEmpty()) {
+                throw new IllegalArgumentException(String.join("; ", result.failures()));
             }
-        });
-        return valid;
-    }
+            result.epiphanies().forEach((id, definition) ->
+                    KnowledgeDefinitions.validateDefinition(definition, MathModRuneBootstrap.registry()));
+            result.discoveries().forEach((id, definition) ->
+                    KnowledgeDefinitions.validateDefinition(definition, MathModRuneBootstrap.registry()));
+        }
 
-    private static Map<NamespacedId, DiscoveryDefinition> validDiscoveries(
-            Map<NamespacedId, DiscoveryDefinition> definitions
-    ) {
-        Map<NamespacedId, DiscoveryDefinition> valid = new LinkedHashMap<>();
-        definitions.forEach((id, definition) -> {
-            try {
-                KnowledgeDefinitions.validateDefinition(
-                        definition,
-                        MathModRuneBootstrap.registry()
-                );
-                valid.put(id, definition);
-            } catch (IllegalStateException exception) {
-                MathMod.LOGGER.error("Rejected discovery {}: {}", id, exception.getMessage());
+        record LoadResult(
+                Map<NamespacedId, EpiphanyDefinition> epiphanies,
+                Map<NamespacedId, DiscoveryDefinition> discoveries,
+                Map<KnowledgeKey, KnowledgeKey> aliases,
+                List<String> failures
+        ) {
+            LoadResult {
+                epiphanies = Map.copyOf(epiphanies);
+                discoveries = Map.copyOf(discoveries);
+                aliases = Map.copyOf(aliases);
+                failures = List.copyOf(failures);
             }
-        });
-        return valid;
+        }
     }
 
     private static EpiphanyDefinition parseEpiphany(NamespacedId id, JsonObject json) {
@@ -198,7 +183,8 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
     private static <T> Map<NamespacedId, T> loadDefinitions(
             ResourceManager resources,
             String directory,
-            DefinitionParser<T> parser
+            DefinitionParser<T> parser,
+            List<String> failures
     ) {
         Map<NamespacedId, T> definitions = new LinkedHashMap<>();
         resources.listResources(directory, KnowledgeDefinitionReloadListener::isJson)
@@ -208,6 +194,7 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
                         JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
                         definitions.put(id, parser.parse(id, json));
                     } catch (Exception exception) {
+                        failures.add("definition " + location + ": " + exception.getMessage());
                         MathMod.LOGGER.error(
                                 "Rejected knowledge definition {} from {}: {}",
                                 location,
@@ -264,18 +251,6 @@ public final class KnowledgeDefinitionReloadListener implements PreparableReload
             throw new IllegalArgumentException("Missing array field " + field);
         }
         return json.getAsJsonArray(field);
-    }
-
-    record LoadResult(
-            Map<NamespacedId, EpiphanyDefinition> epiphanies,
-            Map<NamespacedId, DiscoveryDefinition> discoveries,
-            Map<KnowledgeKey, KnowledgeKey> aliases
-    ) {
-        LoadResult {
-            epiphanies = Map.copyOf(epiphanies);
-            discoveries = Map.copyOf(discoveries);
-            aliases = Map.copyOf(aliases);
-        }
     }
 
     @FunctionalInterface

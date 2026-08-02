@@ -17,32 +17,69 @@ public final class KnowledgeAliases {
     }
 
     public static KnowledgeAliasRegistry current() {
-        return current;
+        return KnowledgeReloadPublication.aliases();
     }
 
-    public static synchronized void registerKube(
+    public static void registerKube(
             KnowledgeKind kind,
             NamespacedId alias,
             NamespacedId target
     ) {
-        Map<KnowledgeKey, KnowledgeKey> candidate = new LinkedHashMap<>(KUBE_ALIASES);
-        candidate.put(new KnowledgeKey(kind, alias), new KnowledgeKey(kind, target));
-        KnowledgeAliasRegistry next = createCurrent(candidate, dataAliases);
-        KUBE_ALIASES.clear();
-        KUBE_ALIASES.putAll(candidate);
-        current = next;
+        KnowledgeReloadPublication.registerKube(kind, alias, target);
     }
 
-    static synchronized void publishData(Map<KnowledgeKey, KnowledgeKey> aliases) {
+    static void publishData(Map<KnowledgeKey, KnowledgeKey> aliases) {
+        KnowledgeReloadPublication.publishAliases(aliases);
+    }
+
+    static Prepared prepareData(Map<KnowledgeKey, KnowledgeKey> aliases) {
         if (aliases.size() > MAX_ALIASES) {
             throw new IllegalArgumentException(
                     "Too many knowledge aliases: " + aliases.size() + " > " + MAX_ALIASES
             );
         }
-        Map<KnowledgeKey, KnowledgeKey> candidate = Map.copyOf(aliases);
-        KnowledgeAliasRegistry next = createCurrent(KUBE_ALIASES, candidate);
-        dataAliases = candidate;
-        current = next;
+        return prepare(KUBE_ALIASES, aliases);
+    }
+
+    static Prepared prepareCurrent() {
+        return prepare(KUBE_ALIASES, dataAliases);
+    }
+
+    static Prepared prepareKube(KnowledgeKind kind, NamespacedId alias, NamespacedId target) {
+        Map<KnowledgeKey, KnowledgeKey> candidate = new LinkedHashMap<>(KUBE_ALIASES);
+        candidate.put(new KnowledgeKey(kind, alias), new KnowledgeKey(kind, target));
+        return prepare(candidate, dataAliases);
+    }
+
+    static void commit(Prepared prepared) {
+        KUBE_ALIASES.clear();
+        KUBE_ALIASES.putAll(prepared.kubeAliases());
+        dataAliases = prepared.dataAliases();
+        current = prepared.registry();
+    }
+
+    private static Prepared prepare(
+            Map<KnowledgeKey, KnowledgeKey> kubeAliases,
+            Map<KnowledgeKey, KnowledgeKey> dataAliases
+    ) {
+        Map<KnowledgeKey, KnowledgeKey> copiedKube = Map.copyOf(kubeAliases);
+        Map<KnowledgeKey, KnowledgeKey> copiedData = Map.copyOf(dataAliases);
+        return new Prepared(copiedKube, copiedData, createCurrent(copiedKube, copiedData));
+    }
+
+    static KnowledgeAliasRegistry rawCurrent() {
+        return current;
+    }
+
+    record Prepared(
+            Map<KnowledgeKey, KnowledgeKey> kubeAliases,
+            Map<KnowledgeKey, KnowledgeKey> dataAliases,
+            KnowledgeAliasRegistry registry
+    ) {
+        Prepared {
+            kubeAliases = Map.copyOf(kubeAliases);
+            dataAliases = Map.copyOf(dataAliases);
+        }
     }
 
     public static NamespacedId parseUserId(String value) {
