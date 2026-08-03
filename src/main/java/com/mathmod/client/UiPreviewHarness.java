@@ -51,6 +51,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -75,6 +76,7 @@ import java.lang.reflect.Method;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @EventBusSubscriber(modid = MathMod.MOD_ID, value = Dist.CLIENT)
@@ -137,14 +139,19 @@ public final class UiPreviewHarness {
     private static int patchouliMatrixOpenAttempts;
     private static int authoringRegistryPreviewStep;
     private static int authoringRegistryPreviewStepTick;
+    private static int selfRepeatPreviewStep;
+    private static int selfRepeatPreviewStepTick;
     private static final Field OVERLAY_MESSAGE_FIELD = overlayMessageField();
     private static final Field CUSTOM_WORKSPACE_FIELD = programmerField("customWorkspace");
     private static final Field CUSTOM_SPELL_NAME_FIELD = programmerField("customSpellName");
     private static final Field PRESET_SCROLL_FIELD = programmerField("presetPaletteScroll");
     private static final Field SELECTED_PRESET_FIELD = programmerField("selectedPreset");
+    private static final Field THEOREM_STATEMENT_FIELD = programmerField("theoremStatement");
     private static final Field PARAMETER_ACTION_FIELD = programmerField("parameterAction");
     private static final Field PARAMETER_BOXES_FIELD = programmerField("parameterBoxes");
     private static final Field MATERIAL_SCROLL_FIELD = resourcesField("materialScroll");
+    private static final Method ASSEMBLE_PRESET_METHOD = programmerMethod("assemblePreset", TalismanPreset.class);
+    private static final Method GRAPH_VIEWPORT_Y_METHOD = programmerMethod("graphViewportY");
     private static final Method MOUSE_MOVE_CALLBACK = mouseMoveCallback();
 
     private UiPreviewHarness() {
@@ -208,6 +215,15 @@ public final class UiPreviewHarness {
             }
             runAuthoringRegistryPreview(screen);
             if (authoringRegistryPreviewStep < 3) {
+                return;
+            }
+        }
+        if (selfRepeatPreview()) {
+            if (!(minecraft.screen instanceof RuneProgrammerScreen screen)) {
+                throw new IllegalStateException("Self-repeat preview left the Laboratory screen");
+            }
+            runSelfRepeatPreview(minecraft, screen);
+            if (selfRepeatPreviewStep < 2) {
                 return;
             }
         }
@@ -401,6 +417,10 @@ public final class UiPreviewHarness {
             hoverFirstBinding(minecraft, screen);
         }
         if (PREVIEW.equalsIgnoreCase("theorem-node-tooltip")
+                && minecraft.screen instanceof RuneProgrammerScreen screen) {
+            hoverSecondTheoremNode(minecraft, screen);
+        }
+        if (factoredLeapHoverPreview()
                 && minecraft.screen instanceof RuneProgrammerScreen screen) {
             hoverSecondTheoremNode(minecraft, screen);
         }
@@ -696,7 +716,7 @@ public final class UiPreviewHarness {
         RenderSystem.disableScissor();
         Screenshot.grab(
                 minecraft.gameDirectory,
-                "mathmod-" + PREVIEW + "-preview.png",
+                previewCaptureName(),
                 minecraft.getMainRenderTarget(),
                 message -> {
                     MathMod.LOGGER.info("UI preview result: {}", message.getString());
@@ -852,7 +872,8 @@ public final class UiPreviewHarness {
                 Component.translatable("screen.mathmod.rune_programmer")
         );
         minecraft.setScreen(screen);
-        if (!PREVIEW.equalsIgnoreCase("authoring-registry-palette")) {
+        if (!PREVIEW.equalsIgnoreCase("authoring-registry-palette")
+                && theoremCatalogPreflightRequired(screen)) {
             requireTheoremCatalogFormulaFit(minecraft, screen);
         }
         requireTheoremStatementFit(minecraft, screen);
@@ -996,6 +1017,21 @@ public final class UiPreviewHarness {
             } else if (PREVIEW.equalsIgnoreCase("type-legend-tooltip")) {
                 hoverTypeLegend(minecraft, screen);
             }
+        } else if (factoredLeapStatementPreview()) {
+            if (PREVIEW.equalsIgnoreCase("fs-05")) {
+                selectFrameTheorem(screen);
+            } else if (PREVIEW.equalsIgnoreCase("fs-06")) {
+                selectTheorem(screen, "mathmod:hop");
+            } else {
+                selectFactoredLeapTheorem(screen);
+            }
+            int lineCount = logTheoremStatementPresentation(minecraft, screen);
+            if (PREVIEW.equalsIgnoreCase("fs-06") && lineCount != 1) {
+                throw new IllegalStateException("One-line presentation regression preview did not select one line");
+            }
+            if (factoredLeapHoverPreview()) {
+                hoverSecondTheoremNode(minecraft, screen);
+            }
         }
     }
 
@@ -1005,6 +1041,7 @@ public final class UiPreviewHarness {
     ) {
         int availableWidth = previewLayout(screen).palette().width() - 42;
         List<String> overflowing = ProgramPresets.talismanPresets().stream()
+                .filter(preset -> !FactoredLeapCatalogException.isExact(preset))
                 .filter(preset -> minecraft.font.width(preset.catalogFormula()) > availableWidth)
                 .map(preset -> preset.id() + "=" + preset.catalogFormula())
                 .toList();
@@ -1014,6 +1051,11 @@ public final class UiPreviewHarness {
                             + String.join(", ", overflowing)
             );
         }
+    }
+
+    /** Compact palettes retain the previously accepted clipped catalog presentation. */
+    private static boolean theoremCatalogPreflightRequired(RuneProgrammerScreen screen) {
+        return !previewLayout(screen).compact();
     }
 
     private static void requireTheoremStatementFit(
@@ -1026,12 +1068,12 @@ public final class UiPreviewHarness {
                         minecraft.font,
                         preset.formula(),
                         availableWidth
-                ).size() > 2)
+                ).size() > 3)
                 .map(preset -> preset.id() + "=" + preset.formula())
                 .toList();
         if (!overflowing.isEmpty()) {
             throw new IllegalStateException(
-                    "Theorem statements exceed two lines at " + availableWidth + " px: "
+                    "Theorem statements exceed three lines at " + availableWidth + " px: "
                             + String.join(", ", overflowing)
             );
         }
@@ -1915,8 +1957,19 @@ public final class UiPreviewHarness {
         int left = (screen.width - previewLayout.width()) / 2;
         int top = (screen.height - previewLayout.height()) / 2;
         double guiX = left + previewLayout.graph().x() + previewLayout.graph().width() / 2.0D;
-        double guiY = top + previewLayout.panelTop() + 37 + 16 + 5;
+        double guiY = top + graphViewportY(screen) + 16 + 5;
         movePreviewCursor(minecraft, screen.width, screen.height, guiX, guiY);
+    }
+
+    private static int graphViewportY(RuneProgrammerScreen screen) {
+        if (GRAPH_VIEWPORT_Y_METHOD == null) {
+            throw new IllegalStateException("Theorem graph viewport origin was unavailable for hover inspection");
+        }
+        try {
+            return (int) GRAPH_VIEWPORT_Y_METHOD.invoke(screen);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not inspect theorem graph viewport origin", exception);
+        }
     }
 
     private static void hoverTypeLegend(Minecraft minecraft, RuneProgrammerScreen screen) {
@@ -2104,6 +2157,39 @@ public final class UiPreviewHarness {
 
     private static boolean authoringRegistryPalettePreview() {
         return PREVIEW.equalsIgnoreCase("authoring-registry-palette");
+    }
+
+    private static boolean selfRepeatPreview() {
+        return PREVIEW.equalsIgnoreCase("laboratory-self-repeat");
+    }
+
+    private static void runSelfRepeatPreview(Minecraft minecraft, RuneProgrammerScreen screen) {
+        if (selfRepeatPreviewStep == 0 && ticks >= 5) {
+            selectLaboratoryTab(screen);
+            focusPaletteAndMove(screen, 0, true);
+            selfRepeatPreviewStep = 1;
+            selfRepeatPreviewStepTick = ticks;
+            return;
+        }
+        if (selfRepeatPreviewStep == 1 && ticks >= selfRepeatPreviewStepTick + 2) {
+            if (!laboratoryWorkspaceActions(screen).equals(List.of(CustomSpellAction.SELF))) {
+                throw new IllegalStateException("First explicit Self was not applied");
+            }
+            focusPaletteAndMove(screen, 0, true);
+            selfRepeatPreviewStep = 2;
+            hoverFirstCustomPaletteRow(minecraft, screen);
+            if (!laboratoryWorkspaceActions(screen).equals(List.of(CustomSpellAction.SELF, CustomSpellAction.SELF))) {
+                throw new IllegalStateException("Repeated explicit Self was not applied");
+            }
+        }
+    }
+
+    private static void selectLaboratoryTab(RuneProgrammerScreen screen) {
+        ProgrammerLayout layout = previewLayout(screen);
+        int left = (screen.width - layout.width()) / 2;
+        int top = (screen.height - layout.height()) / 2;
+        ProgrammerLayout.Rect tab = layout.laboratoryTab();
+        screen.mouseClicked(left + tab.x() + tab.width() / 2.0D, top + tab.y() + tab.height() / 2.0D, 0);
     }
 
     private static void runAuthoringRegistryPreview(RuneProgrammerScreen screen) {
@@ -2683,6 +2769,17 @@ public final class UiPreviewHarness {
         }
     }
 
+    private static Method programmerMethod(String name, Class<?>... parameterTypes) {
+        try {
+            Method method = RuneProgrammerScreen.class.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            return method;
+        } catch (ReflectiveOperationException exception) {
+            MathMod.LOGGER.error("Could not prepare Programmer method inspection for {}", name, exception);
+            return null;
+        }
+    }
+
     private static Field resourcesField(String name) {
         try {
             Field field = TalismanResourcesScreen.class.getDeclaredField(name);
@@ -2849,6 +2946,83 @@ public final class UiPreviewHarness {
             screen.mouseScrolled(paletteX, paletteY, 0.0D, -1.0D);
         }
         screen.mouseClicked(paletteX, top + palette.y() + 53.0D, 0);
+    }
+
+    private static boolean factoredLeapStatementPreview() {
+        return PREVIEW.equalsIgnoreCase("fs-01")
+                || PREVIEW.equalsIgnoreCase("fs-02")
+                || PREVIEW.equalsIgnoreCase("fs-03")
+                || PREVIEW.equalsIgnoreCase("fs-04")
+                || PREVIEW.equalsIgnoreCase("fs-05")
+                || PREVIEW.equalsIgnoreCase("fs-06");
+    }
+
+    private static boolean factoredLeapHoverPreview() {
+        return PREVIEW.equalsIgnoreCase("fs-04");
+    }
+
+    private static String previewCaptureName() {
+        if (factoredLeapStatementPreview()) {
+            return "mathmod-" + PREVIEW.toLowerCase(Locale.ROOT)
+                    + "-" + PREVIEW_LOCALE.toLowerCase(Locale.ROOT)
+                    + "-preview.png";
+        }
+        return "mathmod-" + PREVIEW + "-preview.png";
+    }
+
+    private static void selectFactoredLeapTheorem(RuneProgrammerScreen screen) {
+        selectTheorem(screen, FactoredLeapCatalogException.ID);
+        if (!selectedPreset(screen).id().equals(FactoredLeapCatalogException.ID)) {
+            throw new IllegalStateException("Factored Leap preview selected a different theorem");
+        }
+    }
+
+    private static void selectTheorem(RuneProgrammerScreen screen, String id) {
+        TalismanPreset preset = ProgramPresets.presetForId(id)
+                .orElseThrow(() -> new IllegalStateException("The registered theorem was unavailable: " + id));
+        if (ASSEMBLE_PRESET_METHOD == null) {
+            throw new IllegalStateException("Theorem selection method was unavailable for the statement preview");
+        }
+        try {
+            ASSEMBLE_PRESET_METHOD.invoke(screen, preset);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not select the registered theorem", exception);
+        }
+    }
+
+    private static int logTheoremStatementPresentation(Minecraft minecraft, RuneProgrammerScreen screen) {
+        if (THEOREM_STATEMENT_FIELD == null || GRAPH_VIEWPORT_Y_METHOD == null) {
+            throw new IllegalStateException("Theorem presentation geometry was unavailable for inspection");
+        }
+        try {
+            AbstractWidget statement = (AbstractWidget) THEOREM_STATEMENT_FIELD.get(screen);
+            TalismanPreset preset = selectedPreset(screen);
+            int availableWidth = Math.max(0, statement.getWidth() - 7);
+            List<FormattedCharSequence> lines = TheoremStatementPresentation.lines(
+                    minecraft.font,
+                    preset.formula(),
+                    availableWidth
+            );
+            int graphOrigin = (int) GRAPH_VIEWPORT_Y_METHOD.invoke(screen);
+            if (lines.size() > 3) {
+                throw new IllegalStateException("Theorem preview exceeded three complete statement lines");
+            }
+            MathMod.LOGGER.info(
+                    "Theorem presentation: selectedTheoremId={} availableWidth={} exactLineCount={} "
+                            + "statementHitbox=({},{} {}x{}) graphOrigin={} formula={}",
+                    preset.id(), availableWidth, lines.size(), statement.getX(), statement.getY(),
+                    statement.getWidth(), statement.getHeight(), graphOrigin, preset.formula()
+            );
+            for (int index = 0; index < lines.size(); index++) {
+                MathMod.LOGGER.info(
+                        "Theorem presentation line {} width={}",
+                        index + 1, minecraft.font.width(lines.get(index))
+                );
+            }
+            return lines.size();
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Could not inspect theorem presentation geometry", exception);
+        }
     }
 
     private static ProgrammerLayout previewLayout(RuneProgrammerScreen screen) {
@@ -3778,5 +3952,18 @@ public final class UiPreviewHarness {
 
     private static boolean longLoadoutNamePreview() {
         return PREVIEW.equalsIgnoreCase("resources-long-name-tooltip");
+    }
+}
+
+/** Exact, frozen exception for the one catalog string whose compact rendering is accepted. */
+final class FactoredLeapCatalogException {
+    static final String ID = "mathmod:factored_leap";
+    static final String FORMULA = "push(halve(look)+halve(up))";
+
+    private FactoredLeapCatalogException() {
+    }
+
+    static boolean isExact(TalismanPreset preset) {
+        return preset.id().equals(ID) && preset.catalogFormula().equals(FORMULA);
     }
 }

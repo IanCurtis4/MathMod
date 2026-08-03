@@ -116,7 +116,7 @@ public final class CustomSpellWorkspace {
         CustomSpellAction action = invocation.action();
         int stepId = nextStepId++;
         switch (action) {
-            case SELF -> outputNodeId = ensureSelf();
+            case SELF -> outputNodeId = addExplicitSelf();
             case NUMBER_ONE -> addNumberLiteral(invocation.argument("value"));
             case ADD_ONE -> addNumberAddOne();
             case SUBTRACT_ONE -> addNumberSubtractOne();
@@ -207,6 +207,11 @@ public final class CustomSpellWorkspace {
         if (selfNodeId == null) {
             selfNodeId = addNode("self", "mathmod:self_player");
         }
+        return selfNodeId;
+    }
+
+    private String addExplicitSelf() {
+        selfNodeId = addNode("self", "mathmod:self_player");
         return selfNodeId;
     }
 

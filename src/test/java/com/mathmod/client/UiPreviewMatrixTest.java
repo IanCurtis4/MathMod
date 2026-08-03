@@ -1,11 +1,16 @@
 package com.mathmod.client;
 
+import com.mathmod.program.ProgramPresets;
+import com.mathmod.program.TalismanPreset;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UiPreviewMatrixTest {
@@ -70,11 +75,67 @@ class UiPreviewMatrixTest {
         assertTrue(hasCase("rune-inspector-functional", "pt_br", 640, 480));
     }
 
+    @Test
+    void theoremPreflightsRunForSelfRepeatAndTheCatalogExceptionIsIdentitySpecific() throws Exception {
+        String harness = Files.readString(Path.of("src/main/java/com/mathmod/client/UiPreviewHarness.java"));
+
+        assertTrue(harness.contains("!PREVIEW.equalsIgnoreCase(\"authoring-registry-palette\")"));
+        assertFalse(harness.contains("&& !selfRepeatPreview()"));
+        assertTrue(harness.contains("requireTheoremCatalogFormulaFit(minecraft, screen);"));
+        assertTrue(harness.contains("requireTheoremStatementFit(minecraft, screen);"));
+        assertTrue(harness.contains("preset -> !FactoredLeapCatalogException.isExact(preset)"));
+        assertTrue(harness.contains(").size() > 3"));
+        assertTrue(hasCase("laboratory-self-repeat", "en_us", 1024, 800));
+        assertTrue(hasCase("laboratory-self-repeat", "pt_br", 1024, 800));
+    }
+
+    @Test
+    void catalogExceptionRequiresBothTheFrozenIdAndFrozenFormula() {
+        TalismanPreset factoredLeap = ProgramPresets.presetForId("mathmod:factored_leap").orElseThrow();
+
+        assertTrue(FactoredLeapCatalogException.isExact(factoredLeap));
+        assertFalse(FactoredLeapCatalogException.isExact(copyWith(
+                factoredLeap,
+                "mathmod:factored_leap",
+                "push(halve(look)+halve(other))"
+        )));
+        assertFalse(FactoredLeapCatalogException.isExact(copyWith(
+                factoredLeap,
+                "mathmod:another_theorem",
+                factoredLeap.catalogFormula()
+        )));
+    }
+
+    @Test
+    void factoredLeapPresentationVectorsCoverEveryRequiredLocaleAndViewport() {
+        assertTrue(hasCase("fs-01", "en_us", 1024, 800));
+        assertTrue(hasCase("fs-02", "pt_br", 1024, 800));
+        assertTrue(hasCase("fs-03", "pt_br", 640, 480));
+        assertTrue(hasCase("fs-04", "pt_br", 640, 480));
+        assertTrue(hasCase("fs-05", "en_us", 1024, 800));
+        assertTrue(hasCase("fs-06", "en_us", 1024, 800));
+    }
+
     private static boolean hasCase(String mode, String locale, int width, int height) {
         return UiPreviewMatrix.cases().stream()
                 .anyMatch(preview -> preview.mode().equals(mode)
                         && preview.locale().equals(locale)
                         && preview.width() == width
                         && preview.height() == height);
+    }
+
+    private static TalismanPreset copyWith(TalismanPreset source, String id, String catalogFormula) {
+        return new TalismanPreset(
+                source.buttonId(),
+                id,
+                source.category(),
+                source.nameKey(),
+                source.hintKey(),
+                source.formula(),
+                catalogFormula,
+                source.iconRuneId(),
+                source.provenance(),
+                source::graph
+        );
     }
 }

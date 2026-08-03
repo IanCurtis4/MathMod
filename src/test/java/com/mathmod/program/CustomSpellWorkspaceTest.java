@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -143,6 +144,46 @@ class CustomSpellWorkspaceTest {
         assertTrue(preview.inputs().isEmpty());
         assertEquals(1, preview.addedRunes());
         assertEquals(0, preview.addedBindings());
+    }
+
+    @Test
+    void repeatedExplicitSelfAlwaysAddsOneRuneAndBecomesTheOutput() {
+        CustomSpellWorkspace workspace = new CustomSpellWorkspace();
+
+        workspace.apply(CustomSpellAction.SELF);
+        CustomActionPreview repeatedPreview = workspace.preview(CustomSpellAction.SELF);
+        workspace.apply(CustomSpellAction.SELF);
+
+        assertEquals(1, repeatedPreview.addedRunes());
+        assertEquals(2, workspace.steps().size());
+        assertEquals(2, workspace.toGraph().nodes().stream()
+                .filter(node -> node.runeId().equals("mathmod:self_player"))
+                .count());
+        assertEquals(workspace.steps().getLast().outputNodeId(), workspace.toGraph().outputNodeId());
+
+        assertTrue(workspace.undoLast());
+        assertEquals(1, workspace.toGraph().nodes().stream()
+                .filter(node -> node.runeId().equals("mathmod:self_player"))
+                .count());
+    }
+
+    @Test
+    void everyLaboratoryActionRemainsPreviewableAfterItsOwnRepeatedApplication() {
+        for (CustomSpellAction action : CustomSpellAction.values()) {
+            CustomSpellWorkspace workspace = new CustomSpellWorkspace();
+
+            workspace.apply(action);
+            CustomActionPreview firstRepeatedPreview = assertDoesNotThrow(
+                    () -> workspace.preview(action), action.name() + " must preview after its first application"
+            );
+            workspace.apply(action);
+            CustomActionPreview secondRepeatedPreview = assertDoesNotThrow(
+                    () -> workspace.preview(action), action.name() + " must preview after its repeated application"
+            );
+
+            assertTrue(firstRepeatedPreview.addedRunes() >= 1, action.name() + " repeated preview must describe a real addition");
+            assertTrue(secondRepeatedPreview.addedRunes() >= 1, action.name() + " repeated preview must remain a real addition");
+        }
     }
 
     @Test

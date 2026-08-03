@@ -235,7 +235,9 @@ public class RuneProgrammerMenu extends AbstractContainerMenu {
     }
 
     private boolean canMutateWorkspace(Player player) {
-        return player.containerMenu == this && stillValid(player);
+        return player.containerMenu == this
+                && stillValid(player)
+                && ItemStack.isSameItemSameComponents(player.getItemInHand(hand), capturedProjectionTarget);
     }
 
     private boolean projectionStillBound(Player player) {

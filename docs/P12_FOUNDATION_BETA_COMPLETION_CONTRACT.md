@@ -10,10 +10,20 @@
 `ACCEPT` under `docs/P12_TM_01_FINAL_GATE_ACCEPTANCE.md`. `P12-TM-02` is
 `DONE` with `ACCEPT` under `docs/P12_TM_02_FINAL_GATE_ACCEPTANCE.md`.
 `P12-SOL-02` is `DONE` with `ACCEPT` under
-`docs/P12_DEDICATED_SERVER_FIXTURE_READINESS.md`. `P12-FX-01` is
-blocked on external proof after bounded correction `P12-FX-01F` became `DONE`
-with `ACCEPT` under `docs/P12_FX_01F_GATE_ACCEPTANCE.md`. `P12-DS` remains
-blocked until the complete Sol/operator proof is accepted.
+`docs/P12_DEDICATED_SERVER_FIXTURE_READINESS.md`. `P12-FX-01F` is `DONE` with
+`ACCEPT` under `docs/P12_FX_01F_GATE_ACCEPTANCE.md`, and the final immutable
+standalone recheck closes `P12-FX-01` with `ACCEPT` under
+`docs/P12_FX_01_FINAL_GATE_ACCEPTANCE.md`. The 2026-08-02 DS-01 execution found
+a repeated Laboratory client crash and a stale-target authority defect;
+`P12-DS` was put in `NEEDS_FIX`; `P12-TM-04` is `DONE` with `ACCEPT` under
+`docs/P12_TM_04_FINAL_GATE_ACCEPTANCE.md`. DS-06 remains in the separate multiplayer
+backlog under `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`. The runtime harness
+also exposed an independent Factored Leap statement presentation failure;
+`P12-SOL-03` is `DONE` with `ACCEPT` under
+`docs/P12_FACTORED_LEAP_STATEMENT_PRESENTATION_CONTRACT.md`. The first
+`P12-TM-05` and `P12-TM-05F` are `DONE` with `ACCEPT` under
+`docs/P12_TM_05F_FINAL_GATE_ACCEPTANCE.md`. Single-client `P12-DS` is `READY`
+to create the next immutable artifact and cleanly rerun DS-01.
 
 ## 1. Product decision
 
@@ -305,8 +315,14 @@ P12-SOL-01 DONE (ACCEPT)
     -> P12-TM-02 DONE (ACCEPT)
     -> P12-SOL-02 DONE (ACCEPT)
     -> P12-FX-01F DONE (ACCEPT)
-    -> P12-FX-01 BLOCKED (ENVIRONMENT_FAILURE)
-    -> P12-DS BLOCKED
+    -> P12-FX-01 DONE (ACCEPT)
+    -> P12-DS NEEDS_FIX (DS-01)
+    -> P12-TM-04 DONE (ACCEPT)
+    -> P12-SOL-03 DONE (ACCEPT)
+    -> P12-TM-05 DONE (ACCEPT)
+    -> P12-TM-05F DONE (ACCEPT)
+    -> P12-DS READY (NEW IMMUTABLE ARTIFACT + CLEAN DS-01 RERUN)
+    -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED
     -> Foundation Beta consolidation gate
     -> 0.3.0 Inspectable Mathematics gap audit

@@ -42,6 +42,14 @@ public final class UiPreviewMatrix {
             ,new Case("p9-defensive-resources", "en_us", 1024, 800, 2, true)
             ,new Case("p9-defensive-resources", "pt_br", 1024, 800, 2, true)
             ,new Case("p9-defensive-resources", "pt_br", 640, 480, 2, true)
+            ,new Case("laboratory-self-repeat", "en_us", 1024, 800, 2, true)
+            ,new Case("laboratory-self-repeat", "pt_br", 1024, 800, 2, true)
+            ,new Case("fs-01", "en_us", 1024, 800, 2, true)
+            ,new Case("fs-02", "pt_br", 1024, 800, 2, true)
+            ,new Case("fs-03", "pt_br", 640, 480, 2, true)
+            ,new Case("fs-04", "pt_br", 640, 480, 2, true)
+            ,new Case("fs-05", "en_us", 1024, 800, 2, true)
+            ,new Case("fs-06", "en_us", 1024, 800, 2, true)
     );
 
     private UiPreviewMatrix() {

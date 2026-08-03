@@ -10,7 +10,7 @@
 
 **Board owner:** Sol
 
-**Last updated:** 2026-08-01
+**Last updated:** 2026-08-02
 
 ---
 
@@ -337,11 +337,40 @@ Therefore:
 - `P12-TM-03`, F and F2 are `DONE` with `ACCEPT` under
   `docs/P12_TM_03_FINAL_GATE_ACCEPTANCE.md`: 17 focused JUnit, 526 global
   JUnit and 59/59 global GameTests pass, including the named real-load test;
-- `P12-FX-01` is no longer blocked by a known product defect; it is `BLOCKED`
-  on a clean immutable commit/JAR and the corrected standalone DS-02 recheck;
+- `P12-FX-01` is `DONE` with `ACCEPT` under
+  `docs/P12_FX_01_FINAL_GATE_ACCEPTANCE.md`. Commit
+  `ce64b9bbc1d3ef48d3231be13ebad1203d9eb7e7` produced the immutable JAR
+  SHA-256 `9FF1CFE7D094BBB8E86E5739E9600C954A42ED9DC164EFD49EC6F6B74CFC725F`;
+  the corrected standalone DS-02 recheck rejected the malformed candidate
+  before publication and retained the previous paired snapshot;
 - DS-06 and any truly two-client evidence are `BACKLOG`, not passed or waived,
   under `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`;
-- `P12-DS` remains blocked.
+- `P12-DS` was put in `NEEDS_FIX`: the authenticated DS-01 run reproduced the same
+  `Self player` Laboratory render-thread crash twice, and repository control
+  flow also proves ordinary Laboratory mutation is not component-exactly bound
+  to the captured target. The findings and bounded correction are frozen in
+  `docs/P12_DS_01_GATE_REVIEW.md`;
+- `P12-TM-04` is `DONE` with `ACCEPT` under
+  `docs/P12_TM_04_FINAL_GATE_ACCEPTANCE.md`: 28/28 focused tests, 529/529 global
+  JUnit, the new named GameTest within 60/60 global GameTests, both localized
+  real-client completion logs and the standard build pass. Its R6 harness
+  escalation is accepted under
+  `docs/P12_TM_04_HARNESS_PREFLIGHT_CLARIFICATION.md`: only
+  `laboratory-self-repeat` may bypass the two unrelated theorem-only
+  preflights; formulas, localization and production UI remain read-only;
+- the second preflight exposed an independent Factored Leap statement
+  `PRESENTATION_FAILURE`, recorded in
+  `docs/P12_FACTORED_LEAP_STATEMENT_PRESENTATION_FINDING.md`. `P12-SOL-03` is
+  `DONE` with `ACCEPT` under
+  `docs/P12_FACTORED_LEAP_STATEMENT_PRESENTATION_CONTRACT.md`. `P12-TM-05F`
+  closes the first handoff's three findings and is `DONE` with `ACCEPT` under
+  `docs/P12_TM_05F_FINAL_GATE_ACCEPTANCE.md`. Single-client `P12-DS` is `READY`
+  to create a new immutable artifact/batch and rerun DS-01 from a clean checkpoint.
+  A full ATM10 manual-test candidate is installed under
+  `docs/P12_ATM10_CANDIDATE_AND_WARNING_REVIEW.md`; its AllTheTweaks warning is
+  an intentional pack-owned `allthetweaks -> AFTER bcc` override, not a MathMod
+  incompatibility. The candidate is not immutable because the repository is
+  not yet clean/committed.
 
 ---
 
@@ -403,13 +432,17 @@ Therefore:
 | `P12-TM-01F` | Terra Medium | `DONE` (`ACCEPT`) | finite launch + loaded swept-volume correction accepted | `P12-TM-02` |
 | `P12-TM-02` | Terra Medium | `DONE` (`ACCEPT`) | 47 focused; P9 4, P10 5, P11 5; 58 global GameTests | `P12-SOL-02` |
 | `P12-SOL-02` | Sol | `DONE` (`ACCEPT`) | fixture/evidence contract frozen | `P12-FX-01` |
-| `P12-FX-01` | Sol + operator | `BLOCKED` | clean immutable accepted commit/JAR plus standalone DS-02 recheck | complete reproducible fixture proof |
+| `P12-FX-01` | Sol + operator | `DONE` (`ACCEPT`) | immutable JAR plus corrected standalone DS-02 accepted | `P12-DS` single-client execution |
 | `P12-FX-01F` | Terra Medium | `DONE` (`ACCEPT`) | FX-R1/FX-R2 closed | Sol/operator external continuation |
 | `P12-TM-03` | Terra Medium | `DONE` (`ACCEPT`) | paired atomic publication accepted | external runtime recheck |
 | `P12-TM-03F` | Terra Medium | `DONE` (`ACCEPT`) | R1-R4 closed through F2 | external runtime recheck |
 | `P12-TM-03F2` | Terra Medium | `DONE` (`ACCEPT`) | reproducible real-load GameTest; 59/59 global | external runtime recheck |
 | `P12-DS-MP` | Sol + operator | `BACKLOG` | two distinct authenticated accounts | DS-06 multiplayer evidence |
-| `P12-DS` | Sol + operator | `BLOCKED` | accepted P12-TM-03F2 plus corrected standalone recheck | single-client dedicated-server evidence |
+| `P12-DS` | Sol + operator | `READY` | accepted P12-TM-05F | new immutable artifact and clean DS-01 rerun |
+| `P12-TM-04` | Terra Medium | `DONE` (`ACCEPT`) | DS01-R1/R2 and R6 closed | `P12-SOL-03` presentation contract |
+| `P12-SOL-03` | Sol | `DONE` (`ACCEPT`) | accepted `P12-TM-04` handoff | bounded third-line presentation contract |
+| `P12-TM-05` | Terra Medium | `DONE` (`ACCEPT`) | R1-R3 closed through F | statement presentation gate |
+| `P12-TM-05F` | Terra Medium | `DONE` (`ACCEPT`) | R1-R3 closed; 40 focused / 533 global | single-client `P12-DS` |
 | `P12-M` | Sol + independent player | `BLOCKED` | stable build and observation fixture | manual first-use/accessibility evidence |
 | `A0-LU-INVENTORY` | Luna | `DONE` | frozen current ids | `A0-SOL-LU-01` |
 | `A0-SOL-LU-01` | Sol | `DONE` (`ACCEPT`) | completed Luna inventory | `A0-LU-01` |
@@ -419,7 +452,7 @@ Therefore:
 ### Tasks that may be dispatched now
 
 ```text
-None — commit the accepted P12-TM-03/F/F2 delta and restore a clean tree first.
+P12-DS (single-client only; begin with new artifact and clean DS-01)
 ```
 
 ### Tasks that must not be dispatched yet
@@ -440,9 +473,9 @@ Use these four role threads as the stable pipeline:
 
 | Thread | Current assignment | Next assignment |
 |---|---|---|
-| Sol | `P12-TM-03F2` accepted | after clean commit/build, rerun standalone DS-02 |
+| Sol | `P12-TM-05F` accepted | create new immutable batch and execute clean DS-01 rerun |
 | Terra High | `L0-TH-01` complete with `APPROVE` | wait for later semantic gate |
-| Terra Medium | `P12-TM-03/F/F2` `DONE` with `ACCEPT` | wait; ownership released |
+| Terra Medium | `P12-TM-05F` `DONE` with `ACCEPT` | wait for DS evidence findings, if any |
 | Luna | `L0-LU-02` accepted | wait for a later content gate |
 
 Do not manually switch the model within a thread. Keep the role stable and
@@ -1310,7 +1343,8 @@ The L0 sequence is closed and the next product priority is frozen in
 `docs/P12_FOUNDATION_BETA_COMPLETION_CONTRACT.md`. Only:
 
 ```text
-No model task is dispatchable; Sol/operator needs a clean immutable revision.
+Single-client `P12-DS` is `READY`; DS-06 remains in the separate
+`P12-DS-MP` backlog.
 ```
 
 All P12-TM-03 ownership is released. Networking, schemas, content and public
@@ -1357,8 +1391,13 @@ P12-SOL-01 DONE (ACCEPT)
     -> P12-TM-03 DONE (ACCEPT)
     -> P12-TM-03F DONE (ACCEPT)
     -> P12-TM-03F2 DONE (ACCEPT)
-    -> P12-FX-01 BLOCKED (CLEAN IMMUTABLE RUNTIME RECHECK)
-    -> P12-DS BLOCKED
+    -> P12-FX-01 DONE (ACCEPT)
+    -> P12-DS NEEDS_FIX (DS-01)
+    -> P12-TM-04 DONE (ACCEPT)
+    -> P12-SOL-03 DONE (ACCEPT)
+    -> P12-TM-05 DONE (ACCEPT)
+    -> P12-TM-05F DONE (ACCEPT)
+    -> P12-DS READY (NEW IMMUTABLE ARTIFACT + CLEAN DS-01 RERUN)
     -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED
 ```
@@ -1480,11 +1519,12 @@ The task must name:
 
 Open or update the threads in this order:
 
-1. Do not dispatch another model task.
-2. Commit the accepted P12-TM-03/F/F2 implementation, tests, handoffs and Sol
-   gate documents; exclude runtime logs and restore a clean working tree.
-3. Sol must then rebuild/hash the immutable JAR and reproduce the corrected
-   standalone DS-02 sequence. Keep `P12-DS` blocked until that result.
+1. Complete the manual full-ATM10 candidate check recorded in
+   `docs/P12_ATM10_CANDIDATE_AND_WARNING_REVIEW.md`.
+2. Commit the accepted repository state, prove a clean tree, then create the
+   new immutable JAR/batch and rerun DS-01 from a clean checkpoint.
+3. Do not start DS-02 or any later single-client row until the new DS-01 result
+   is accepted.
 4. Keep DS-06/two-client evidence in `P12-DS-MP BACKLOG`; it is neither a pass
    nor a prerequisite for the single-client recheck.
 5. Keep Luna and Terra High idle.
@@ -1542,8 +1582,13 @@ P12-SOL-01 DONE (ACCEPT)
     -> P12-TM-03 DONE (ACCEPT)
     -> P12-TM-03F DONE (ACCEPT)
     -> P12-TM-03F2 DONE (ACCEPT)
-    -> P12-FX-01 BLOCKED (CLEAN IMMUTABLE RUNTIME RECHECK)
-    -> P12-DS BLOCKED
+    -> P12-FX-01 DONE (ACCEPT)
+    -> P12-DS NEEDS_FIX (DS-01)
+    -> P12-TM-04 DONE (ACCEPT)
+    -> P12-SOL-03 DONE (ACCEPT)
+    -> P12-TM-05 DONE (ACCEPT)
+    -> P12-TM-05F DONE (ACCEPT)
+    -> P12-DS READY (NEW IMMUTABLE ARTIFACT + CLEAN DS-01 RERUN)
     -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED
 

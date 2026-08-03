@@ -221,13 +221,14 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         theoremStatement = addRenderableWidget(new TheoremStatementWidget(
                 leftPos + GRAPH_X + TEXT_PADDING,
                 topPos + PANEL_TOP + 14,
-                GRAPH_WIDTH - TEXT_PADDING * 2 - inspectorHeaderReserve()
+                GRAPH_WIDTH - TEXT_PADDING * 2 - theoremStatementInspectorReserve()
         ));
+        updateTheoremStatementGeometry();
 
         inspectButton = addRenderableWidget(MathButton.iconAction(
-                leftPos + GRAPH_X + GRAPH_WIDTH - 54,
+                leftPos + GRAPH_X + GRAPH_WIDTH - inspectButtonWidth() - 20,
                 topPos + PANEL_TOP + 2,
-                34,
+                inspectButtonWidth(),
                 18,
                 Component.translatable("screen.mathmod.rune_inspector.open"),
                 Component.literal("i"),
@@ -649,6 +650,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         preview = preset.graph();
         validation = validatePreview(preview, ProgramResources.recommendedFor(preview));
         graphScroll = 0;
+        updateTheoremStatementGeometry();
         updateModeButtons();
     }
 
@@ -785,6 +787,7 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
     private void refreshPresetPreview() {
         preview = selectedPreset.graph();
         validation = validatePreview(preview, ProgramResources.recommendedFor(preview));
+        updateTheoremStatementGeometry();
     }
 
     private void updateModeButtons() {
@@ -1429,6 +1432,14 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         return TYPE_LEGEND_TITLE_RESERVE + 38;
     }
 
+    private int theoremStatementInspectorReserve() {
+        return layout.compact() ? 26 : inspectorHeaderReserve();
+    }
+
+    private int inspectButtonWidth() {
+        return layout.compact() ? 20 : 34;
+    }
+
     private void openInspector() {
         if (minecraft == null || preview == null) {
             return;
@@ -1942,8 +1953,33 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
 
     private int graphViewportY() {
         return PANEL_TOP + (currentTab == ProgrammerTab.PRESETS
-                ? THEOREM_GRAPH_VIEWPORT_OFFSET
+                ? TheoremStatementGeometry.graphViewportOffsetForRenderedLineCount(theoremStatementLineCount())
                 : DEFAULT_GRAPH_VIEWPORT_OFFSET);
+    }
+
+    private int theoremStatementLineCount() {
+        if (font == null || selectedPreset == null || theoremStatement == null) {
+            return 2;
+        }
+        return TheoremStatementGeometry.effectiveLineCount(theoremStatementLines().size());
+    }
+
+    private List<FormattedCharSequence> theoremStatementLines() {
+        int width = Math.max(0, theoremStatement.getWidth() - 7);
+        List<FormattedCharSequence> lines = TheoremStatementPresentation.lines(
+                font,
+                selectedPreset.formula(),
+                width
+        );
+        return lines;
+    }
+
+    private void updateTheoremStatementGeometry() {
+        if (theoremStatement != null) {
+            theoremStatement.setHeight(TheoremStatementGeometry.heightForRenderedLineCount(
+                    theoremStatementLines().size()
+            ));
+        }
     }
 
     private void renderPalette(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -3638,12 +3674,8 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
                     getY() + getHeight() - 2,
                     MathGuiTheme.GOLD
             );
-            List<FormattedCharSequence> formulaLines = TheoremStatementPresentation.lines(
-                    font,
-                    selectedPreset.formula(),
-                    Math.max(0, getWidth() - 7)
-            );
-            for (int index = 0; index < Math.min(2, formulaLines.size()); index++) {
+            List<FormattedCharSequence> formulaLines = theoremStatementLines();
+            for (int index = 0; index < formulaLines.size(); index++) {
                 guiGraphics.drawString(
                         font,
                         formulaLines.get(index),
@@ -3800,5 +3832,30 @@ public class RuneProgrammerScreen extends AbstractContainerScreen<RuneProgrammer
         SAVED,
         PRESETS,
         CUSTOM
+    }
+}
+
+/** Package-private geometry oracle shared by the client screen and its focused regression test. */
+final class TheoremStatementGeometry {
+    private static final int LINE_HEIGHT = 11;
+    private static final int TWO_LINE_GRAPH_VIEWPORT_OFFSET = 37;
+
+    private TheoremStatementGeometry() {
+    }
+
+    static int effectiveLineCount(int renderedLineCount) {
+        if (renderedLineCount > 3) {
+            throw new IllegalStateException("Theorem statement exceeds the supported three-line presentation");
+        }
+        return Math.max(2, renderedLineCount);
+    }
+
+    static int heightForRenderedLineCount(int renderedLineCount) {
+        return LINE_HEIGHT * effectiveLineCount(renderedLineCount);
+    }
+
+    static int graphViewportOffsetForRenderedLineCount(int renderedLineCount) {
+        return TWO_LINE_GRAPH_VIEWPORT_OFFSET
+                + Math.max(0, effectiveLineCount(renderedLineCount) - 2) * LINE_HEIGHT;
     }
 }

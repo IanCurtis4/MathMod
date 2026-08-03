@@ -4,7 +4,23 @@
 **Date:** 2026-07-30  
 **Owner:** Sol  
 **Documentary decision:** `ACCEPT`  
-**Execution decision:** `P12-DS` remains `BLOCKED`
+**Execution decision:** single-client `P12-DS` is `READY`; `P12-TM-04`,
+`P12-SOL-03`, `P12-TM-05` and `P12-TM-05F` are `DONE` with `ACCEPT`
+
+> Operational supersession, 2026-08-02: the first authenticated DS-01
+> Laboratory run reproduced an identical client crash twice and repository
+> control flow exposed a stale-target mutation-authority defect. The active
+> correction boundary is `docs/P12_DS_01_GATE_REVIEW.md`. No later
+> single-client row may continue before correction acceptance and a clean
+> DS-01 rerun on a new immutable artifact. Before that artifact is generated,
+> `P12-TM-05F` closed the bounded findings and received Sol acceptance in
+> `docs/P12_TM_05F_FINAL_GATE_ACCEPTANCE.md`. A new immutable artifact/batch
+> and clean DS-01 rerun are now authorized; the failed old batch is not reusable.
+
+> Operational supersession, 2026-08-02: `P12-FX-01` is `DONE` with `ACCEPT`
+> under `docs/P12_FX_01_FINAL_GATE_ACCEPTANCE.md`. The immutable standalone
+> DS-02 recheck closed FX-R3. DS-06 remains a separate unpassed multiplayer
+> backlog item under `docs/P12_MULTIPLAYER_EVIDENCE_DEFERRAL.md`.
 
 > Operational supersession, 2026-08-01: the clean build, standalone backend
 > observations, five configuration profiles, multiplayer deferral and the
@@ -288,7 +304,12 @@ Classify every non-pass using
 A failed row is not rerun over the same mutated world unless the row explicitly
 tests persistence across that mutation. Preserve its checkpoint and log first.
 
-## 10. Current blockers
+## 10. Historical blockers
+
+The list below records the pre-fixture state frozen by this readiness
+document. Its operational disposition is superseded by
+`docs/P12_FX_01_FINAL_GATE_ACCEPTANCE.md` and the multiplayer deferral; it must
+not be read as the current board state.
 
 `P12-DS` remains blocked by all of the following:
 
@@ -300,17 +321,18 @@ tests persistence across that mutation. Preserve its checkpoint and log first.
 6. no clean immutable Git revision representing the accepted current product
    delta.
 
-All six must close in one `P12-FX-01` handoff. Partial closure does not release
-DS-01 through DS-09.
+The original gate required all six to close together. The later explicit
+multiplayer deferral moved item 4 and DS-06 to `P12-DS-MP BACKLOG`; the other
+fixture dependencies are closed by the final P12-FX-01 acceptance. This does
+not waive or pass DS-06.
 
 ## 11. P12-FX-01 ownership
 
 **Owner:** Terra Medium for repository fixture assembly; Sol + operator for
 external artifact, account and launch proof.
 
-**Status:** fixture correction accepted under
-`docs/P12_FX_01F_GATE_ACCEPTANCE.md`; `P12-FX-01` remains blocked on external
-Sol/operator evidence.
+**Status:** `DONE` with `ACCEPT` under
+`docs/P12_FX_01_FINAL_GATE_ACCEPTANCE.md`.
 
 Allowed:
 
@@ -359,8 +381,14 @@ Current:
 P12-TM-02 DONE (ACCEPT)
     -> P12-SOL-02 DONE (ACCEPT)
     -> P12-FX-01F DONE (ACCEPT)
-    -> P12-FX-01 BLOCKED (ENVIRONMENT_FAILURE)
-    -> P12-DS BLOCKED
+    -> P12-FX-01 DONE (ACCEPT)
+    -> P12-DS NEEDS_FIX (DS-01)
+    -> P12-TM-04 DONE (ACCEPT)
+    -> P12-SOL-03 DONE (ACCEPT)
+    -> P12-TM-05 DONE (ACCEPT)
+    -> P12-TM-05F DONE (ACCEPT)
+    -> P12-DS READY (NEW IMMUTABLE ARTIFACT + CLEAN DS-01 RERUN)
+    -> P12-DS-MP BACKLOG
     -> P12-M BLOCKED
 ```
 
